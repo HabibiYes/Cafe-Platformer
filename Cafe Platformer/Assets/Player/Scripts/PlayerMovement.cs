@@ -127,13 +127,19 @@ public class PlayerMovement : MonoBehaviour
         return origin + (direction.normalized * distance);
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded(bool checkJumping = true)
     {
+        if (checkJumping && player.jumping.isJumping)
+            return false;
+
         return Physics.SphereCast(transform.position, 0.5f, Vector3.down, out RaycastHit hit, groundCheckDistance, ground);
     }
 
-    private bool OnValidSlope()
+    public bool OnValidSlope(bool checkJumping = true)
     {
+        if (checkJumping && player.jumping.isJumping)
+            return false;
+
         if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
@@ -142,9 +148,12 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    private bool OnInvalidSlope()
+    private bool OnInvalidSlope(bool checkJumping = true)
     {
-        if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground))
+        if (checkJumping && player.jumping.isJumping)
+            return false;
+
+        if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground) && !player.jumping.isJumping)
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle != 0 && angle > maxSlopeAngle;
