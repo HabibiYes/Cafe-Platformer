@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 8375753585463072636}
   - component: {fileID: 1688217304780181510}
   - component: {fileID: 1895022137358924228}
+  - component: {fileID: 2349531008263143818}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -539,6 +540,7 @@ MonoBehaviour:
   cam: {fileID: 7213887209433451483}
   rb: {fileID: 0}
   playerMovement: {fileID: 1895022137358924228}
+  jumping: {fileID: 0}
 --- !u!114 &1895022137358924228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,9 +557,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckDistance: 1
-  acceleration: 40
+  walkAcceleration: 35
   drag: 10
-  maxSpeed: 20
+  maxSpeed: 7
   airSpeedMultiplier: 0.25
+  sprintMultiplier: 2.5
   maxSlopeAngle: 40
   slopeLerpSpeed: 7.5
+  slipForce: 10
+--- !u!114 &2349531008263143818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4767bbfe5a5463cba3e34d0f2f1c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 7
+  isJumping: 0

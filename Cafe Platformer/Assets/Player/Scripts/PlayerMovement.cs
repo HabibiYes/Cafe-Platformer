@@ -10,10 +10,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 1f;
 
     [Header("Movement")]
-    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float walkAcceleration = 10f;
     [SerializeField] private float drag = 0.7f;
     [SerializeField] private float maxSpeed = 20f;
     [SerializeField] private float airSpeedMultiplier = 0.25f;
+    [SerializeField] private float sprintMultiplier = 1.25f;
+
+    // Scaled acceleration
+    private float acceleration { get => player.controls.Player.Sprint.IsPressed() ? walkAcceleration * sprintMultiplier : walkAcceleration; }
+
     Vector3 moveDir;
 
     [Header("Slopes")]
@@ -41,7 +46,8 @@ public class PlayerMovement : MonoBehaviour
         // Add player force
         MovePlayer();
 
-        // Limit player speed
+        ApplyDrag();
+
         SpeedLimit();
 
         if (OnValidSlope())
@@ -78,23 +84,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        // Add movement force and horizontal drag
+        // Add movement force
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         if (OnValidSlope())
-        {
             rb.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);
-            rb.AddForce(-rb.linearVelocity * drag, ForceMode.Force);
-        }
         else if (IsGrounded())
-        {
             rb.AddForce(moveDir * acceleration, ForceMode.Force);
-            rb.AddForce(-flatVelocity * drag, ForceMode.Force);
-        }
         else
-        {
             rb.AddForce(moveDir * acceleration * airSpeedMultiplier, ForceMode.Force);
-            rb.AddForce(-flatVelocity * drag * airSpeedMultiplier, ForceMode.Force);
-        }
 
         rb.useGravity = !OnValidSlope();
     }
@@ -109,6 +106,18 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = flatVelocity.normalized * maxSpeed;
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, yVelocity, rb.linearVelocity.z);
         }
+    }
+
+    private void ApplyDrag()
+    {
+        // Apply drag
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        if (OnValidSlope())
+            rb.AddForce(-rb.linearVelocity * drag, ForceMode.Force);
+        else if (IsGrounded())
+            rb.AddForce(-flatVelocity * drag, ForceMode.Force);
+        else
+            rb.AddForce(-flatVelocity * drag * airSpeedMultiplier, ForceMode.Force);
     }
 
     private void KeepPlayerOnSlope()
