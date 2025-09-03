@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     // Scaled acceleration
     private float acceleration { get => player.controls.Player.Sprint.IsPressed() ? walkAcceleration * sprintMultiplier : walkAcceleration; }
 
-    Vector3 moveDir;
+    [HideInInspector] public Vector3 moveDir;
 
     [Header("Slopes")]
     [SerializeField] private float maxSlopeAngle = 40f;
