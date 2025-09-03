@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Slopes")]
     [SerializeField] private float maxSlopeAngle = 40f;
     [SerializeField] private float slopeLerpSpeed = 7.5f;
+    [SerializeField] private float slipForce = 10f;
     RaycastHit slopeHit;
 
     private void Awake()
@@ -43,8 +44,17 @@ public class PlayerMovement : MonoBehaviour
         // Limit player speed
         SpeedLimit();
 
-        // Attach the player to the slope
-        KeepPlayerOnSlope();
+        if (OnValidSlope())
+        {
+            // Attach the player to the slope
+            KeepPlayerOnSlope();
+        }
+
+        if (OnInvalidSlope())
+        {
+            // Slip down slope
+            Slip();
+        }
     }
 
     private void MyInput()
@@ -70,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Add movement force and horizontal drag
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-        if (OnSlope())
+        if (OnValidSlope())
         {
             rb.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);
             rb.AddForce(-rb.linearVelocity * drag, ForceMode.Force);
@@ -86,8 +96,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(-flatVelocity * drag * airSpeedMultiplier, ForceMode.Force);
         }
 
-        rb.useGravity = !OnSlope();
-        Debug.Log(rb.useGravity);
+        rb.useGravity = !OnValidSlope();
     }
 
     private void SpeedLimit()
@@ -104,11 +113,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void KeepPlayerOnSlope()
     {
-        if (OnSlope())
-        {
-            // Lerp the player towards the spherecast center, keeping them attached to the slope
-            rb.position = Vector3.Lerp(rb.position, SphereCastCenter(transform.position, Vector3.down, slopeHit.distance) + Vector3.up * 0.5f, slopeLerpSpeed * Time.deltaTime);
-        }
+        // Lerp the player towards the spherecast center, keeping them attached to the slope
+        rb.position = Vector3.Lerp(rb.position, SphereCastCenter(transform.position, Vector3.down, slopeHit.distance) + Vector3.up * 0.5f, slopeLerpSpeed * Time.deltaTime);
+    }
+
+    private void Slip()
+    {
+        rb.AddForce(Vector3.ProjectOnPlane(Vector3.down * slipForce, slopeHit.normal), ForceMode.Force);
     }
 
     private Vector3 SphereCastCenter(Vector3 origin, Vector3 direction, float distance)
@@ -121,12 +132,22 @@ public class PlayerMovement : MonoBehaviour
         return Physics.SphereCast(transform.position, 0.5f, Vector3.down, out RaycastHit hit, groundCheckDistance, ground);
     }
 
-    private bool OnSlope()
+    private bool OnValidSlope()
     {
         if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle != 0 && angle <= maxSlopeAngle;
+        }
+        return false;
+    }
+
+    private bool OnInvalidSlope()
+    {
+        if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle != 0 && angle > maxSlopeAngle;
         }
         return false;
     }
