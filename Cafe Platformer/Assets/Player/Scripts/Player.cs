@@ -34,10 +34,4 @@ public class Player : MonoBehaviour
         // Disable player controls
         controls.Player.Disable();
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + Vector3.down, 0.5f);
-    }
 }

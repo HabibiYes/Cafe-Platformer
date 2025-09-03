@@ -554,7 +554,10 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
+  groundCheckDistance: 1
   acceleration: 40
   drag: 10
   maxSpeed: 20
   airSpeedMultiplier: 0.25
+  maxSlopeAngle: 40
+  slopeLerpSpeed: 7.5
