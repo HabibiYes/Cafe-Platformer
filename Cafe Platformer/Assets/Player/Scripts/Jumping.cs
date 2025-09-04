@@ -29,7 +29,7 @@ public class Jumping : MonoBehaviour
             if (player.playerMovement.OnValidSlope(false))
             {
                 isJumping = false;
-                player.rb.linearVelocity = Vector3.zero;
+                player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, 0, player.rb.linearVelocity.z);
             }
             else if (player.playerMovement.IsGrounded(false))
             {
