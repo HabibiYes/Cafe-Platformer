@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
+[RequireComponent(typeof(PlayerRotation))]
 public class Player : MonoBehaviour
 {
     public Camera cam;
@@ -9,10 +10,12 @@ public class Player : MonoBehaviour
 
     // Components
     [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public Animator animator;
 
     // Scripts
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Jumping jumping;
+    [HideInInspector] public PlayerRotation playerRotation;
 
     private void Awake()
     {
@@ -21,10 +24,12 @@ public class Player : MonoBehaviour
 
         // Get Rigidbody
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         // Get scripts
         playerMovement = GetComponent<PlayerMovement>();
         jumping = GetComponent<Jumping>();
+        playerRotation = GetComponent<PlayerRotation>();
     }
 
     private void OnEnable()

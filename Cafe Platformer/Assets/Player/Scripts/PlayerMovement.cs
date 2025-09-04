@@ -10,22 +10,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 1f;
 
     [Header("Movement")]
-    [SerializeField] private float walkAcceleration = 10f;
-    [SerializeField] private float drag = 0.7f;
-    [SerializeField] private float maxSpeed = 20f;
+    [SerializeField] private float walkAcceleration = 20f;
+    [SerializeField] private float sprintAcceleration = 70f;
+    [SerializeField] private float drag = 10f;
+    [SerializeField] private float maxSpeed = 7f;
     [SerializeField] private float airSpeedMultiplier = 0.25f;
-    [SerializeField] private float sprintMultiplier = 1.25f;
 
     // Scaled acceleration
-    private float acceleration { get => player.controls.Player.Sprint.IsPressed() ? walkAcceleration * sprintMultiplier : walkAcceleration; }
+    private float acceleration { get => player.controls.Player.Sprint.IsPressed() ? sprintAcceleration : walkAcceleration; }
 
-    Vector3 moveDir;
+    [HideInInspector] public Vector3 moveDir;
 
     [Header("Slopes")]
     [SerializeField] private float maxSlopeAngle = 40f;
     [SerializeField] private float slopeLerpSpeed = 7.5f;
     [SerializeField] private float slipForce = 10f;
     RaycastHit slopeHit;
+
+    [Header("Animation")]
+    [SerializeField] private float animationLerpSpeed = 10f;
+    private AnimationCurve movementAnimationCurve = new();
 
     private void Awake()
     {
@@ -34,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Get rigidbody component
         rb = GetComponent<Rigidbody>();
+
+        // Add animation curve keys
+        movementAnimationCurve.AddKey(0f, 0f);
+        movementAnimationCurve.AddKey(walkAcceleration / drag / maxSpeed, 0.5f);
+        movementAnimationCurve.AddKey(1f, 1f);
     }
 
     private void Update()
@@ -49,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
         ApplyDrag();
 
         SpeedLimit();
+
+        // Set movement blend based on current speed, and lerp
+        player.animator.SetFloat("Blend", Mathf.Lerp(player.animator.GetFloat("Blend"), movementAnimationCurve.Evaluate(rb.linearVelocity.magnitude / maxSpeed), animationLerpSpeed * Time.deltaTime));
 
         if (OnValidSlope())
         {
@@ -85,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         // Add movement force
-        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         if (OnValidSlope())
             rb.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);
         else if (IsGrounded())
