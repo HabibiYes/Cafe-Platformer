@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     // Components
     [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public Animator animator;
 
     // Scripts
     [HideInInspector] public PlayerMovement playerMovement;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
 
         // Get Rigidbody
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         // Get scripts
         playerMovement = GetComponent<PlayerMovement>();
