@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
 [RequireComponent(typeof(PlayerRotation))]
+[RequireComponent(typeof(EnterBusinessHandler))]
 public class Player : MonoBehaviour
 {
     public Camera cam;
@@ -30,6 +31,9 @@ public class Player : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         jumping = GetComponent<Jumping>();
         playerRotation = GetComponent<PlayerRotation>();
+
+        // Keep loaded
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void OnEnable()
