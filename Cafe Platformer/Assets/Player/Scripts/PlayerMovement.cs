@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit slopeHit;
 
     [Header("Animation")]
+    [SerializeField] private float animationLerpSpeed = 10f;
     private AnimationCurve movementAnimationCurve = new();
 
     private void Awake()
@@ -58,8 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
         SpeedLimit();
 
-        // Set movement blend based on current speed
-        player.animator.SetFloat("Blend", movementAnimationCurve.Evaluate(rb.linearVelocity.magnitude / maxSpeed));
+        // Set movement blend based on current speed, and lerp
+        player.animator.SetFloat("Blend", Mathf.Lerp(player.animator.GetFloat("Blend"), movementAnimationCurve.Evaluate(rb.linearVelocity.magnitude / maxSpeed), animationLerpSpeed * Time.deltaTime));
 
         if (OnValidSlope())
         {
