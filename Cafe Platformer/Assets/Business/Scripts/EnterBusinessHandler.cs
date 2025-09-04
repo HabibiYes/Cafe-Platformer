@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnterBusinessHandler : MonoBehaviour
 {
-    public void EnterBusiness()
+    public async void EnterBusiness()
     {
-        SceneManager.LoadScene("Business");
+        await SceneHandler.Instance.LoadScene("Business");
     }
 
     private void OnTriggerEnter(Collider collider)

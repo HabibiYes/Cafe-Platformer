@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnterBusinessHandler))]
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
     public Camera cam;
     public PlayerControls controls;
 
@@ -20,6 +22,18 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        // Set instance and keep loaded, or destroy if already existing
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         // Create new controls
         controls = new();
 
@@ -31,9 +45,6 @@ public class Player : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         jumping = GetComponent<Jumping>();
         playerRotation = GetComponent<PlayerRotation>();
-
-        // Keep loaded
-        DontDestroyOnLoad(this.gameObject);
     }
 
     private void OnEnable()
