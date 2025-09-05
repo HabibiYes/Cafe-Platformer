@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class BusinessSpots : MonoBehaviour
 {
-    [SerializeField] private Transform spotOrigin;
-    [SerializeField] private float spacing = 1.5f;
+    [SerializeField] private SplineContainer spotSpline;
+    [SerializeField] private int targetSpotCount = 0;
+    [SerializeField] private float spacing = 0.1f;
+    [SerializeField] private Align align = Align.Center;
+
+    private enum Align { Left, Center, Right }
 
     [HideInInspector] public List<Vector3> spots = new();
 
@@ -12,22 +17,28 @@ public class BusinessSpots : MonoBehaviour
     {
         spots.Clear();
 
-        // Get collider bounds if available
-        float width;
-        if (TryGetComponent(out Collider collider))
-        {
-            width = collider.bounds.size.x;
-        }
-        else
-            return;
+        int actualSpotCount = targetSpotCount;
 
-        int spotCount = Mathf.FloorToInt(width / spacing);
+        // Get real spot count
+        for (int i = 0; i < targetSpotCount; i++)
+        {
+            if (i * spacing < 0f || i * spacing > 1f)
+            {
+                actualSpotCount -= 1;
+                continue;
+            }
+        }
 
         // Create spots
-        for (int i = 0; i < spotCount; i++)
+        for (int i = 0; i < actualSpotCount; i++)
         {
-            Vector3 spot = spotOrigin.position;
-            spot.x = i * spacing - ((spotCount - 1) * (spacing / 2));
+            Vector3 spot = Vector3.zero;
+            if (align == Align.Left)
+                spot = spotSpline.EvaluatePosition(i * spacing);
+            else if (align == Align.Center)
+                spot = spotSpline.EvaluatePosition(i * spacing - ((actualSpotCount - 1) * (spacing / 2)) + 0.5f);
+            else if (align == Align.Right)
+                spot = spotSpline.EvaluatePosition(1 - i * spacing);
             spots.Add(spot);
         }
     }
@@ -39,12 +50,17 @@ public class BusinessSpots : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        if (spotSpline != null)
+        {
+            Gizmos.color = Color.red;
 
-        if (!Application.isPlaying)
-            CreateSpots();
+            if (!Application.isPlaying)
+                CreateSpots();
 
-        foreach (Vector3 spot in spots)
-            Gizmos.DrawWireSphere(spot, 0.5f);
+            foreach (Vector3 spot in spots)
+            {
+                Gizmos.DrawWireSphere(spot, 0.5f);
+            }
+        }
     }
 }
