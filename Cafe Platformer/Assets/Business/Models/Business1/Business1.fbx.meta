@@ -3,7 +3,27 @@ guid: 548d68b4f2be14b549de605c04e45dce
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Legs
+    second: {fileID: 2100000, guid: 8d105a5fbd5b24fc6ac7bb781366360a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Posts
+    second: {fileID: 2100000, guid: 0f874c1e5d8c042b8b02602359075ff0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sign
+    second: {fileID: 2100000, guid: 620b7ecc1488242d98c483c686b505a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Table
+    second: {fileID: 2100000, guid: 12cd6d8e1c20b49a6948ce7dd8c10db8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
