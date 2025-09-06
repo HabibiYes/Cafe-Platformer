@@ -13,7 +13,7 @@ public class BusinessSpots : MonoBehaviour
 
     [HideInInspector] public List<Vector3> spots = new();
 
-    private void CreateSpots()
+    public void CreateSpots()
     {
         spots.Clear();
 
@@ -41,11 +41,6 @@ public class BusinessSpots : MonoBehaviour
                 spot = spotSpline.EvaluatePosition(1 - i * spacing);
             spots.Add(spot);
         }
-    }
-
-    private void Start()
-    {
-        CreateSpots();
     }
 
     private void OnDrawGizmos()
