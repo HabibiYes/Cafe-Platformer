@@ -41,6 +41,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GiveDrink",
+                    "type": "Button",
+                    "id": "55e6ae85-a34b-4290-a7f3-832e7bf55bf7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -129,6 +138,17 @@
                     "processors": "",
                     "groups": ";Keyboard",
                     "action": "GetDrink",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "305af30b-cb6d-4f7a-9085-820181a1ef3d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "GiveDrink",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

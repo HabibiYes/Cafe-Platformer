@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerRotation))]
 [RequireComponent(typeof(EnterBusinessHandler))]
 [RequireComponent(typeof(GetDrink))]
+[RequireComponent(typeof(GiveDrink))]
+[RequireComponent(typeof(HandleDrink))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Jumping jumping;
     [HideInInspector] public PlayerRotation playerRotation;
+    [HideInInspector] public HandleDrink handleDrink;
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class Player : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         jumping = GetComponent<Jumping>();
         playerRotation = GetComponent<PlayerRotation>();
+        handleDrink = GetComponent<HandleDrink>();
     }
 
     private void OnEnable()
