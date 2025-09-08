@@ -24,18 +24,24 @@ public class GetDrink : MonoBehaviour
 
     private void Update()
     {
-        // Get closest dispenser
-        dispenser = FindClosestDispenser();
-
-        // Get drink data from dispenser
-        if (dispenser != null && player.controls.Player.GetDrink.WasPressedThisFrame())
+        if (!player.handleDrink.holdingDrink)
         {
-            // Create cup instance
-            GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
+            // Get closest dispenser
+            dispenser = FindClosestDispenser();
 
-            // Set drink data to dispenser data
-            Drink drink = go.GetComponent<Drink>();
-            drink.data = dispenser.GetDrinkData();
+            // Get drink data from dispenser
+            if (dispenser != null && player.controls.Player.GetDrink.WasPressedThisFrame())
+            {
+                // Create cup instance
+                GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
+
+                // Set drink data to dispenser data
+                Drink drink = go.GetComponent<Drink>();
+                drink.data = dispenser.GetDrinkData();
+
+                // Set holding drink
+                player.handleDrink.SetDrink(drink);
+            }
         }
     }
 

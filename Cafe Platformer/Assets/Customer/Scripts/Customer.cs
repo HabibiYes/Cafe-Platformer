@@ -10,7 +10,7 @@ public class Customer : MonoBehaviour
     [HideInInspector] public NavMeshAgent agent;
 
     private ChooseSpot chooseSpot;
-    private OrderDrink orderDrink;
+    public OrderDrink orderDrink;
 
     private void Awake()
     {
@@ -23,6 +23,8 @@ public class Customer : MonoBehaviour
 
     private void Start()
     {
+        GameData.Instance.AddCustomer(this);
+
         // Find spot and set destination to it
         chooseSpot.FindClosestSpot();
         agent.SetDestination(spot);
@@ -36,5 +38,11 @@ public class Customer : MonoBehaviour
             orderDrink.Order();
             Debug.Log(orderDrink.orderedDrink.name);
         }
+    }
+
+    public void Remove()
+    {
+        GameData.Instance.RemoveCustomer(this);
+        Destroy(this.gameObject);
     }
 }
