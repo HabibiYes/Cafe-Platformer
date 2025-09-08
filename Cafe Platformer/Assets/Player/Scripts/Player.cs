@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Jumping))]
 [RequireComponent(typeof(PlayerRotation))]
 [RequireComponent(typeof(EnterBusinessHandler))]
+[RequireComponent(typeof(GetDrink))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     public PlayerControls controls;
 
     // Components
+    public Transform playerModel;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Animator animator;
 
