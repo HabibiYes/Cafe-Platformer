@@ -127,6 +127,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GiveDrink"",
+                    ""type"": ""Button"",
+                    ""id"": ""55e6ae85-a34b-4290-a7f3-832e7bf55bf7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -217,6 +226,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""GetDrink"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""305af30b-cb6d-4f7a-9085-820181a1ef3d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""GiveDrink"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -241,6 +261,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_GetDrink = m_Player.FindAction("GetDrink", throwIfNotFound: true);
+        m_Player_GiveDrink = m_Player.FindAction("GiveDrink", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -325,6 +346,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_GetDrink;
+    private readonly InputAction m_Player_GiveDrink;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -352,6 +374,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/GetDrink".
         /// </summary>
         public InputAction @GetDrink => m_Wrapper.m_Player_GetDrink;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/GiveDrink".
+        /// </summary>
+        public InputAction @GiveDrink => m_Wrapper.m_Player_GiveDrink;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -390,6 +416,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @GetDrink.started += instance.OnGetDrink;
             @GetDrink.performed += instance.OnGetDrink;
             @GetDrink.canceled += instance.OnGetDrink;
+            @GiveDrink.started += instance.OnGiveDrink;
+            @GiveDrink.performed += instance.OnGiveDrink;
+            @GiveDrink.canceled += instance.OnGiveDrink;
         }
 
         /// <summary>
@@ -413,6 +442,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @GetDrink.started -= instance.OnGetDrink;
             @GetDrink.performed -= instance.OnGetDrink;
             @GetDrink.canceled -= instance.OnGetDrink;
+            @GiveDrink.started -= instance.OnGiveDrink;
+            @GiveDrink.performed -= instance.OnGiveDrink;
+            @GiveDrink.canceled -= instance.OnGiveDrink;
         }
 
         /// <summary>
@@ -494,5 +526,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGetDrink(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GiveDrink" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGiveDrink(InputAction.CallbackContext context);
     }
 }
