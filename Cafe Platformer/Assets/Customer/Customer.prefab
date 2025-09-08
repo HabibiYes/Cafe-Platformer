@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7874458074826575376}
   - component: {fileID: 9196772223510670082}
   - component: {fileID: 472931491439370339}
+  - component: {fileID: 5983645245677826254}
   - component: {fileID: 8862859398791993228}
   m_Layer: 0
   m_Name: Customer
@@ -139,6 +140,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996150c0231f9456caad3759dedbb2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5983645245677826254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288580626546154110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8dcb15413d54174a9146374decc523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drinks:
+  - {fileID: 11400000, guid: bd6cf553d01834eec97304ce9e21beda, type: 2}
+  orderedDrink: {fileID: 0}
 --- !u!195 &8862859398791993228
 NavMeshAgent:
   m_ObjectHideFlags: 0
