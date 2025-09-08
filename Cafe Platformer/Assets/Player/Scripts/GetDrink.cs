@@ -27,7 +27,7 @@ public class GetDrink : MonoBehaviour
         if (!player.handleDrink.holdingDrink)
         {
             // Get closest dispenser
-            dispenser = FindClosestDispenser();
+            dispenser = GetObjectFromDistance.FindClosestObject(dispensers, range, transform.position);
 
             // Get drink data from dispenser
             if (dispenser != null && player.controls.Player.GetDrink.WasPressedThisFrame())
@@ -43,23 +43,5 @@ public class GetDrink : MonoBehaviour
                 player.handleDrink.SetDrink(drink);
             }
         }
-    }
-
-    private Dispenser FindClosestDispenser()
-    {
-        float closest = Mathf.Infinity;
-        Dispenser closestDispenser = null;
-
-        foreach (Dispenser dispenser in dispensers)
-        {
-            float dist = Vector3.Distance(transform.position, dispenser.transform.position);
-            if (dist < closest && dist < range)
-            {
-                closest = dist;
-                closestDispenser = dispenser;
-            }
-        }
-
-        return closestDispenser;
     }
 }
