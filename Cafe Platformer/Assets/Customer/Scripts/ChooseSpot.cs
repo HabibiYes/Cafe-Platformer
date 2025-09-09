@@ -20,21 +20,6 @@ public class ChooseSpot : MonoBehaviour
 
     public void FindClosestSpot()
     {
-        // Check distance to each spot
-        float closest = Mathf.Infinity;
-        Vector3 closestSpot = Vector3.zero;
-
-        foreach (Vector3 spot in business.spots)
-        {
-            float distance = Vector3.Distance(transform.position, spot);
-            if (distance < closest)
-            {
-                closestSpot = spot;
-                closest = distance;
-            }
-        }
-
-        // Set spot to found spot
-        customer.spot = closestSpot;
+        customer.spot = GetObjectFromDistance.FindClosestPosition(business.spots, Mathf.Infinity, transform.position);
     }
 }

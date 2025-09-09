@@ -34,18 +34,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "GetDrink",
+                    "name": "Interact",
                     "type": "Button",
-                    "id": "dd8d83d1-80fb-4b85-bb08-9a1bdacfb793",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GiveDrink",
-                    "type": "Button",
-                    "id": "55e6ae85-a34b-4290-a7f3-832e7bf55bf7",
+                    "id": "24fe2054-f201-4eac-999e-bc2729e38414",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -132,23 +123,12 @@
                 },
                 {
                     "name": "",
-                    "id": "264328fb-58ab-4c7b-95c8-2e54bfbdab18",
+                    "id": "f38fa9f0-3ec6-4515-b7ff-59784c31331d",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "GetDrink",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "305af30b-cb6d-4f7a-9085-820181a1ef3d",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard",
-                    "action": "GiveDrink",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
