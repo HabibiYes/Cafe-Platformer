@@ -10,6 +10,7 @@ public class GameData : MonoBehaviour
     public List<Customer> customers { get; private set; } = new();
     public List<Dispenser> dispensers { get; private set; } = new();
     public List<TrashCan> trashCans { get; private set; } = new();
+    [field: SerializeField] public List<DrinkData> drinks { get; private set; } = new();
 
     private void Start()
     {
