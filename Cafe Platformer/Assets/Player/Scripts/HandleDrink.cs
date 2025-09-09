@@ -18,6 +18,8 @@ public class HandleDrink : MonoBehaviour
     {
         holdingDrink = true;
         currentDrink = drink;
+
+        Debug.Log("Got drink");
     }
 
     public void ResetDrink()

@@ -20,12 +20,13 @@ public class GiveDrink : MonoBehaviour
             Customer customer = GetObjectFromDistance.FindClosestObject(GameData.Instance.customers, range, transform.position, (customer) => customer.orderDrink.orderedDrink == player.handleDrink.currentDrink.data);
             
             // Give drink on key press
-            if (customer != null && player.controls.Player.GiveDrink.WasPressedThisFrame())
+            if (customer != null && player.controls.Player.Interact.WasPressedThisFrame())
             {
-                customer.Remove();
-
                 // Reset holding drink
                 player.handleDrink.ResetDrink();
+
+                // Remove customer
+                customer.Remove();
 
                 Debug.Log("Received drink");
             }

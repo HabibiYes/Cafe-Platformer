@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(GetDrink))]
 [RequireComponent(typeof(GiveDrink))]
 [RequireComponent(typeof(HandleDrink))]
+[RequireComponent(typeof(TrashItem))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }

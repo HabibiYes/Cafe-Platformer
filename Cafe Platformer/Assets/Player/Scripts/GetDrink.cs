@@ -30,7 +30,7 @@ public class GetDrink : MonoBehaviour
             dispenser = GetObjectFromDistance.FindClosestObject(dispensers, range, transform.position);
 
             // Get drink data from dispenser
-            if (dispenser != null && player.controls.Player.GetDrink.WasPressedThisFrame())
+            if (dispenser != null && player.controls.Player.Interact.WasPressedThisFrame())
             {
                 // Create cup instance
                 GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
