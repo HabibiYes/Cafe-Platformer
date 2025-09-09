@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
 
     public List<Customer> customers { get; private set; } = new();
     public List<Dispenser> dispensers { get; private set; } = new();
+    public List<TrashCan> trashCans { get; private set; } = new();
 
     private void Start()
     {
@@ -21,8 +22,9 @@ public class GameData : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        // Get dispensers on scene change
+        // Get objects on scene change
         SceneManager.sceneLoaded += (a, b) => { if (a.name == "Business") { dispensers = GameObject.FindObjectsByType<Dispenser>(FindObjectsSortMode.None).ToList(); } };
+        SceneManager.sceneLoaded += (a, b) => { if (a.name == "Business") { trashCans = GameObject.FindObjectsByType<TrashCan>(FindObjectsSortMode.None).ToList(); } };
     }
 
     public void AddCustomer(Customer customer)
