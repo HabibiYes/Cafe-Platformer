@@ -89,6 +89,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9adca3c6b6c7e4838b552c199969aaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drinks:
-  - {fileID: 11400000, guid: bd6cf553d01834eec97304ce9e21beda, type: 2}
   selectedDrink: 0
+  containerMaterialIndex: 2

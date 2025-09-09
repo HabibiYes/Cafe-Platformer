@@ -41,6 +41,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DispenserPositive",
+                    "type": "Button",
+                    "id": "75ac4cae-f526-4e9d-aa84-3e4ddc882c5d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DispenserNegative",
+                    "type": "Button",
+                    "id": "03f5c9e3-2c83-43de-bf59-e067954f4d56",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -129,6 +147,28 @@
                     "processors": "",
                     "groups": ";Keyboard",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56b2caa9-6b9f-4528-b61b-d1277725f086",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "DispenserPositive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb0b6b37-eec3-48a5-b2d4-e58e9672e9a9",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "DispenserNegative",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

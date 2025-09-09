@@ -127,6 +127,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DispenserPositive"",
+                    ""type"": ""Button"",
+                    ""id"": ""75ac4cae-f526-4e9d-aa84-3e4ddc882c5d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DispenserNegative"",
+                    ""type"": ""Button"",
+                    ""id"": ""03f5c9e3-2c83-43de-bf59-e067954f4d56"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -217,6 +235,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56b2caa9-6b9f-4528-b61b-d1277725f086"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""DispenserPositive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb0b6b37-eec3-48a5-b2d4-e58e9672e9a9"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""DispenserNegative"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -241,6 +281,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_DispenserPositive = m_Player.FindAction("DispenserPositive", throwIfNotFound: true);
+        m_Player_DispenserNegative = m_Player.FindAction("DispenserNegative", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -325,6 +367,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_DispenserPositive;
+    private readonly InputAction m_Player_DispenserNegative;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -352,6 +396,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DispenserPositive".
+        /// </summary>
+        public InputAction @DispenserPositive => m_Wrapper.m_Player_DispenserPositive;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DispenserNegative".
+        /// </summary>
+        public InputAction @DispenserNegative => m_Wrapper.m_Player_DispenserNegative;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -390,6 +442,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @DispenserPositive.started += instance.OnDispenserPositive;
+            @DispenserPositive.performed += instance.OnDispenserPositive;
+            @DispenserPositive.canceled += instance.OnDispenserPositive;
+            @DispenserNegative.started += instance.OnDispenserNegative;
+            @DispenserNegative.performed += instance.OnDispenserNegative;
+            @DispenserNegative.canceled += instance.OnDispenserNegative;
         }
 
         /// <summary>
@@ -413,6 +471,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @DispenserPositive.started -= instance.OnDispenserPositive;
+            @DispenserPositive.performed -= instance.OnDispenserPositive;
+            @DispenserPositive.canceled -= instance.OnDispenserPositive;
+            @DispenserNegative.started -= instance.OnDispenserNegative;
+            @DispenserNegative.performed -= instance.OnDispenserNegative;
+            @DispenserNegative.canceled -= instance.OnDispenserNegative;
         }
 
         /// <summary>
@@ -494,5 +558,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DispenserPositive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDispenserPositive(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DispenserNegative" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDispenserNegative(InputAction.CallbackContext context);
     }
 }
