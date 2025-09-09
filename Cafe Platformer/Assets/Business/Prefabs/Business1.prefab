@@ -192,6 +192,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5654227645567459175}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4314896295239776222}
   m_SourcePrefab: {fileID: 100100000, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
 --- !u!1 &498150913173991095 stripped
 GameObject:
@@ -231,7 +234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e492b51d08db452fa160ca6cbd8c4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spots: []
   businessSpots: {fileID: 0}
 --- !u!114 &5654227645567459175
 MonoBehaviour:
@@ -252,6 +254,22 @@ MonoBehaviour:
   spots:
   - {x: 0.7509467, y: 0, z: 1.35}
   - {x: -0.7509465, y: 0, z: 1.35}
+  availableSpots: []
+--- !u!114 &-4314896295239776222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498150913173991095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4570c326126cc481b8de9a6ba546397c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customer: {fileID: 1288580626546154110, guid: 265b338492d6a4d5eb386445e6179c2f, type: 3}
+  minSpawnTime: 7
+  maxSpawnTime: 15
 --- !u!4 &982375368490349581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
