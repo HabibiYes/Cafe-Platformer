@@ -5,7 +5,6 @@ public class OrderDrink : MonoBehaviour
 {
     Customer customer;
 
-    [SerializeField] private List<DrinkData> drinks = new();
     [HideInInspector] public DrinkData orderedDrink;
 
     private void Awake()
@@ -15,6 +14,6 @@ public class OrderDrink : MonoBehaviour
 
     public void Order()
     {
-        orderedDrink = drinks[Random.Range(0, drinks.Count)];
+        orderedDrink = GameData.Instance.drinks[Random.Range(0, GameData.Instance.drinks.Count)];
     }
 }
