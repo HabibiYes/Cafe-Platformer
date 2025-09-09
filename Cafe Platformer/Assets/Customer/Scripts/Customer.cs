@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Customer : MonoBehaviour
 {
     [HideInInspector] public Vector3 spot;
+    [HideInInspector] public Business business;
 
     [HideInInspector] public NavMeshAgent agent;
 
@@ -25,6 +26,9 @@ public class Customer : MonoBehaviour
     {
         GameData.Instance.AddCustomer(this);
 
+        // Get business
+        business = GameObject.FindFirstObjectByType<Business>();
+
         // Find spot and set destination to it
         chooseSpot.FindClosestSpot();
         agent.SetDestination(spot);
@@ -42,6 +46,7 @@ public class Customer : MonoBehaviour
 
     public void Remove()
     {
+        business.businessSpots.availableSpots.Add(spot);
         GameData.Instance.RemoveCustomer(this);
         Destroy(this.gameObject);
     }

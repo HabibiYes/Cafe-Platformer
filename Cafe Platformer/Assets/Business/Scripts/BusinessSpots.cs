@@ -12,6 +12,7 @@ public class BusinessSpots : MonoBehaviour
     private enum Align { Left, Center, Right }
 
     [HideInInspector] public List<Vector3> spots = new();
+    [HideInInspector] public List<Vector3> availableSpots = new();
 
     public void CreateSpots()
     {
@@ -41,6 +42,9 @@ public class BusinessSpots : MonoBehaviour
                 spot = spotSpline.EvaluatePosition(1 - i * spacing);
             spots.Add(spot);
         }
+
+        // Create available spots list
+        availableSpots = spots;
     }
 
     private void OnDrawGizmos()
