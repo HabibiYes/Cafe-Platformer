@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Jumping))]
 [RequireComponent(typeof(PlayerRotation))]
 [RequireComponent(typeof(EnterBusinessHandler))]
-[RequireComponent(typeof(GetDrink))]
-[RequireComponent(typeof(GiveDrink))]
 [RequireComponent(typeof(HandleDrink))]
 [RequireComponent(typeof(HandleDispenser))]
 [RequireComponent(typeof(TrashItem))]
