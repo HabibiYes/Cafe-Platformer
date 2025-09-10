@@ -49,7 +49,7 @@ public class HandleDrink : MonoBehaviour
     private void GetDrink()
     {
         // Find closest dispenser
-        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.dispensers, range, transform.position);
+        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
 
         if (dispenser != null && player.controls.Player.Interact.WasPressedThisFrame())
         {
@@ -68,7 +68,7 @@ public class HandleDrink : MonoBehaviour
     private void GiveDrink()
     {
         // Find closest customer
-        Customer customer = GetObjectFromDistance.FindClosestObject(GameData.Instance.customers, range, transform.position, (customer) => customer.orderDrink.orderedDrink == player.handleDrink.currentDrink.data);
+        Customer customer = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.customers, range, transform.position, (customer) => customer.orderDrink.orderedDrink == player.handleDrink.currentDrink.data);
 
         // Give drink on key press
         if (customer != null && player.controls.Player.Interact.WasPressedThisFrame())

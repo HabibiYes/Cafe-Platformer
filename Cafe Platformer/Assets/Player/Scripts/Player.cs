@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public Jumping jumping;
     [HideInInspector] public PlayerRotation playerRotation;
     [HideInInspector] public HandleDrink handleDrink;
+    [HideInInspector] public HandleDispenser handleDispenser;
+    [HideInInspector] public TrashItem trashItem;
 
     private void Awake()
     {
@@ -51,6 +54,21 @@ public class Player : MonoBehaviour
         jumping = GetComponent<Jumping>();
         playerRotation = GetComponent<PlayerRotation>();
         handleDrink = GetComponent<HandleDrink>();
+        handleDispenser = GetComponent<HandleDispenser>();
+        trashItem = GetComponent<TrashItem>();
+
+        // Enable and disable business scripts
+        SceneManager.sceneLoaded += (a, b) =>
+        {
+            if (a.name == "Business")
+            {
+                BusinessMode();
+            }
+            else
+            {
+                PlatformerMode();
+            }
+        };
     }
 
     private void OnEnable()
@@ -63,5 +81,21 @@ public class Player : MonoBehaviour
     {
         // Disable player controls
         controls.Player.Disable();
+    }
+
+    private void BusinessMode()
+    {
+        // Enable business scripts
+        handleDrink.enabled = true;
+        handleDispenser.enabled = true;
+        trashItem.enabled = true;
+    }
+
+    private void PlatformerMode()
+    {
+        // Disable business scripts
+        handleDrink.enabled = false;
+        handleDispenser.enabled = false;
+        trashItem.enabled = false;
     }
 }

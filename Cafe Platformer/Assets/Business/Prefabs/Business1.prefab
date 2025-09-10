@@ -195,6 +195,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4314896295239776222}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4770203573377867940}
   m_SourcePrefab: {fileID: 100100000, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
 --- !u!1 &498150913173991095 stripped
 GameObject:
@@ -235,6 +238,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   businessSpots: {fileID: 0}
+  supplies: {fileID: 0}
+  <drinks>k__BackingField:
+  - {fileID: 11400000, guid: bd6cf553d01834eec97304ce9e21beda, type: 2}
+  - {fileID: 11400000, guid: 761b503fb84d64524870511321ac0015, type: 2}
+  - {fileID: 11400000, guid: 67456e154f28746ab8892d86f3023a19, type: 2}
+  - {fileID: 11400000, guid: a01b576a20563415b89cee6c1b1ac361, type: 2}
+  - {fileID: 11400000, guid: b6dec468680e84aceaa32abb3e4a98fb, type: 2}
+  - {fileID: 11400000, guid: 889560b20a7c447bdbb5f5050b6b2ea9, type: 2}
 --- !u!114 &5654227645567459175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +281,19 @@ MonoBehaviour:
   customer: {fileID: 1288580626546154110, guid: 265b338492d6a4d5eb386445e6179c2f, type: 3}
   minSpawnTime: 7
   maxSpawnTime: 15
+--- !u!114 &-4770203573377867940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498150913173991095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86dba80b335c740ebb0942896e687dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSupplies: 20
 --- !u!4 &982375368490349581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 548d68b4f2be14b549de605c04e45dce, type: 3}
