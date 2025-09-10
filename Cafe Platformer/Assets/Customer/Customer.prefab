@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8dcb15413d54174a9146374decc523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconCircleColorMultiplier: 0.5
   orderedDrink: {fileID: 0}
 --- !u!195 &8862859398791993228
 NavMeshAgent:
