@@ -59,6 +59,8 @@ public class HandleStorage : MonoBehaviour
             box = go.GetComponent<StorageBox>();
             box.storage = fill;
 
+            storage.RemoveStorage(fill);
+
             holdingBox = true;
         }
     }

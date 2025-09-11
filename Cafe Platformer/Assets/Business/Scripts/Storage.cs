@@ -35,7 +35,10 @@ public class Storage : MonoBehaviour
         foreach (KeyValuePair<string, int> pair in remove)
         {
             if (storage.ContainsKey(pair.Key))
+            {
                 storage[pair.Key] -= pair.Value;
+                Debug.Log("Took " + pair.Value + " " + pair.Key + " from storage. Left: " + storage[pair.Key]);
+            }
         }
     }
 }
