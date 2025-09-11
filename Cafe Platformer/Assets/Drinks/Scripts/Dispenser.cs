@@ -7,6 +7,7 @@ public class Dispenser : MonoBehaviour
     [SerializeField] private int containerMaterialIndex = 0;
 
     [HideInInspector] public Supplies supplies;
+    [HideInInspector] public Material supplyBar;
 
     MeshRenderer meshRenderer;
 
@@ -15,6 +16,7 @@ public class Dispenser : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
 
         supplies = GetComponent<Supplies>();
+        supplyBar = transform.Find("SupplyBar").GetComponent<MeshRenderer>().material;
     }
 
     public DrinkData GetDrinkData()
@@ -33,6 +35,14 @@ public class Dispenser : MonoBehaviour
         // Change container material
         meshRenderer.materials[containerMaterialIndex].color = GameData.Instance.business.drinks[selectedDrink].color;
 
+        // Update supply bar
+        UpdateSupplyBar();
+
         Debug.Log($"Changed drink from {GameData.Instance.business.drinks[selectedDrink - change].name} to {GameData.Instance.business.drinks[selectedDrink].name}");
+    }
+
+    public void UpdateSupplyBar()
+    {
+        supplyBar.SetFloat("_Supply", (float)supplies.drinkSupplies[GetDrinkData().name] / supplies.maxSupplies);
     }
 }
