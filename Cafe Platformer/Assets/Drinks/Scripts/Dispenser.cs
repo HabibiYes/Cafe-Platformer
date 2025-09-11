@@ -1,15 +1,20 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Supplies))]
 public class Dispenser : MonoBehaviour
 {
     public int selectedDrink = 0;
     [SerializeField] private int containerMaterialIndex = 0;
+
+    [HideInInspector] public Supplies supplies;
 
     MeshRenderer meshRenderer;
 
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+
+        supplies = GetComponent<Supplies>();
     }
 
     public DrinkData GetDrinkData()

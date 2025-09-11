@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class Business : MonoBehaviour
 {
     [HideInInspector] public BusinessSpots businessSpots;
-    [HideInInspector] public Supplies supplies;
 
     public List<Customer> customers { get; private set; } = new();
     public List<Dispenser> dispensers { get; private set; } = new();
@@ -19,9 +18,6 @@ public class Business : MonoBehaviour
         // Get spots
         businessSpots = GetComponent<BusinessSpots>();
         businessSpots.CreateSpots();
-
-        // Get supplies
-        supplies = GetComponent<Supplies>();
 
         // Get objects on scene change
         SceneManager.sceneLoaded += (a, b) => { if (a.name == "Business") { dispensers = GameObject.FindObjectsByType<Dispenser>(FindObjectsSortMode.None).ToList(); } };
