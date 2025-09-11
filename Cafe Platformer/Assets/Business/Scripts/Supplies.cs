@@ -33,4 +33,9 @@ public class Supplies : MonoBehaviour
             }
         }
     }
+
+    public void RemoveSupply(string name)
+    {
+        drinkSupplies[name] -= 1;
+    }
 }

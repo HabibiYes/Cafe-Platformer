@@ -51,7 +51,7 @@ public class HandleDrink : MonoBehaviour
         // Find closest dispenser
         Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
 
-        if (dispenser != null && player.controls.Player.Interact.WasPressedThisFrame())
+        if (dispenser != null && GameData.Instance.business.supplies.drinkSupplies[dispenser.GetDrinkData().name] > 0 && player.controls.Player.Interact.WasPressedThisFrame())
         {
             // Create cup instance
             GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
@@ -62,6 +62,9 @@ public class HandleDrink : MonoBehaviour
 
             // Set holding drink
             player.handleDrink.SetDrink(drink);
+
+            // Remove one supplies
+            GameData.Instance.business.supplies.RemoveSupply(drink.data.name);
         }
     }
 
