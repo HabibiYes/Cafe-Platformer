@@ -36,11 +36,11 @@ public class HandleDrink : MonoBehaviour
 
     private void Update()
     {
-        if (!holdingDrink)
+        if (!holdingDrink && !player.handleStorage.holdingBox)
         {
             GetDrink();
         }
-        else
+        else if (holdingDrink)
         {
             GiveDrink();
         }
@@ -55,6 +55,7 @@ public class HandleDrink : MonoBehaviour
         {
             // Create cup instance
             GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
+            player.Scale(go);
 
             // Set drink data to dispenser data
             Drink drink = go.GetComponent<Drink>();

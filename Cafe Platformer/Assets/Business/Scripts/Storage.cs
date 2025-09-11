@@ -1,13 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Storage : MonoBehaviour
 {
-    public int capacity = 50;
-    public int amount = 0;
+    [SerializeField] private int startAmount = 50;
     public Dictionary<string, int> storage = new();
 
-    private void AddStorage(Dictionary<string, int> add)
+    private void Start()
+    {
+        Dictionary<string, int> fill = GameData.Instance.business.drinks.Select(x => x.name).Zip(Enumerable.Range(0, GameData.Instance.business.drinks.Count).Select(x => startAmount),
+        (key, value) => new { Key = key, Value = value }).ToDictionary(item => item.Key, item => item.Value);
+
+        AddStorage(fill);
+    }
+
+    public void AddStorage(Dictionary<string, int> add)
     {
         foreach (KeyValuePair<string, int> pair in add)
         {
@@ -22,7 +30,7 @@ public class Storage : MonoBehaviour
         }
     }
 
-    private void RemoveStorage(Dictionary<string, int> remove)
+    public void RemoveStorage(Dictionary<string, int> remove)
     {
         foreach (KeyValuePair<string, int> pair in remove)
         {

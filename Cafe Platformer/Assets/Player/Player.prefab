@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 164446283544546945}
   - component: {fileID: 6003973208086168294}
   - component: {fileID: 7513743488822508454}
+  - component: {fileID: 3629471207177401540}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -551,6 +552,9 @@ MonoBehaviour:
   jumping: {fileID: 0}
   playerRotation: {fileID: 0}
   handleDrink: {fileID: 0}
+  handleDispenser: {fileID: 0}
+  handleStorage: {fileID: 0}
+  trashItem: {fileID: 0}
 --- !u!114 &1895022137358924228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,6 +662,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
+--- !u!114 &3629471207177401540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940429ad9686641a2afbd7c202d7276f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 3
+  storageBox: {fileID: 3569649716795745640, guid: 460789aefe5fc4ce7b3642ac99a78f0e, type: 3}
+  holdingBox: 0
 --- !u!1001 &3968911876951855243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -666,6 +685,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 467232105144422112}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfc3e0130300947388643c4634349833, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -704,6 +735,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfc3e0130300947388643c4634349833, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5651131560553982378, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -5651131560553982378, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -5651131560553982378, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -5651131560553982378, guid: cfc3e0130300947388643c4634349833, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cfc3e0130300947388643c4634349833, type: 3}

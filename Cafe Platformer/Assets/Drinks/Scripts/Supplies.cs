@@ -5,7 +5,7 @@ using UnityEngine;
 public class Supplies : MonoBehaviour
 {
     public Dictionary<string, int> drinkSupplies = new();
-    [SerializeField] private int maxSupplies = 20;
+    public int maxSupplies = 20;
 
     private void Start()
     {
