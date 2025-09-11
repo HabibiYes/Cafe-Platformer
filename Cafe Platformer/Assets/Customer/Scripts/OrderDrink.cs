@@ -20,8 +20,8 @@ public class OrderDrink : MonoBehaviour
 
     public void Order()
     {
-        int index = Random.Range(0, GameData.Instance.drinks.Count);
-        orderedDrink = GameData.Instance.drinks[index];
+        int index = Random.Range(0, GameData.Instance.business.drinks.Count);
+        orderedDrink = GameData.Instance.business.drinks[index];
 
         // Set and activate icon
         MeshRenderer meshRenderer = transform.Find("Icon").GetComponent<MeshRenderer>();

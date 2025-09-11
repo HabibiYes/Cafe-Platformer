@@ -24,7 +24,7 @@ public class Customer : MonoBehaviour
 
     private void Start()
     {
-        GameData.Instance.AddCustomer(this);
+        GameData.Instance.business.AddCustomer(this);
 
         // Get business
         business = GameObject.FindFirstObjectByType<Business>();
@@ -47,7 +47,7 @@ public class Customer : MonoBehaviour
     public void Remove()
     {
         business.businessSpots.availableSpots.Add(spot);
-        GameData.Instance.RemoveCustomer(this);
+        GameData.Instance.business.RemoveCustomer(this);
         Destroy(this.gameObject);
     }
 }

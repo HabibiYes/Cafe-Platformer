@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
@@ -6,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnterBusinessHandler))]
 [RequireComponent(typeof(HandleDrink))]
 [RequireComponent(typeof(HandleDispenser))]
+[RequireComponent(typeof(HandleStorage))]
 [RequireComponent(typeof(TrashItem))]
 public class Player : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class Player : MonoBehaviour
     [HideInInspector] public Jumping jumping;
     [HideInInspector] public PlayerRotation playerRotation;
     [HideInInspector] public HandleDrink handleDrink;
+    [HideInInspector] public HandleDispenser handleDispenser;
+    [HideInInspector] public HandleStorage handleStorage;
+    [HideInInspector] public TrashItem trashItem;
 
     private void Awake()
     {
@@ -51,6 +56,28 @@ public class Player : MonoBehaviour
         jumping = GetComponent<Jumping>();
         playerRotation = GetComponent<PlayerRotation>();
         handleDrink = GetComponent<HandleDrink>();
+        handleDispenser = GetComponent<HandleDispenser>();
+        handleStorage = GetComponent<HandleStorage>();
+        trashItem = GetComponent<TrashItem>();
+
+        // Enable and disable business scripts
+        SceneManager.sceneLoaded += (a, b) =>
+        {
+            if (a.name == "Business")
+            {
+                BusinessMode();
+            }
+            else
+            {
+                PlatformerMode();
+            }
+        };
+    }
+
+    public void Scale(GameObject go)
+    {
+        Vector3 scale = go.transform.localScale;
+        go.transform.localScale = new Vector3(scale.x / playerModel.localScale.x, scale.y / playerModel.localScale.y, scale.z / playerModel.localScale.z);
     }
 
     private void OnEnable()
@@ -63,5 +90,23 @@ public class Player : MonoBehaviour
     {
         // Disable player controls
         controls.Player.Disable();
+    }
+
+    private void BusinessMode()
+    {
+        // Enable business scripts
+        handleDrink.enabled = true;
+        handleDispenser.enabled = true;
+        handleStorage.enabled = true;
+        trashItem.enabled = true;
+    }
+
+    private void PlatformerMode()
+    {
+        // Disable business scripts
+        handleDrink.enabled = false;
+        handleDispenser.enabled = false;
+        handleStorage.enabled = false;
+        trashItem.enabled = false;
     }
 }

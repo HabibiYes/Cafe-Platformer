@@ -15,7 +15,7 @@ public class HandleDispenser : MonoBehaviour
     {
         if (!player.handleDrink.holdingDrink)
         {
-            Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.dispensers, range, transform.position);
+            Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
 
             if (player.controls.Player.DispenserPositive.WasPressedThisFrame())
                 dispenser.ChangeSelectedDrink(1);
