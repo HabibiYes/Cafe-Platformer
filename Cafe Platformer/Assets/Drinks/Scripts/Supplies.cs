@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Supplies : MonoBehaviour
 {
+    Dispenser dispenser;
+
     public Dictionary<string, int> drinkSupplies = new();
     public int maxSupplies = 20;
 
     private void Start()
     {
+        dispenser = GetComponent<Dispenser>();
+
         // Create fill dict
         Dictionary<string, int> fill = GameData.Instance.business.drinks.Select(x => x.name).Zip(Enumerable.Range(0, GameData.Instance.business.drinks.Count).Select(x => maxSupplies),
         (key, value) => new { Key = key, Value = value }).ToDictionary(item => item.Key, item => item.Value);
@@ -32,10 +36,13 @@ public class Supplies : MonoBehaviour
                 Debug.Log("Added " + supply.Key);
             }
         }
+
+        dispenser.UpdateSupplyBar();
     }
 
     public void RemoveSupply(string name)
     {
         drinkSupplies[name] -= 1;
+        dispenser.UpdateSupplyBar();
     }
 }
