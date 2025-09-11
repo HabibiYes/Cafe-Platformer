@@ -71,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d739230392b934f909b5d97235e86e5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: -272648829039315291}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d739230392b934f909b5d97235e86e5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4318156803392356234}
   m_SourcePrefab: {fileID: 100100000, guid: d739230392b934f909b5d97235e86e5e, type: 3}
 --- !u!1 &3643655930577614861 stripped
 GameObject:
@@ -91,3 +94,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedDrink: 0
   containerMaterialIndex: 2
+  supplies: {fileID: 0}
+--- !u!114 &-4318156803392356234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643655930577614861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86dba80b335c740ebb0942896e687dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSupplies: 20

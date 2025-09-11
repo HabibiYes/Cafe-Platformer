@@ -36,11 +36,11 @@ public class HandleDrink : MonoBehaviour
 
     private void Update()
     {
-        if (!holdingDrink)
+        if (!holdingDrink && !player.handleStorage.holdingBox)
         {
             GetDrink();
         }
-        else
+        else if (holdingDrink)
         {
             GiveDrink();
         }
@@ -49,12 +49,13 @@ public class HandleDrink : MonoBehaviour
     private void GetDrink()
     {
         // Find closest dispenser
-        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.dispensers, range, transform.position);
+        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
 
-        if (dispenser != null && player.controls.Player.Interact.WasPressedThisFrame())
+        if (dispenser != null && dispenser.supplies.drinkSupplies[dispenser.GetDrinkData().name] > 0 && player.controls.Player.Interact.WasPressedThisFrame())
         {
             // Create cup instance
             GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
+            player.Scale(go);
 
             // Set drink data to dispenser data
             Drink drink = go.GetComponent<Drink>();
@@ -62,13 +63,16 @@ public class HandleDrink : MonoBehaviour
 
             // Set holding drink
             player.handleDrink.SetDrink(drink);
+
+            // Remove one supplies
+            dispenser.supplies.RemoveSupply(drink.data.name);
         }
     }
 
     private void GiveDrink()
     {
         // Find closest customer
-        Customer customer = GetObjectFromDistance.FindClosestObject(GameData.Instance.customers, range, transform.position, (customer) => customer.orderDrink.orderedDrink == player.handleDrink.currentDrink.data);
+        Customer customer = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.customers, range, transform.position, (customer) => customer.orderDrink.orderedDrink == player.handleDrink.currentDrink.data);
 
         // Give drink on key press
         if (customer != null && player.controls.Player.Interact.WasPressedThisFrame())

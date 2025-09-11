@@ -14,7 +14,7 @@ public class TrashItem : MonoBehaviour
     private void Update()
     {
         // Find closest trash can
-        TrashCan trashCan = GetObjectFromDistance.FindClosestObject(GameData.Instance.trashCans, range, transform.position);
+        TrashCan trashCan = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.trashCans, range, transform.position);
 
         if (trashCan != null && player.handleDrink.holdingDrink && player.controls.Player.Interact.WasPressedThisFrame())
         {
