@@ -31,7 +31,10 @@ public class HandleStorage : MonoBehaviour
         }
         else if (holdingBox)
         {
-            UseStorageBox();
+            if (storage != null)
+                AddStorageToBox();
+            else
+                UseStorageBox();
         }
     }
 
@@ -59,31 +62,27 @@ public class HandleStorage : MonoBehaviour
         // Get storage box
         Debug.Log("Found storage");
 
-        // Storage to fill
-        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, Mathf.Infinity, transform.position);
-        List<string> drinksToFill = GameData.Instance.business.drinks.Select(x =>
-        {
-            return dispenser.supplies.drinkSupplies[x.name] < dispenser.supplies.maxSupplies ? x.name : "";
-        }).ToList();
-        drinksToFill.RemoveAll(x => x == "");
-
-        List<int> amountToFill = drinksToFill.Select(x => dispenser.supplies.maxSupplies - dispenser.supplies.drinkSupplies[x]).ToList();
-
-        Dictionary<string, int> fill = drinksToFill.Zip(amountToFill, (key, value) => new { Key = key, Value = value }).ToDictionary(item => item.Key, item => item.Value);
-
-        // Check if amount to fill for all is over zero
-        if (fill.Values.Sum() <= 0)
-            return;
-
         // Create box
         GameObject go = Instantiate(storageBox, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
         player.Scale(go);
         box = go.GetComponent<StorageBox>();
-        box.storage = fill;
-
-        storage.RemoveStorage(fill);
 
         holdingBox = true;
+    }
+
+    private void AddStorageToBox()
+    {
+        if (!player.controls.Player.Interact.WasPressedThisFrame() || !storage.HasStorage())
+            return;
+
+        // Check if box storage already contains key. If true, it adds, else, updates by 1
+        if (!box.storage.TryAdd(storage.storageSelectedDrink.name, 1))
+            box.storage[storage.storageSelectedDrink.name] += 1;
+
+        // Remove drink from storage
+        storage.RemoveStorage(new Dictionary<string, int>() { [storage.storageSelectedDrink.name] = 1 });
+
+        Debug.Log($"Added 1 {storage.storageSelectedDrink.name} to storage box");
     }
 
     private void UseStorageBox()
