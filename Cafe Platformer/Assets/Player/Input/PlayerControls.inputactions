@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DispenserPositive",
+                    "name": "CyclePositive",
                     "type": "Button",
                     "id": "75ac4cae-f526-4e9d-aa84-3e4ddc882c5d",
                     "expectedControlType": "",
@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DispenserNegative",
+                    "name": "CycleNegative",
                     "type": "Button",
                     "id": "03f5c9e3-2c83-43de-bf59-e067954f4d56",
                     "expectedControlType": "",
@@ -157,7 +157,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "DispenserPositive",
+                    "action": "CyclePositive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -168,7 +168,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "DispenserNegative",
+                    "action": "CycleNegative",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

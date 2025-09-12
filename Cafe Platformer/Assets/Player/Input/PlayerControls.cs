@@ -129,7 +129,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DispenserPositive"",
+                    ""name"": ""CyclePositive"",
                     ""type"": ""Button"",
                     ""id"": ""75ac4cae-f526-4e9d-aa84-3e4ddc882c5d"",
                     ""expectedControlType"": """",
@@ -138,7 +138,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DispenserNegative"",
+                    ""name"": ""CycleNegative"",
                     ""type"": ""Button"",
                     ""id"": ""03f5c9e3-2c83-43de-bf59-e067954f4d56"",
                     ""expectedControlType"": """",
@@ -243,7 +243,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""DispenserPositive"",
+                    ""action"": ""CyclePositive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -254,7 +254,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""DispenserNegative"",
+                    ""action"": ""CycleNegative"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -281,8 +281,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_DispenserPositive = m_Player.FindAction("DispenserPositive", throwIfNotFound: true);
-        m_Player_DispenserNegative = m_Player.FindAction("DispenserNegative", throwIfNotFound: true);
+        m_Player_CyclePositive = m_Player.FindAction("CyclePositive", throwIfNotFound: true);
+        m_Player_CycleNegative = m_Player.FindAction("CycleNegative", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -367,8 +367,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_DispenserPositive;
-    private readonly InputAction m_Player_DispenserNegative;
+    private readonly InputAction m_Player_CyclePositive;
+    private readonly InputAction m_Player_CycleNegative;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -397,13 +397,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         /// <summary>
-        /// Provides access to the underlying input action "Player/DispenserPositive".
+        /// Provides access to the underlying input action "Player/CyclePositive".
         /// </summary>
-        public InputAction @DispenserPositive => m_Wrapper.m_Player_DispenserPositive;
+        public InputAction @CyclePositive => m_Wrapper.m_Player_CyclePositive;
         /// <summary>
-        /// Provides access to the underlying input action "Player/DispenserNegative".
+        /// Provides access to the underlying input action "Player/CycleNegative".
         /// </summary>
-        public InputAction @DispenserNegative => m_Wrapper.m_Player_DispenserNegative;
+        public InputAction @CycleNegative => m_Wrapper.m_Player_CycleNegative;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -442,12 +442,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @DispenserPositive.started += instance.OnDispenserPositive;
-            @DispenserPositive.performed += instance.OnDispenserPositive;
-            @DispenserPositive.canceled += instance.OnDispenserPositive;
-            @DispenserNegative.started += instance.OnDispenserNegative;
-            @DispenserNegative.performed += instance.OnDispenserNegative;
-            @DispenserNegative.canceled += instance.OnDispenserNegative;
+            @CyclePositive.started += instance.OnCyclePositive;
+            @CyclePositive.performed += instance.OnCyclePositive;
+            @CyclePositive.canceled += instance.OnCyclePositive;
+            @CycleNegative.started += instance.OnCycleNegative;
+            @CycleNegative.performed += instance.OnCycleNegative;
+            @CycleNegative.canceled += instance.OnCycleNegative;
         }
 
         /// <summary>
@@ -471,12 +471,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @DispenserPositive.started -= instance.OnDispenserPositive;
-            @DispenserPositive.performed -= instance.OnDispenserPositive;
-            @DispenserPositive.canceled -= instance.OnDispenserPositive;
-            @DispenserNegative.started -= instance.OnDispenserNegative;
-            @DispenserNegative.performed -= instance.OnDispenserNegative;
-            @DispenserNegative.canceled -= instance.OnDispenserNegative;
+            @CyclePositive.started -= instance.OnCyclePositive;
+            @CyclePositive.performed -= instance.OnCyclePositive;
+            @CyclePositive.canceled -= instance.OnCyclePositive;
+            @CycleNegative.started -= instance.OnCycleNegative;
+            @CycleNegative.performed -= instance.OnCycleNegative;
+            @CycleNegative.canceled -= instance.OnCycleNegative;
         }
 
         /// <summary>
@@ -559,18 +559,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "DispenserPositive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "CyclePositive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDispenserPositive(InputAction.CallbackContext context);
+        void OnCyclePositive(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "DispenserNegative" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "CycleNegative" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDispenserNegative(InputAction.CallbackContext context);
+        void OnCycleNegative(InputAction.CallbackContext context);
     }
 }

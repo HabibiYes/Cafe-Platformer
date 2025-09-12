@@ -12,6 +12,8 @@ public class HandleStorage : MonoBehaviour
     [HideInInspector] public bool holdingBox = false;
     StorageBox box;
 
+    Storage storage;
+
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -19,6 +21,10 @@ public class HandleStorage : MonoBehaviour
 
     private void Update()
     {
+        // Get closest storage
+        storage = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.storages, range, transform.position);
+
+        CycleStorage();
         if (!holdingBox && !player.handleDrink.holdingDrink)
         {
             GetStorageBox();
@@ -29,53 +35,68 @@ public class HandleStorage : MonoBehaviour
         }
     }
 
+    private void CycleStorage()
+    {
+        if (storage == null)
+            return;
+
+        // Cycle through storage drink options
+        if (player.controls.Player.CyclePositive.WasPressedThisFrame())
+        {
+            storage.ChangeSelectedDrink(1);
+        }
+        else if (player.controls.Player.CycleNegative.WasPressedThisFrame())
+        {
+            storage.ChangeSelectedDrink(-1);
+        }
+    }
+
     private void GetStorageBox()
     {
+        if (storage == null || !player.controls.Player.Interact.WasPressedThisFrame())
+            return;
+
         // Get storage box
-        Storage storage = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.storages, range, transform.position);
-        if (storage != null && player.controls.Player.Interact.WasPressedThisFrame())
+        Debug.Log("Found storage");
+
+        // Storage to fill
+        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, Mathf.Infinity, transform.position);
+        List<string> drinksToFill = GameData.Instance.business.drinks.Select(x =>
         {
-            Debug.Log("Found storage");
+            return dispenser.supplies.drinkSupplies[x.name] < dispenser.supplies.maxSupplies ? x.name : "";
+        }).ToList();
+        drinksToFill.RemoveAll(x => x == "");
 
-            // Storage to fill
-            Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, Mathf.Infinity, transform.position);
-            List<string> drinksToFill = GameData.Instance.business.drinks.Select(x =>
-            {
-                return dispenser.supplies.drinkSupplies[x.name] < dispenser.supplies.maxSupplies ? x.name : "";
-            }).ToList();
-            drinksToFill.RemoveAll(x => x == "");
+        List<int> amountToFill = drinksToFill.Select(x => dispenser.supplies.maxSupplies - dispenser.supplies.drinkSupplies[x]).ToList();
 
-            List<int> amountToFill = drinksToFill.Select(x => dispenser.supplies.maxSupplies - dispenser.supplies.drinkSupplies[x]).ToList();
+        Dictionary<string, int> fill = drinksToFill.Zip(amountToFill, (key, value) => new { Key = key, Value = value }).ToDictionary(item => item.Key, item => item.Value);
 
-            Dictionary<string, int> fill = drinksToFill.Zip(amountToFill, (key, value) => new { Key = key, Value = value }).ToDictionary(item => item.Key, item => item.Value);
+        // Check if amount to fill for all is over zero
+        if (fill.Values.Sum() <= 0)
+            return;
 
-            // Check if amount to fill for all is over zero
-            if (fill.Values.Sum() <= 0)
-                return;
+        // Create box
+        GameObject go = Instantiate(storageBox, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
+        player.Scale(go);
+        box = go.GetComponent<StorageBox>();
+        box.storage = fill;
 
-            // Create box
-            GameObject go = Instantiate(storageBox, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
-            player.Scale(go);
-            box = go.GetComponent<StorageBox>();
-            box.storage = fill;
+        storage.RemoveStorage(fill);
 
-            storage.RemoveStorage(fill);
-
-            holdingBox = true;
-        }
+        holdingBox = true;
     }
 
     private void UseStorageBox()
     {
-        // Use storage box
         Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
-        if (dispenser != null && player.controls.Player.Interact.WasPressedThisFrame())
-        {
-            dispenser.supplies.FillSupplies(box.storage);
-            Destroy(box.gameObject);
+        if (dispenser == null || !player.controls.Player.Interact.WasPressedThisFrame())
+            return;
 
-            holdingBox = false;
-            box = null;
-        }
+        // Use storage box
+        dispenser.supplies.FillSupplies(box.storage);
+        Destroy(box.gameObject);
+
+        holdingBox = false;
+        box = null;
     }
 }
