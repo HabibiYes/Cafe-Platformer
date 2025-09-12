@@ -41,4 +41,9 @@ public class Business : MonoBehaviour
     {
         customers.Remove(customer);
     }
+
+    public DrinkData DrinkNameToData(string name)
+    {
+        return drinks.Find(x => x.name == name);
+    }
 }
