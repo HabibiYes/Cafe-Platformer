@@ -28,11 +28,17 @@ public class HandleStorage : MonoBehaviour
         if (!holdingBox && !player.handleDrink.holdingDrink)
         {
             GetStorageBox();
+            AddStorageToBox();
         }
         else if (holdingBox)
         {
             if (storage != null)
-                AddStorageToBox();
+            {
+                if (box == null)
+                    AddStorageToBox();
+                else
+                    ReturnStorageFromBox();
+            }
             else
                 UseStorageBox();
         }
@@ -85,6 +91,18 @@ public class HandleStorage : MonoBehaviour
         Debug.Log($"Added 1 {storage.storageSelectedDrink.name} to storage box");
     }
 
+    private void ReturnStorageFromBox()
+    {
+        if (!player.controls.Player.Interact.WasPressedThisFrame())
+            return;
+
+        // Return storage and remove box
+        storage.AddStorage(box.storage);
+        DestroyBox();
+
+        Debug.Log("Returned storage from box to main storage");
+    }
+
     private void UseStorageBox()
     {
         Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
@@ -93,6 +111,12 @@ public class HandleStorage : MonoBehaviour
 
         // Use storage box
         dispenser.supplies.FillSupplies(box.storage);
+
+        DestroyBox();
+    }
+
+    private void DestroyBox()
+    {
         Destroy(box.gameObject);
 
         holdingBox = false;
