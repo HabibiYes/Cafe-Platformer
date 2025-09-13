@@ -43,6 +43,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AltInteract",
+                    "type": "Button",
+                    "id": "74bf9db4-5ca5-4b74-978f-395089932906",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CyclePositive",
                     "type": "Button",
                     "id": "75ac4cae-f526-4e9d-aa84-3e4ddc882c5d",
@@ -169,6 +178,17 @@
                     "processors": "",
                     "groups": ";Keyboard",
                     "action": "CycleNegative",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6f8901e7-3ae7-4e63-afd5-ee6ba2eb51d2",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "AltInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
