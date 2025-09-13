@@ -28,10 +28,19 @@ public class HandleStorage : MonoBehaviour
         if (!holdingBox && !player.handleDrink.holdingDrink)
         {
             GetStorageBox();
+            AddStorageToBox();
         }
         else if (holdingBox)
         {
-            UseStorageBox();
+            if (storage != null)
+            {
+                if (box == null)
+                    AddStorageToBox();
+                else
+                    ReturnStorageFromBox();
+            }
+            else
+                UseStorageBox();
         }
     }
 
@@ -59,31 +68,39 @@ public class HandleStorage : MonoBehaviour
         // Get storage box
         Debug.Log("Found storage");
 
-        // Storage to fill
-        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, Mathf.Infinity, transform.position);
-        List<string> drinksToFill = GameData.Instance.business.drinks.Select(x =>
-        {
-            return dispenser.supplies.drinkSupplies[x.name] < dispenser.supplies.maxSupplies ? x.name : "";
-        }).ToList();
-        drinksToFill.RemoveAll(x => x == "");
-
-        List<int> amountToFill = drinksToFill.Select(x => dispenser.supplies.maxSupplies - dispenser.supplies.drinkSupplies[x]).ToList();
-
-        Dictionary<string, int> fill = drinksToFill.Zip(amountToFill, (key, value) => new { Key = key, Value = value }).ToDictionary(item => item.Key, item => item.Value);
-
-        // Check if amount to fill for all is over zero
-        if (fill.Values.Sum() <= 0)
-            return;
-
         // Create box
         GameObject go = Instantiate(storageBox, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
         player.Scale(go);
         box = go.GetComponent<StorageBox>();
-        box.storage = fill;
-
-        storage.RemoveStorage(fill);
 
         holdingBox = true;
+    }
+
+    private void AddStorageToBox()
+    {
+        if (!player.controls.Player.Interact.WasPressedThisFrame() || !storage.HasStorage())
+            return;
+
+        // Check if box storage already contains key. If true, it adds, else, updates by 1
+        if (!box.storage.TryAdd(storage.storageSelectedDrink.name, 1))
+            box.storage[storage.storageSelectedDrink.name] += 1;
+
+        // Remove drink from storage
+        storage.RemoveStorage(new Dictionary<string, int>() { [storage.storageSelectedDrink.name] = 1 });
+
+        Debug.Log($"Added 1 {storage.storageSelectedDrink.name} to storage box");
+    }
+
+    private void ReturnStorageFromBox()
+    {
+        if (!player.controls.Player.Interact.WasPressedThisFrame())
+            return;
+
+        // Return storage and remove box
+        storage.AddStorage(box.storage);
+        DestroyBox();
+
+        Debug.Log("Returned storage from box to main storage");
     }
 
     private void UseStorageBox()
@@ -94,6 +111,12 @@ public class HandleStorage : MonoBehaviour
 
         // Use storage box
         dispenser.supplies.FillSupplies(box.storage);
+
+        DestroyBox();
+    }
+
+    private void DestroyBox()
+    {
         Destroy(box.gameObject);
 
         holdingBox = false;

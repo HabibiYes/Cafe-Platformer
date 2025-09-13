@@ -72,4 +72,11 @@ public class Storage : MonoBehaviour
 
         return storage.Keys.ToList()[i];
     }
+
+    public bool HasStorage(string name = "")
+    {
+        if (name == "")
+            name = storageSelectedDrink.name;
+        return storage[name] > 0;
+    }
 }
