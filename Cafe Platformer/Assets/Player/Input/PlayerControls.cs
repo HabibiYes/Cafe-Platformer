@@ -129,6 +129,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""AltInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""74bf9db4-5ca5-4b74-978f-395089932906"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""CyclePositive"",
                     ""type"": ""Button"",
                     ""id"": ""75ac4cae-f526-4e9d-aa84-3e4ddc882c5d"",
@@ -257,6 +266,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CycleNegative"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f8901e7-3ae7-4e63-afd5-ee6ba2eb51d2"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""AltInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -281,6 +301,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_AltInteract = m_Player.FindAction("AltInteract", throwIfNotFound: true);
         m_Player_CyclePositive = m_Player.FindAction("CyclePositive", throwIfNotFound: true);
         m_Player_CycleNegative = m_Player.FindAction("CycleNegative", throwIfNotFound: true);
     }
@@ -367,6 +388,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_AltInteract;
     private readonly InputAction m_Player_CyclePositive;
     private readonly InputAction m_Player_CycleNegative;
     /// <summary>
@@ -396,6 +418,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/AltInteract".
+        /// </summary>
+        public InputAction @AltInteract => m_Wrapper.m_Player_AltInteract;
         /// <summary>
         /// Provides access to the underlying input action "Player/CyclePositive".
         /// </summary>
@@ -442,6 +468,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @AltInteract.started += instance.OnAltInteract;
+            @AltInteract.performed += instance.OnAltInteract;
+            @AltInteract.canceled += instance.OnAltInteract;
             @CyclePositive.started += instance.OnCyclePositive;
             @CyclePositive.performed += instance.OnCyclePositive;
             @CyclePositive.canceled += instance.OnCyclePositive;
@@ -471,6 +500,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @AltInteract.started -= instance.OnAltInteract;
+            @AltInteract.performed -= instance.OnAltInteract;
+            @AltInteract.canceled -= instance.OnAltInteract;
             @CyclePositive.started -= instance.OnCyclePositive;
             @CyclePositive.performed -= instance.OnCyclePositive;
             @CyclePositive.canceled -= instance.OnCyclePositive;
@@ -558,6 +590,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AltInteract" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAltInteract(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "CyclePositive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

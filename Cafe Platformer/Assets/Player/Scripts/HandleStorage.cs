@@ -34,10 +34,8 @@ public class HandleStorage : MonoBehaviour
         {
             if (storage != null)
             {
-                if (box == null)
-                    AddStorageToBox();
-                else
-                    ReturnStorageFromBox();
+                AddStorageToBox();
+                ReturnStorageFromBox();
             }
             else
                 UseStorageBox();
@@ -93,7 +91,7 @@ public class HandleStorage : MonoBehaviour
 
     private void ReturnStorageFromBox()
     {
-        if (!player.controls.Player.Interact.WasPressedThisFrame())
+        if (!player.controls.Player.AltInteract.WasPressedThisFrame())
             return;
 
         // Return storage and remove box
