@@ -12,7 +12,7 @@ public class HandleStorage : MonoBehaviour
     [HideInInspector] public bool holdingBox = false;
     StorageBox box;
 
-    Storage storage;
+    [HideInInspector] public Storage storage;
 
     private void Awake()
     {
