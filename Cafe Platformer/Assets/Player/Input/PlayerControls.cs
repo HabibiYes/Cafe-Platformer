@@ -154,6 +154,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""a685384c-e798-4ce0-856a-e26dc1a2d3a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UnlockCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6dcd777-6449-457c-a539-099c990cb78b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -277,6 +295,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""AltInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d21b307b-d1b6-419b-8537-a91ee2aadaed"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""UnlockCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b705686-50ea-478d-8823-abdc6bad523a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""LockCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -304,6 +344,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_AltInteract = m_Player.FindAction("AltInteract", throwIfNotFound: true);
         m_Player_CyclePositive = m_Player.FindAction("CyclePositive", throwIfNotFound: true);
         m_Player_CycleNegative = m_Player.FindAction("CycleNegative", throwIfNotFound: true);
+        m_Player_LockCursor = m_Player.FindAction("LockCursor", throwIfNotFound: true);
+        m_Player_UnlockCursor = m_Player.FindAction("UnlockCursor", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -391,6 +433,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_AltInteract;
     private readonly InputAction m_Player_CyclePositive;
     private readonly InputAction m_Player_CycleNegative;
+    private readonly InputAction m_Player_LockCursor;
+    private readonly InputAction m_Player_UnlockCursor;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -430,6 +474,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/CycleNegative".
         /// </summary>
         public InputAction @CycleNegative => m_Wrapper.m_Player_CycleNegative;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/LockCursor".
+        /// </summary>
+        public InputAction @LockCursor => m_Wrapper.m_Player_LockCursor;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/UnlockCursor".
+        /// </summary>
+        public InputAction @UnlockCursor => m_Wrapper.m_Player_UnlockCursor;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -477,6 +529,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CycleNegative.started += instance.OnCycleNegative;
             @CycleNegative.performed += instance.OnCycleNegative;
             @CycleNegative.canceled += instance.OnCycleNegative;
+            @LockCursor.started += instance.OnLockCursor;
+            @LockCursor.performed += instance.OnLockCursor;
+            @LockCursor.canceled += instance.OnLockCursor;
+            @UnlockCursor.started += instance.OnUnlockCursor;
+            @UnlockCursor.performed += instance.OnUnlockCursor;
+            @UnlockCursor.canceled += instance.OnUnlockCursor;
         }
 
         /// <summary>
@@ -509,6 +567,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CycleNegative.started -= instance.OnCycleNegative;
             @CycleNegative.performed -= instance.OnCycleNegative;
             @CycleNegative.canceled -= instance.OnCycleNegative;
+            @LockCursor.started -= instance.OnLockCursor;
+            @LockCursor.performed -= instance.OnLockCursor;
+            @LockCursor.canceled -= instance.OnLockCursor;
+            @UnlockCursor.started -= instance.OnUnlockCursor;
+            @UnlockCursor.performed -= instance.OnUnlockCursor;
+            @UnlockCursor.canceled -= instance.OnUnlockCursor;
         }
 
         /// <summary>
@@ -611,5 +675,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCycleNegative(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LockCursor" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLockCursor(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "UnlockCursor" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUnlockCursor(InputAction.CallbackContext context);
     }
 }

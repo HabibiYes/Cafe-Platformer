@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
     public Transform playerModel;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public CinemachineInputAxisController cameraInputController;
 
     // Scripts
     [HideInInspector] public PlayerMovement playerMovement;
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
         // Get Rigidbody
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        cameraInputController = GetComponentInChildren<CinemachineInputAxisController>();
 
         // Get scripts
         playerMovement = GetComponent<PlayerMovement>();
@@ -72,6 +75,9 @@ public class Player : MonoBehaviour
                 PlatformerMode();
             }
         };
+
+        // Lock cursor
+        MouseLock.Lock();
     }
 
     public void Scale(GameObject go)
@@ -84,12 +90,40 @@ public class Player : MonoBehaviour
     {
         // Enable player controls
         controls.Player.Enable();
+
+        // Add cursor lock & unlock
+        controls.Player.LockCursor.performed += (context) => MouseLock.Lock();
+        controls.Player.UnlockCursor.performed += (context) => MouseLock.Unlock();
+
+        // Add enable and disable camera control
+        MouseLock.mouseLocked += () => EnableCameraControls();
+        MouseLock.mouseUnlocked += () => DisableCameraControls();
     }
 
     private void OnDisable()
     {
         // Disable player controls
         controls.Player.Disable();
+
+        // Remove cursor lock & unlock
+        controls.Player.LockCursor.performed -= (context) => MouseLock.Lock();
+        controls.Player.UnlockCursor.performed -= (context) => MouseLock.Unlock();
+
+        // Remove enable and disable camera control
+        MouseLock.mouseLocked -= () => EnableCameraControls();
+        MouseLock.mouseUnlocked -= () => DisableCameraControls();
+    }
+
+    private void EnableCameraControls()
+    {
+        cameraInputController.Controllers[0].Enabled = true;
+        cameraInputController.Controllers[1].Enabled = true;
+    }
+
+    private void DisableCameraControls()
+    {
+        cameraInputController.Controllers[0].Enabled = false;
+        cameraInputController.Controllers[1].Enabled = false;
     }
 
     private void BusinessMode()
