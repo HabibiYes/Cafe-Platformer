@@ -6,6 +6,8 @@ public class HandleDispenser : MonoBehaviour
 
     [SerializeField] private float range = 3f;
 
+    [HideInInspector] public Dispenser dispenser;
+
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -15,7 +17,7 @@ public class HandleDispenser : MonoBehaviour
     {
         if (!player.handleDrink.holdingDrink)
         {
-            Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
+            dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
             if (dispenser != null)
             {
                 if (player.controls.Player.CyclePositive.WasPressedThisFrame())

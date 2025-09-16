@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(HandleDispenser))]
 [RequireComponent(typeof(HandleStorage))]
 [RequireComponent(typeof(TrashItem))]
+[RequireComponent(typeof(StationPriority))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
@@ -31,6 +32,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public HandleDispenser handleDispenser;
     [HideInInspector] public HandleStorage handleStorage;
     [HideInInspector] public TrashItem trashItem;
+
+    public enum Mode
+    {
+        Platformer,
+        Business
+    }
+    public Mode mode = Mode.Platformer;
 
     private void Awake()
     {
@@ -133,6 +141,8 @@ public class Player : MonoBehaviour
         handleDispenser.enabled = true;
         handleStorage.enabled = true;
         trashItem.enabled = true;
+
+        mode = Mode.Business;
     }
 
     private void PlatformerMode()
@@ -142,5 +152,7 @@ public class Player : MonoBehaviour
         handleDispenser.enabled = false;
         handleStorage.enabled = false;
         trashItem.enabled = false;
+
+        mode = Mode.Platformer;
     }
 }
