@@ -72,6 +72,9 @@ public class Player : MonoBehaviour
                 PlatformerMode();
             }
         };
+
+        // Lock cursor
+        MouseLock.Lock();
     }
 
     public void Scale(GameObject go)
@@ -84,12 +87,20 @@ public class Player : MonoBehaviour
     {
         // Enable player controls
         controls.Player.Enable();
+
+        // Add cursor lock & unlock
+        controls.Player.LockCursor.performed += (context) => MouseLock.Lock();
+        controls.Player.UnlockCursor.performed += (context) => MouseLock.Unlock();
     }
 
     private void OnDisable()
     {
         // Disable player controls
         controls.Player.Disable();
+
+        // Remove cursor lock & unlock
+        controls.Player.LockCursor.performed -= (context) => MouseLock.Lock();
+        controls.Player.UnlockCursor.performed -= (context) => MouseLock.Unlock();
     }
 
     private void BusinessMode()
