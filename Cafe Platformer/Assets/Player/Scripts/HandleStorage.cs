@@ -1,18 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class HandleStorage : MonoBehaviour
 {
     Player player;
 
-    [SerializeField] private float range = 3f;
     [SerializeField] private GameObject storageBox;
 
     [HideInInspector] public bool holdingBox = false;
     StorageBox box;
 
-    [HideInInspector] public Storage storage;
+    Storage storage;
 
     private void Awake()
     {
@@ -22,13 +20,16 @@ public class HandleStorage : MonoBehaviour
     private void Update()
     {
         // Get closest storage
-        storage = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.storages, range, transform.position);
+        storage = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.storages, player.interactRange, transform.position);
 
         CycleStorage();
         if (!holdingBox && !player.handleDrink.holdingDrink)
         {
-            GetStorageBox();
-            AddStorageToBox();
+            if (storage != null)
+            {
+                GetStorageBox();
+                AddStorageToBox();
+            }
         }
         else if (holdingBox)
         {
@@ -37,7 +38,8 @@ public class HandleStorage : MonoBehaviour
                 AddStorageToBox();
                 ReturnStorageFromBox();
             }
-            else
+
+            if (player.stationPriority.closest == "Dispenser")
                 UseStorageBox();
         }
     }
@@ -103,7 +105,7 @@ public class HandleStorage : MonoBehaviour
 
     private void UseStorageBox()
     {
-        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, range, transform.position);
+        Dispenser dispenser = GetObjectFromDistance.FindClosestObject(GameData.Instance.business.dispensers, player.interactRange, transform.position);
         if (dispenser == null || !player.controls.Player.Interact.WasPressedThisFrame())
             return;
 

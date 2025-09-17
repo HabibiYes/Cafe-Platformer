@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public HandleDispenser handleDispenser;
     [HideInInspector] public HandleStorage handleStorage;
     [HideInInspector] public TrashItem trashItem;
+    [HideInInspector] public StationPriority stationPriority;
 
     public enum Mode
     {
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
         Business
     }
     public Mode mode = Mode.Platformer;
+
+    public float interactRange = 3f;
 
     private void Awake()
     {
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour
         handleDispenser = GetComponent<HandleDispenser>();
         handleStorage = GetComponent<HandleStorage>();
         trashItem = GetComponent<TrashItem>();
+        stationPriority = GetComponent<StationPriority>();
 
         // Enable and disable business scripts
         SceneManager.sceneLoaded += (a, b) =>
