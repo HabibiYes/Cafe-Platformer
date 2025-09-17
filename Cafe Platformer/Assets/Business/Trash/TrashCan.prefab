@@ -89,5 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17718cfa4f2a64a0b999d981a8bba9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: TrashCan
+  allowHoldingDrink: 1
+  allowHoldingBox: 0
+  allowed: 
   capacity: 5
   trashAmount: 0

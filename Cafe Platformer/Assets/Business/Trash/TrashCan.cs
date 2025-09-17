@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TrashCan : MonoBehaviour
+public class TrashCan : Station
 {
     public int capacity = 5;
     [HideInInspector] public int trashAmount = 0;

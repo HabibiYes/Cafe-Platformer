@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(ChooseSpot))]
 [RequireComponent(typeof(OrderDrink))]
-public class Customer : MonoBehaviour
+public class Customer : Station
 {
     [HideInInspector] public Vector3 spot;
     [HideInInspector] public Business business;

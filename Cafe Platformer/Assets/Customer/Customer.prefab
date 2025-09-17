@@ -127,6 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5a7a1fbddac445794601a0b60c6604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Customer
+  allowHoldingDrink: 1
+  allowHoldingBox: 0
+  allowed: 
   spot: {x: 0, y: 0, z: 0}
   business: {fileID: 0}
   agent: {fileID: 0}
