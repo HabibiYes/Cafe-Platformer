@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Storage : MonoBehaviour
+public class Storage : Station
 {
     [SerializeField] private int startAmount = 50;
     public Dictionary<string, int> storage = new();

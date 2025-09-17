@@ -196,6 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99c016aa695c451888103272b06b604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Storage
+  allowHoldingDrink: 0
+  allowHoldingBox: 1
+  allowed: 
   startAmount: 50
   storageSelectedDrink: {fileID: 0}
   storageSelectedDrinkIndex: 0

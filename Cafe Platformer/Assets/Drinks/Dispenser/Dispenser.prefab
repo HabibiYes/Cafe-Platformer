@@ -194,9 +194,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9adca3c6b6c7e4838b552c199969aaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Dispenser
+  allowHoldingDrink: 0
+  allowHoldingBox: 1
+  allowed: 
   selectedDrink: 0
   containerMaterialIndex: 2
   supplies: {fileID: 0}
+  supplyBar: {fileID: 0}
 --- !u!114 &-4318156803392356234
 MonoBehaviour:
   m_ObjectHideFlags: 0

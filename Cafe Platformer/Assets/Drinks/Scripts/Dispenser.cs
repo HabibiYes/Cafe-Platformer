@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Supplies))]
-public class Dispenser : MonoBehaviour
+public class Dispenser : Station
 {
     public int selectedDrink = 0;
     [SerializeField] private int containerMaterialIndex = 0;

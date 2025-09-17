@@ -8,6 +8,7 @@ public class Business : MonoBehaviour
 {
     [HideInInspector] public BusinessSpots businessSpots;
 
+    public List<Station> stations { get; private set; } = new();
     public List<Customer> customers { get; private set; } = new();
     public List<Dispenser> dispensers { get; private set; } = new();
     public List<TrashCan> trashCans { get; private set; } = new();
@@ -25,6 +26,7 @@ public class Business : MonoBehaviour
         {
             if (a.name == "Business")
             {
+                stations = GameObject.FindObjectsByType<Station>(FindObjectsSortMode.None).ToList();
                 dispensers = GameObject.FindObjectsByType<Dispenser>(FindObjectsSortMode.None).ToList();
                 trashCans = GameObject.FindObjectsByType<TrashCan>(FindObjectsSortMode.None).ToList();
                 storages = GameObject.FindObjectsByType<Storage>(FindObjectsSortMode.None).ToList();
@@ -34,11 +36,13 @@ public class Business : MonoBehaviour
 
     public void AddCustomer(Customer customer)
     {
+        stations.Add(customer);
         customers.Add(customer);
     }
 
     public void RemoveCustomer(Customer customer)
     {
+        stations.Remove(customer);
         customers.Remove(customer);
     }
 
