@@ -8,11 +8,14 @@ public class SceneHandler : MonoBehaviour
     public static SceneHandler Instance { get; private set; }
 
     [Header("Fade")]
-    [SerializeField] private Image fadeImage;
     [SerializeField] private float fadeTime = 2f;
+    private Image fadeImage;
 
     private void Start()
     {
+        // Get fade image
+        fadeImage = GameObject.FindGameObjectWithTag("SceneFade").GetComponent<Image>();
+
         // Set instance and keep loaded, or destroy if already existing
         if (Instance == null)
         {

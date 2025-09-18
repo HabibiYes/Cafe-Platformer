@@ -45,7 +45,6 @@ public class HandleInventory : MonoBehaviour
     {
         // Empty inventory
         EmptyInventory();
-        inventory[0] = InventoryDataToStruct(GameData.Instance.inventoryItems[0]);
 
         // Get inventory UI
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
