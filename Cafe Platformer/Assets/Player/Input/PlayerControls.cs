@@ -172,6 +172,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenCloseInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e3d5e87-eb88-400c-ab12-6124d412d815"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -317,6 +326,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""LockCursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97f238ba-1b8c-4843-b1fd-bd3d903738c9"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""OpenCloseInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -346,6 +366,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_CycleNegative = m_Player.FindAction("CycleNegative", throwIfNotFound: true);
         m_Player_LockCursor = m_Player.FindAction("LockCursor", throwIfNotFound: true);
         m_Player_UnlockCursor = m_Player.FindAction("UnlockCursor", throwIfNotFound: true);
+        m_Player_OpenCloseInventory = m_Player.FindAction("OpenCloseInventory", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -435,6 +456,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CycleNegative;
     private readonly InputAction m_Player_LockCursor;
     private readonly InputAction m_Player_UnlockCursor;
+    private readonly InputAction m_Player_OpenCloseInventory;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -482,6 +504,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/UnlockCursor".
         /// </summary>
         public InputAction @UnlockCursor => m_Wrapper.m_Player_UnlockCursor;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/OpenCloseInventory".
+        /// </summary>
+        public InputAction @OpenCloseInventory => m_Wrapper.m_Player_OpenCloseInventory;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -535,6 +561,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UnlockCursor.started += instance.OnUnlockCursor;
             @UnlockCursor.performed += instance.OnUnlockCursor;
             @UnlockCursor.canceled += instance.OnUnlockCursor;
+            @OpenCloseInventory.started += instance.OnOpenCloseInventory;
+            @OpenCloseInventory.performed += instance.OnOpenCloseInventory;
+            @OpenCloseInventory.canceled += instance.OnOpenCloseInventory;
         }
 
         /// <summary>
@@ -573,6 +602,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UnlockCursor.started -= instance.OnUnlockCursor;
             @UnlockCursor.performed -= instance.OnUnlockCursor;
             @UnlockCursor.canceled -= instance.OnUnlockCursor;
+            @OpenCloseInventory.started -= instance.OnOpenCloseInventory;
+            @OpenCloseInventory.performed -= instance.OnOpenCloseInventory;
+            @OpenCloseInventory.canceled -= instance.OnOpenCloseInventory;
         }
 
         /// <summary>
@@ -689,5 +721,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUnlockCursor(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenCloseInventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenCloseInventory(InputAction.CallbackContext context);
     }
 }

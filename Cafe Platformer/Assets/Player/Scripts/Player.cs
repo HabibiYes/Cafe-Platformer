@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
 
     public float interactRange = 3f;
 
+    [HideInInspector] public bool canMove = true;
+
     private void Awake()
     {
         // Set instance and keep loaded, or destroy if already existing
@@ -159,5 +161,15 @@ public class Player : MonoBehaviour
         trashItem.enabled = false;
 
         mode = Mode.Platformer;
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+    
+    public void DisableMovement()
+    {
+        canMove = false;
     }
 }

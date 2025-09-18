@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class HandleInventory : MonoBehaviour
 {
+    Player player;
+
+
+    // Inventory vars
     public struct InventoryItem
     {
         public string name;
@@ -10,7 +14,6 @@ public class HandleInventory : MonoBehaviour
     }
 
     public InventoryItem[] inventory = new InventoryItem[5];
-
 
     private InventoryUI inventoryUI;
 
@@ -27,6 +30,17 @@ public class HandleInventory : MonoBehaviour
         return item;
     }
 
+    [HideInInspector] public bool isOpen = false;
+
+
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+
+        // Assign open and close input
+        player.controls.Player.OpenCloseInventory.performed += (context) => { if (isOpen) Close(); else Open(); };
+    }
+
     private void Start()
     {
         // Empty inventory
@@ -37,6 +51,9 @@ public class HandleInventory : MonoBehaviour
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
 
         UpdateInventoryUI();
+
+        // Hide inventory at start
+        Close();
     }
 
     private void EmptyInventory()
@@ -51,5 +68,19 @@ public class HandleInventory : MonoBehaviour
         {
             inventoryUI.inventorySlots[i].material.SetTexture("_MainTex", inventory[i].image);
         }
+    }
+
+    private void Open()
+    {
+        player.DisableMovement();
+        inventoryUI.gameObject.SetActive(true);
+        isOpen = true;
+    }
+
+    private void Close()
+    {
+        player.EnableMovement();
+        inventoryUI.gameObject.SetActive(false);
+        isOpen = false;
     }
 }
