@@ -9,7 +9,11 @@ public class HandleInventory : MonoBehaviour
         public Texture2D image;
     }
 
-    public InventoryItem[,] inventory = new InventoryItem[5, 2];
+    public InventoryItem[] inventory = new InventoryItem[5];
+
+
+    private InventoryUI inventoryUI;
+
 
     private InventoryItem InventoryDataToStruct(InventoryItemData data)
     {
@@ -23,20 +27,29 @@ public class HandleInventory : MonoBehaviour
         return item;
     }
 
-    private void Awake()
+    private void Start()
     {
+        // Empty inventory
         EmptyInventory();
-        inventory[0, 0] = InventoryDataToStruct(GameData.Instance.inventoryItems[0]);
+        inventory[0] = InventoryDataToStruct(GameData.Instance.inventoryItems[0]);
+
+        // Get inventory UI
+        inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
+
+        UpdateInventoryUI();
     }
 
     private void EmptyInventory()
     {
-        for (int x = 0; x < inventory.GetLength(0); x++)
+        Array.Fill(inventory, new InventoryItem());
+    }
+
+    private void UpdateInventoryUI()
+    {
+        // TODO: Fix inventory slot material changing
+        for (int i = 0; i < inventoryUI.inventorySlots.Length; i++)
         {
-            for (int y = 0; y < inventory.GetLength(1); y++)
-            {
-                inventory[y, x] = new InventoryItem();
-            }
+            inventoryUI.inventorySlots[i].material.SetTexture("_MainTex", inventory[i].image);
         }
     }
 }

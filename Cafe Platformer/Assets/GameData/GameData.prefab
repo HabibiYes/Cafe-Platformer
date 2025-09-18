@@ -44,10 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a028d5728451040bca5dcef313259d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <drinks>k__BackingField:
-  - {fileID: 11400000, guid: bd6cf553d01834eec97304ce9e21beda, type: 2}
-  - {fileID: 11400000, guid: 761b503fb84d64524870511321ac0015, type: 2}
-  - {fileID: 11400000, guid: 67456e154f28746ab8892d86f3023a19, type: 2}
-  - {fileID: 11400000, guid: a01b576a20563415b89cee6c1b1ac361, type: 2}
-  - {fileID: 11400000, guid: b6dec468680e84aceaa32abb3e4a98fb, type: 2}
-  - {fileID: 11400000, guid: 889560b20a7c447bdbb5f5050b6b2ea9, type: 2}
+  <inventoryItems>k__BackingField:
+  - {fileID: 11400000, guid: ab491ef8e755845938e74e817c3f0a7e, type: 2}

@@ -8,7 +8,7 @@ public class GameData : MonoBehaviour
 
     public Business business { get; private set; }
 
-    public List<InventoryItemData> inventoryItems { get; private set; } = new();
+    [field: SerializeField] public List<InventoryItemData> inventoryItems { get; private set; } = new();
 
     private void Start()
     {
