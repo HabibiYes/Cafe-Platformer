@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class GameData : MonoBehaviour
     public static GameData Instance { get; private set; }
 
     public Business business { get; private set; }
+
+    [field: SerializeField] public List<InventoryItemData> inventoryItems { get; private set; } = new();
 
     private void Start()
     {

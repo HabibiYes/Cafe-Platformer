@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(HandleStorage))]
 [RequireComponent(typeof(TrashItem))]
 [RequireComponent(typeof(StationPriority))]
+[RequireComponent(typeof(HandleInventory))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
@@ -42,6 +43,8 @@ public class Player : MonoBehaviour
     public Mode mode = Mode.Platformer;
 
     public float interactRange = 3f;
+
+    [HideInInspector] public bool canMove = true;
 
     private void Awake()
     {
@@ -158,5 +161,15 @@ public class Player : MonoBehaviour
         trashItem.enabled = false;
 
         mode = Mode.Platformer;
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+    
+    public void DisableMovement()
+    {
+        canMove = false;
     }
 }

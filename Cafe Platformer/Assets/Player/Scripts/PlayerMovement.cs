@@ -91,7 +91,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rightRelative = right * input.x;
 
         // Get movement direction
-        moveDir = (forwardRelative + rightRelative).normalized;
+        if (player.canMove)
+            moveDir = (forwardRelative + rightRelative).normalized;
+        else
+            moveDir = Vector3.zero;
     }
 
     private void MovePlayer()
