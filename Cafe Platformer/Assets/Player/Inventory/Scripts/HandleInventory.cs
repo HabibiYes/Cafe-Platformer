@@ -13,7 +13,7 @@ public class HandleInventory : MonoBehaviour
         public Texture2D image;
     }
 
-    public InventoryItem[] inventory = new InventoryItem[5];
+    public InventoryItem[] inventory = new InventoryItem[10];
 
     private InventoryUI inventoryUI;
 
@@ -107,7 +107,6 @@ public class HandleInventory : MonoBehaviour
 
     private void UpdateInventoryUI()
     {
-        // TODO: Fix inventory slot material changing
         for (int i = 0; i < inventoryUI.inventorySlots.Length; i++)
         {
             inventoryUI.inventorySlots[i].material.SetTexture("_MainTex", inventory[i].image);
@@ -117,14 +116,14 @@ public class HandleInventory : MonoBehaviour
     private void Open()
     {
         player.DisableMovement();
-        inventoryUI.gameObject.SetActive(true);
+        inventoryUI.Open();
         isOpen = true;
     }
 
     private void Close()
     {
         player.EnableMovement();
-        inventoryUI.gameObject.SetActive(false);
+        inventoryUI.Close();
         isOpen = false;
     }
 }
