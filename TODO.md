@@ -4,8 +4,6 @@
 - Inventory/Storage
     > 5 hotbar slots
 
-    > 5 inventory slots (base)
-
     > inventory slots increase by 5 per bag level
 
     > 10 storage slots per storage unit level works for both fridges and storage units
