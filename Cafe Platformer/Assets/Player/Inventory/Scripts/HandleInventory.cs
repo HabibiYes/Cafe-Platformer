@@ -31,6 +31,10 @@ public class HandleInventory : MonoBehaviour
 
     [HideInInspector] public bool isOpen = false;
 
+    [SerializeField] private GameObject inventorySlotGameObject;
+    [SerializeField] private int slotCount = 10;
+    [SerializeField] private int hotbarSize = 5;
+
 
     private void Awake()
     {
@@ -44,6 +48,7 @@ public class HandleInventory : MonoBehaviour
     {
         // Get inventory UI
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
+        inventoryUI.Create(slotCount, hotbarSize, inventorySlotGameObject);
 
         // Empty inventory
         EmptyInventory();

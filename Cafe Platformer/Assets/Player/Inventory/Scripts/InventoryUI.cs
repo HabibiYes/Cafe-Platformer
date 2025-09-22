@@ -7,24 +7,19 @@ public class InventoryUI : MonoBehaviour
     public Transform inventoryUI;
     [HideInInspector] public Image[] inventorySlots;
 
-    private void Awake()
+    public void Create(int slotCount, int hotbarSize, GameObject inventorySlotGameObject)
     {
-        // Get total number of inventory slots, which is hotbar + inventory
-        int slotCount = hotbarUI.childCount + inventoryUI.childCount;
-
         inventorySlots = new Image[slotCount];
 
-        // Get each slot image component
-        for (int i = 0; i < slotCount; i++)
+        // Create and get each slot image component
+        for (int i = 0; i < slotCount + hotbarSize; i++)
         {
-            // Get current transform (hotbar or inventory) based on current index
-            Transform currentTransform = i < hotbarUI.childCount ? hotbarUI : inventoryUI;
-            int currentIndex = currentTransform == hotbarUI ? i : i - hotbarUI.childCount;
+            GameObject slot = Instantiate(inventorySlotGameObject, Vector3.zero, Quaternion.identity, i < hotbarSize ? hotbarUI : inventoryUI);
 
             // Get child image component
-            Image image = currentTransform.GetChild(currentIndex).GetComponent<Image>();
+            Image image = slot.GetComponent<Image>();
             image.material = new(image.material);
-            inventorySlots[i] = image;
+            inventorySlots[i < slotCount ? i : i - slotCount] = image;
         }
     }
 

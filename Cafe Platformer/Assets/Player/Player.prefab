@@ -706,6 +706,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  inventorySlotGameObject: {fileID: 280572739673641672, guid: 769477abda4fb41e78e31edc3238bbdc, type: 3}
+  slotCount: 10
+  hotbarSize: 5
 --- !u!1001 &3968911876951855243
 PrefabInstance:
   m_ObjectHideFlags: 0
