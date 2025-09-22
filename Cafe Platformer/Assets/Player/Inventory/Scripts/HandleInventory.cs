@@ -17,7 +17,6 @@ public class HandleInventory : MonoBehaviour
 
     private InventoryUI inventoryUI;
 
-
     private InventoryItem InventoryDataToStruct(InventoryItemData data)
     {
         // Convert item data to struct
@@ -43,21 +42,67 @@ public class HandleInventory : MonoBehaviour
 
     private void Start()
     {
-        // Empty inventory
-        EmptyInventory();
-
         // Get inventory UI
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
 
-        UpdateInventoryUI();
+        // Empty inventory
+        EmptyInventory();
 
         // Hide inventory at start
         Close();
     }
 
-    private void EmptyInventory()
+    public void AddInventory(InventoryItemData data)
+    {
+        // Check if data is null
+        if (data == null)
+            return;
+
+        // Get first open index. If out of range, do not add.
+        int index = InventoryFirstOpenIndex();
+        if (index < 0 || index > inventory.Length)
+            return;
+
+        InventoryItem item = InventoryDataToStruct(data);
+        inventory[index] = item;
+
+        UpdateInventoryUI();
+
+        Debug.Log("Added " + data.name + " to inventory at index " + index);
+    }
+
+    public void EmptyInventory()
     {
         Array.Fill(inventory, new InventoryItem());
+
+        UpdateInventoryUI();
+
+        Debug.Log("Emptied inventory");
+    }
+
+    /// <summary>
+    /// Finds the first open index in the inventory.
+    /// </summary>
+    private int InventoryFirstOpenIndex()
+    {
+        bool found = false;
+        int index = -1;
+        foreach (InventoryItem item in inventory)
+        {
+            index++;
+
+            // Check if item is empty
+            if (item.name != null)
+                continue;
+
+            // If item is empty, choose index
+            found = true;
+            break;
+        }
+
+        if (!found)
+            index = -1;
+        return index;
     }
 
     private void UpdateInventoryUI()
