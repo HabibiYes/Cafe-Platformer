@@ -109,7 +109,11 @@ public class HandleInventory : MonoBehaviour
     {
         for (int i = 0; i < inventoryUI.inventorySlots.Length; i++)
         {
-            inventoryUI.inventorySlots[i].material.SetTexture("_MainTex", inventory[i].image);
+            // Get index for inventory to set slot UI
+            int index = i < inventoryUI.inventorySlots.Length - inventoryUI.hotbarUI.childCount ? i : i - (inventoryUI.inventorySlots.Length - inventoryUI.hotbarUI.childCount);
+
+            // Set slot UI image
+            inventoryUI.inventorySlots[i].material.SetTexture("_MainTex", inventory[index].image);
         }
     }
 

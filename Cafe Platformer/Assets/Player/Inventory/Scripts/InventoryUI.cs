@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] private Transform hotbarUI;
-    [SerializeField] private Transform inventoryUI;
+    public Transform hotbarUI;
+    public Transform inventoryUI;
     [HideInInspector] public Image[] inventorySlots;
 
     private void Awake()
