@@ -25,8 +25,6 @@
 
 ## In Progress
 - Inventory/Storage
-    > inventory slots increase by 5 per bag level
-
     > 10 storage slots per storage unit level works for both fridges and storage units
 
     > Fridges can only hold food items, and storage units hold everything else
@@ -82,3 +80,5 @@
     > 5 hotbar slots (9/22)
 
     > 5 inventory slots (base) (9/22)
+
+    > inventory slots increase by 5 per bag level (9/23)

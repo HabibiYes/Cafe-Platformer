@@ -33,6 +33,7 @@ public class HandleInventory : MonoBehaviour
     [SerializeField] private GameObject inventorySlotGameObject;
     [SerializeField] private int baseInventorySize = 5;
     [SerializeField] private int baseHotbarSize = 5;
+    public int maxBagLevel = 3;
 
     [HideInInspector] public int bagLevel = 1;
 
@@ -49,9 +50,6 @@ public class HandleInventory : MonoBehaviour
         // Get inventory UI
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
         MakeInventory();
-
-        // Empty inventory
-        EmptyInventory();
 
         // Hide inventory at start
         Close();
@@ -139,7 +137,7 @@ public class HandleInventory : MonoBehaviour
     // Other methods
     public void UpgradeBag(int change)
     {
-        bagLevel = Mathf.Clamp(bagLevel + change, 1, 5);
+        bagLevel = Mathf.Clamp(bagLevel + change, 1, maxBagLevel);
         MakeInventory();
     }
 }
