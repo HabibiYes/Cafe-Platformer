@@ -58,12 +58,12 @@ public class InventoryUI : MonoBehaviour
     public void Open()
     {
         hotbarUI.gameObject.SetActive(false);
-        inventoryUI.gameObject.SetActive(true);
+        inventoryUI.parent.gameObject.SetActive(true);
     }
 
     public void Close()
     {
         hotbarUI.gameObject.SetActive(true);
-        inventoryUI.gameObject.SetActive(false);
+        inventoryUI.parent.gameObject.SetActive(false);
     }
 }
