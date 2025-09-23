@@ -12,10 +12,7 @@ public class HandleInventory : MonoBehaviour
         public string name;
         public Texture2D image;
     }
-
     public InventoryItem[] inventory = new InventoryItem[10];
-
-    private InventoryUI inventoryUI;
 
     private InventoryItem InventoryDataToStruct(InventoryItemData data)
     {
@@ -29,12 +26,15 @@ public class HandleInventory : MonoBehaviour
         return item;
     }
 
+    private InventoryUI inventoryUI;
     [HideInInspector] public bool isOpen = false;
 
+    [Header("Settings")]
     [SerializeField] private GameObject inventorySlotGameObject;
-    [SerializeField] private int slotCount = 10;
-    [SerializeField] private int hotbarSize = 5;
+    [SerializeField] private int baseInventorySize = 5;
+    [SerializeField] private int baseHotbarSize = 5;
 
+    [HideInInspector] public int bagLevel = 1;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class HandleInventory : MonoBehaviour
     {
         // Get inventory UI
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
-        inventoryUI.Create(slotCount, hotbarSize, inventorySlotGameObject);
+        MakeInventory();
 
         // Empty inventory
         EmptyInventory();
@@ -57,6 +57,7 @@ public class HandleInventory : MonoBehaviour
         Close();
     }
 
+    // Inventory methods
     public void AddInventory(InventoryItemData data)
     {
         // Check if data is null
@@ -71,7 +72,7 @@ public class HandleInventory : MonoBehaviour
         InventoryItem item = InventoryDataToStruct(data);
         inventory[index] = item;
 
-        UpdateInventoryUI();
+        inventoryUI.UpdateUI();
 
         Debug.Log("Added " + data.name + " to inventory at index " + index);
     }
@@ -80,7 +81,7 @@ public class HandleInventory : MonoBehaviour
     {
         Array.Fill(inventory, new InventoryItem());
 
-        UpdateInventoryUI();
+        inventoryUI.UpdateUI();
 
         Debug.Log("Emptied inventory");
     }
@@ -110,16 +111,15 @@ public class HandleInventory : MonoBehaviour
         return index;
     }
 
-    private void UpdateInventoryUI()
+    public void MakeInventory()
     {
-        for (int i = 0; i < inventoryUI.inventorySlots.Length; i++)
-        {
-            // Get index for inventory to set slot UI
-            int index = i < inventoryUI.inventorySlots.Length - inventoryUI.hotbarUI.childCount ? i : i - (inventoryUI.inventorySlots.Length - inventoryUI.hotbarUI.childCount);
+        // Resize array to match upgrade inventory
+        if (inventory.Length != baseInventorySize * bagLevel + baseHotbarSize)
+            Array.Resize(ref inventory, baseInventorySize * bagLevel + baseHotbarSize);
 
-            // Set slot UI image
-            inventoryUI.inventorySlots[i].material.SetTexture("_MainTex", inventory[index].image);
-        }
+        // Remake UI to match upgrade inventory
+        inventoryUI.Destroy();
+        inventoryUI.Create(baseInventorySize * bagLevel, baseHotbarSize, inventorySlotGameObject);
     }
 
     private void Open()
@@ -134,5 +134,12 @@ public class HandleInventory : MonoBehaviour
         player.EnableMovement();
         inventoryUI.Close();
         isOpen = false;
+    }
+
+    // Other methods
+    public void UpgradeBag(int change)
+    {
+        bagLevel = Mathf.Clamp(bagLevel + change, 1, 5);
+        MakeInventory();
     }
 }

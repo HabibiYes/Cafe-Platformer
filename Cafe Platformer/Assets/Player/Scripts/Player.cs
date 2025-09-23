@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public HandleDrink handleDrink;
     [HideInInspector] public HandleDispenser handleDispenser;
     [HideInInspector] public HandleStorage handleStorage;
+    [HideInInspector] public HandleInventory handleInventory;
     [HideInInspector] public TrashItem trashItem;
     [HideInInspector] public StationPriority stationPriority;
 
@@ -75,6 +76,7 @@ public class Player : MonoBehaviour
         handleDrink = GetComponent<HandleDrink>();
         handleDispenser = GetComponent<HandleDispenser>();
         handleStorage = GetComponent<HandleStorage>();
+        handleInventory = GetComponent<HandleInventory>();
         trashItem = GetComponent<TrashItem>();
         stationPriority = GetComponent<StationPriority>();
 
