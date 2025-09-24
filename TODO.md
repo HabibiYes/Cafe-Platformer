@@ -84,3 +84,5 @@
     > inventory slots increase by 5 per bag level (9/23)
 
     > Player silhouette (9/23)
+
+    > Item dragging (9/24)

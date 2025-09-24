@@ -17,10 +17,17 @@ public class InventoryUI : MonoBehaviour
         // Create and get each slot image component
         for (int i = 0; i < totalSize + hotbarSize; i++)
         {
-            GameObject slot = Instantiate(inventorySlotGameObject, Vector3.zero, Quaternion.identity, i >= totalSize ? hotbarUI : inventoryUI);
+            GameObject slotGo = Instantiate(inventorySlotGameObject, Vector3.zero, Quaternion.identity, i < totalSize ? inventoryUI : hotbarUI);
+
+            // Get slot component
+            InventorySlot slotComponent = slotGo.GetComponent<InventorySlot>();
+
+            // Set slot index and starting data
+            slotComponent.index = i < totalSize ? i : i - totalSize;
+            slotComponent.data = new HandleInventory.InventoryItem() { name = "None" };
 
             // Get child image component
-            Image image = slot.GetComponent<Image>();
+            Image image = slotGo.GetComponent<Image>();
 
             // If index is on repeat of hotbar, set material to reflect hotbar, else, make a new material
             image.material = new(image.material);
@@ -47,7 +54,12 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            int index = i < Player.Instance.handleInventory.inventory.Length ? i : i - Player.Instance.handleInventory.inventory.Length;
+            int index = i < Player.Instance.handleInventory.inventory.Count ? i : i - Player.Instance.handleInventory.inventory.Count;
+
+            // Set data
+            inventorySlots[i].GetComponent<InventorySlot>().data = Player.Instance.handleInventory.inventory[index];
+
+            // Set material
             inventorySlots[i].materialForRendering.SetTexture("_MainTex", Player.Instance.handleInventory.inventory[index].image);
             inventorySlots[i].SetMaterialDirty();
         }

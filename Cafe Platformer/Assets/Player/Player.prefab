@@ -712,6 +712,7 @@ MonoBehaviour:
   baseHotbarSize: 5
   maxBagLevel: 3
   bagLevel: 1
+  maxReleaseDistance: 100
 --- !u!1001 &3968911876951855243
 PrefabInstance:
   m_ObjectHideFlags: 0
