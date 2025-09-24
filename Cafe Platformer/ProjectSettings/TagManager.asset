@@ -9,6 +9,7 @@ TagManager:
   - SpawnPoint
   - Inventory
   - SceneFade
+  - InventoryItemUI
   layers:
   - Default
   - TransparentFX

@@ -95,6 +95,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "InventoryDrag",
+                    "type": "Button",
+                    "id": "31727f55-5b55-4cc8-978e-b056d261fa12",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -249,6 +258,17 @@
                     "processors": "",
                     "groups": ";Keyboard",
                     "action": "OpenCloseInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b57e387-fab8-47b9-a942-bd108fd8014a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold(duration=0.2)",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "InventoryDrag",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

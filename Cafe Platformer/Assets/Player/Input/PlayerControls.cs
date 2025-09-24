@@ -181,6 +181,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventoryDrag"",
+                    ""type"": ""Button"",
+                    ""id"": ""31727f55-5b55-4cc8-978e-b056d261fa12"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -337,6 +346,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""OpenCloseInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b57e387-fab8-47b9-a942-bd108fd8014a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Hold(duration=0.2)"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""InventoryDrag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -367,6 +387,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_LockCursor = m_Player.FindAction("LockCursor", throwIfNotFound: true);
         m_Player_UnlockCursor = m_Player.FindAction("UnlockCursor", throwIfNotFound: true);
         m_Player_OpenCloseInventory = m_Player.FindAction("OpenCloseInventory", throwIfNotFound: true);
+        m_Player_InventoryDrag = m_Player.FindAction("InventoryDrag", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -457,6 +478,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LockCursor;
     private readonly InputAction m_Player_UnlockCursor;
     private readonly InputAction m_Player_OpenCloseInventory;
+    private readonly InputAction m_Player_InventoryDrag;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -508,6 +530,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/OpenCloseInventory".
         /// </summary>
         public InputAction @OpenCloseInventory => m_Wrapper.m_Player_OpenCloseInventory;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/InventoryDrag".
+        /// </summary>
+        public InputAction @InventoryDrag => m_Wrapper.m_Player_InventoryDrag;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -564,6 +590,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenCloseInventory.started += instance.OnOpenCloseInventory;
             @OpenCloseInventory.performed += instance.OnOpenCloseInventory;
             @OpenCloseInventory.canceled += instance.OnOpenCloseInventory;
+            @InventoryDrag.started += instance.OnInventoryDrag;
+            @InventoryDrag.performed += instance.OnInventoryDrag;
+            @InventoryDrag.canceled += instance.OnInventoryDrag;
         }
 
         /// <summary>
@@ -605,6 +634,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenCloseInventory.started -= instance.OnOpenCloseInventory;
             @OpenCloseInventory.performed -= instance.OnOpenCloseInventory;
             @OpenCloseInventory.canceled -= instance.OnOpenCloseInventory;
+            @InventoryDrag.started -= instance.OnInventoryDrag;
+            @InventoryDrag.performed -= instance.OnInventoryDrag;
+            @InventoryDrag.canceled -= instance.OnInventoryDrag;
         }
 
         /// <summary>
@@ -728,5 +760,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnOpenCloseInventory(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "InventoryDrag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInventoryDrag(InputAction.CallbackContext context);
     }
 }

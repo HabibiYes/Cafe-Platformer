@@ -1,18 +1,6 @@
 # Cafe Platformer TODO
 
 ## High Priority
-- Inventory/Storage
-    > 5 hotbar slots
-
-    > inventory slots increase by 5 per bag level
-
-    > 10 storage slots per storage unit level works for both fridges and storage units
-
-    > Fridges can only hold food items, and storage units hold everything else
-
-    > Inventory has a seperate slots for your pack and clothing
-
-    > Items can stack up to 20
 - Health
     > Max HP is 25 (never changes)
 
@@ -36,7 +24,14 @@
 
 
 ## In Progress
+- Inventory/Storage
+    > 10 storage slots per storage unit level works for both fridges and storage units
 
+    > Fridges can only hold food items, and storage units hold everything else
+
+    > Inventory has a seperate slots for your pack and clothing
+
+    > Items can stack up to 20
 
 ## Future Enhancements
 - Inventory/Storage
@@ -81,3 +76,13 @@
 
     > Just melee attacks don't worry
 ## Completed (last 30 days)
+- Inventory/Storage
+    > 5 hotbar slots (9/22)
+
+    > 5 inventory slots (base) (9/22)
+
+    > inventory slots increase by 5 per bag level (9/23)
+
+    > Player silhouette (9/23)
+
+    > Item dragging (9/24)

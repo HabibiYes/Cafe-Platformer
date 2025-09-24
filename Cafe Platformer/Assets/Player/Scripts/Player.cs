@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public HandleDrink handleDrink;
     [HideInInspector] public HandleDispenser handleDispenser;
     [HideInInspector] public HandleStorage handleStorage;
+    [HideInInspector] public HandleInventory handleInventory;
     [HideInInspector] public TrashItem trashItem;
     [HideInInspector] public StationPriority stationPriority;
 
@@ -75,6 +76,7 @@ public class Player : MonoBehaviour
         handleDrink = GetComponent<HandleDrink>();
         handleDispenser = GetComponent<HandleDispenser>();
         handleStorage = GetComponent<HandleStorage>();
+        handleInventory = GetComponent<HandleInventory>();
         trashItem = GetComponent<TrashItem>();
         stationPriority = GetComponent<StationPriority>();
 
@@ -107,26 +109,12 @@ public class Player : MonoBehaviour
         controls.Player.Enable();
 
         // Add cursor lock & unlock
-        controls.Player.LockCursor.performed += (context) => MouseLock.Lock();
+        controls.Player.LockCursor.performed += (context) => { if (!handleInventory.isOpen) MouseLock.Lock(); };
         controls.Player.UnlockCursor.performed += (context) => MouseLock.Unlock();
 
         // Add enable and disable camera control
         MouseLock.mouseLocked += () => EnableCameraControls();
         MouseLock.mouseUnlocked += () => DisableCameraControls();
-    }
-
-    private void OnDisable()
-    {
-        // Disable player controls
-        controls.Player.Disable();
-
-        // Remove cursor lock & unlock
-        controls.Player.LockCursor.performed -= (context) => MouseLock.Lock();
-        controls.Player.UnlockCursor.performed -= (context) => MouseLock.Unlock();
-
-        // Remove enable and disable camera control
-        MouseLock.mouseLocked -= () => EnableCameraControls();
-        MouseLock.mouseUnlocked -= () => DisableCameraControls();
     }
 
     private void EnableCameraControls()
@@ -167,7 +155,7 @@ public class Player : MonoBehaviour
     {
         canMove = true;
     }
-    
+
     public void DisableMovement()
     {
         canMove = false;

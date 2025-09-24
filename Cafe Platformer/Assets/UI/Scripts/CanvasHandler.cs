@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasHandler : MonoBehaviour
 {
     public static CanvasHandler Instance { get; private set; }
+
+    [HideInInspector] public GraphicRaycaster graphicRaycaster;
 
     private void Start()
     {
@@ -16,5 +19,7 @@ public class CanvasHandler : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+
+        graphicRaycaster = GetComponent<GraphicRaycaster>();
     }
 }
