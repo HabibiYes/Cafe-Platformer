@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,16 +54,25 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        List<HandleInventory.InventoryItem> inventory = Player.Instance.handleInventory.inventory;
+
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            int index = i < Player.Instance.handleInventory.inventory.Count ? i : i - Player.Instance.handleInventory.inventory.Count;
+            int index = i < inventory.Count ? i : i - inventory.Count;
+
+            InventorySlot slotComponent = inventorySlots[i].GetComponent<InventorySlot>();
+            Image slot = inventorySlots[i];
 
             // Set data
-            inventorySlots[i].GetComponent<InventorySlot>().data = Player.Instance.handleInventory.inventory[index];
+            slotComponent.data = inventory[index];
 
             // Set material
-            inventorySlots[i].materialForRendering.SetTexture("_MainTex", Player.Instance.handleInventory.inventory[index].image);
-            inventorySlots[i].SetMaterialDirty();
+            slot.materialForRendering.SetTexture("_MainTex", inventory[index].image);
+            slot.SetMaterialDirty();
+
+            // Set count
+            slotComponent.data.count = inventory[index].count;
+            slotComponent.SetCountText();
         }
 
         Debug.Log("Updated inventory UI");

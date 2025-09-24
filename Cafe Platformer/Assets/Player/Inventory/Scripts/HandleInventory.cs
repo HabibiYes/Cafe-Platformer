@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,16 +15,18 @@ public class HandleInventory : MonoBehaviour
     {
         public string name;
         public Texture2D image;
+        public int count;
     }
     public List<InventoryItem> inventory = new List<InventoryItem>(10);
 
-    private InventoryItem InventoryDataToStruct(InventoryItemData data)
+    private InventoryItem InventoryDataToStruct(InventoryItemData data, int count = 0)
     {
         // Convert item data to struct
         InventoryItem item = new InventoryItem()
         {
             name = data.name,
-            image = data.image
+            image = data.image,
+            count = count
         };
 
         return item;
@@ -36,6 +39,7 @@ public class HandleInventory : MonoBehaviour
     [SerializeField] private GameObject inventorySlotGameObject;
     [SerializeField] private int baseInventorySize = 5;
     [SerializeField] private int baseHotbarSize = 5;
+    [SerializeField] private int maxStackSize = 20;
     public int maxBagLevel = 3;
 
     [HideInInspector] public int bagLevel = 1;
@@ -44,6 +48,7 @@ public class HandleInventory : MonoBehaviour
     [SerializeField] private float maxReleaseDistance = 10f;
     bool isDragging = false;
     InventorySlot draggedItem;
+    InventorySlot baseItem;
 
     private void Awake()
     {
@@ -68,22 +73,24 @@ public class HandleInventory : MonoBehaviour
         if (isDragging)
         {
             draggedItem.transform.position = Input.mousePosition;
+            draggedItem.data.count = baseItem.data.count;
+            draggedItem.SetCountText();
         }
     }
 
     // Inventory methods
-    public void AddInventory(InventoryItemData data)
+    public void AddInventory(InventoryItemData data, int amount = 1)
     {
         // Check if data is null
         if (data == null)
             return;
 
         // Get first open index. If out of range, do not add.
-        int index = InventoryFirstOpenIndex();
+        int index = InventoryFirstOpenIndex(InventoryDataToStruct(data));
         if (index < 0 || index > inventory.Count)
             return;
 
-        InventoryItem item = InventoryDataToStruct(data);
+        InventoryItem item = InventoryDataToStruct(data, inventory[index].count + amount);
         inventory[index] = item;
 
         inventoryUI.UpdateUI();
@@ -102,17 +109,31 @@ public class HandleInventory : MonoBehaviour
         Debug.Log("Swapped inventory indecies " + index1 + " and " + index2);
     }
 
-    public void RemoveInventory(int index)
+    public void RemoveInventory(int index, int amount)
     {
         if (index < 0 || index >= inventory.Count)
             return;
 
-        // Remove inventory item at index
-        inventory[index] = new InventoryItem() { name = "None" };
+        // Remove specified amount of inventory item at index, if none left, remove
+        if (inventory[index].count - amount <= 0)
+        {
+            inventory[index] = new InventoryItem() { name = "None" };
+
+            Debug.Log("Removed inventory item at " + index);
+        }
+        else
+        {
+            inventory[index] = new InventoryItem()
+            {
+                name = inventory[index].name,
+                image = inventory[index].image,
+                count = inventory[index].count - amount
+            };
+
+            Debug.Log("Removed " + amount + " of " + inventory[index].name + " at " + index);
+        }
 
         inventoryUI.UpdateUI();
-
-        Debug.Log("Removed inventory item at " + index);
 
     }
 
@@ -131,26 +152,46 @@ public class HandleInventory : MonoBehaviour
     /// <summary>
     /// Finds the first open index in the inventory.
     /// </summary>
-    private int InventoryFirstOpenIndex()
+    private int InventoryFirstOpenIndex(InventoryItem compare)
     {
-        bool found = false;
-        int index = -1;
+        // Find all possible indecies
+        List<int> foundIndecies = new();
+        int i = 0;
         foreach (InventoryItem item in inventory)
         {
-            index++;
+            // Check if 'item' and 'compare' are the same item
+            if (item.name == compare.name || item.name == "None")
+            {
+                if (item.count != maxStackSize)
+                {
+                    foundIndecies.Add(i);
+                }
+            }
 
-            // Check if item is empty
-            if (item.name != "None")
-                continue;
-
-            // If item is empty, choose index
-            found = true;
-            break;
+            i++;
         }
 
-        if (!found)
-            index = -1;
-        return index;
+        if (foundIndecies.Count == 0)
+            return -1;
+
+        // Try and find first stack to combine with, then return that index
+        try
+        {
+            return foundIndecies.First(x => inventory[x].name != "None");
+        }
+        // If no stack is found, choose the first empty slot
+        catch (InvalidOperationException)
+        {
+            try
+            {
+                return foundIndecies.First(x => inventory[x].name == "None");
+            }
+            // If no empty slot is found, don't add
+            catch
+            {
+                return -1;
+            }
+        }
     }
 
     public void MakeInventory()
@@ -201,9 +242,13 @@ public class HandleInventory : MonoBehaviour
 
         // Set dragged item and dragged item index
         draggedItem = go.GetComponent<InventorySlot>();
-        InventorySlot baseItem = hits[0].gameObject.GetComponent<InventorySlot>();
+        baseItem = hits[0].gameObject.GetComponent<InventorySlot>();
         draggedItem.index = hits[0].gameObject.GetComponent<InventorySlot>().index;
         draggedItem.data = baseItem.data;
+
+        // Set dragged item count
+        draggedItem.data.count = baseItem.data.count;
+        draggedItem.SetCountText();
 
         isDragging = true;
 
@@ -228,6 +273,9 @@ public class HandleInventory : MonoBehaviour
         // Destroy dragged item
         Destroy(draggedItem.gameObject);
         draggedItem = null;
+
+        // Deselect base item
+        baseItem = null;
 
         isDragging = false;
 
