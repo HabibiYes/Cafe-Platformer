@@ -22,6 +22,9 @@
 
     > Bird: Glide
 
+- Clothes
+    > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
+
 
 ## In Progress
 - Inventory/Storage
