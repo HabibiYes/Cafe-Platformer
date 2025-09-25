@@ -25,6 +25,9 @@
 - Clothes
     > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
 
+- Movement
+    > Walk, Run, Jump(scales with button held), swim, climb, stick to walls(slide down), wall jump, glide
+
 
 ## In Progress
 - Inventory/Storage
