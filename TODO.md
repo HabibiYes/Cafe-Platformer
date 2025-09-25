@@ -34,8 +34,6 @@
 
     > Inventory has a seperate slots for your pack and clothing
 
-    > Items can stack up to 20
-
 ## Future Enhancements
 - Inventory/Storage
     > When a item is hovered highlight and enlarge the frame
@@ -89,3 +87,5 @@
     > Player silhouette (9/23)
 
     > Item dragging (9/24)
+
+    > Items can stack up to 20 (9/24)
