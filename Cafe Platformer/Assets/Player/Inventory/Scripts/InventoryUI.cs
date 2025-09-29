@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,24 +8,30 @@ public class InventoryUI : MonoBehaviour
 {
     public Transform hotbarUI;
     public Transform inventoryUI;
-    [HideInInspector] public Image[] inventorySlots; // End of slots is hotbar repeat (shows in hotbar object)
+    public Image clothingSlot;
+    [HideInInspector] public List<Image> inventorySlots; // End of slots is hotbar repeat (shows in hotbar object)
 
-    public void Create(int inventorySize, int hotbarSize, GameObject inventorySlotGameObject)
+    public void Create(int inventorySize, int hotbarSize, int maxStackSize, GameObject inventorySlotGameObject)
     {
         int totalSize = inventorySize + hotbarSize;
-        inventorySlots = new Image[totalSize + hotbarSize];
+        inventorySlots = new List<Image>();
 
         // Create and get each slot image component
         for (int i = 0; i < totalSize + hotbarSize; i++)
         {
-            GameObject slotGo = Instantiate(inventorySlotGameObject, Vector3.zero, Quaternion.identity, i < totalSize ? inventoryUI : hotbarUI);
+            // Get parent for slot. If i is less than totalSize set to inventory UI, else is hotbar UI.
+            Transform parent = i < totalSize ? inventoryUI : hotbarUI;
+            GameObject slotGo = Instantiate(inventorySlotGameObject, Vector3.zero, Quaternion.identity, parent);
 
             // Get slot component
             InventorySlot slotComponent = slotGo.GetComponent<InventorySlot>();
 
-            // Set slot index and starting data
+            // Set slot index
             slotComponent.index = i < totalSize ? i : i - totalSize;
-            slotComponent.data = new HandleInventory.InventoryItem() { name = "None" };
+
+            // Set inventory slots to allow any type, and set max stack size
+            slotComponent.allowedType = InventorySlot.AllowedType.Any;
+            slotComponent.maxStackSize = maxStackSize;
 
             // Get child image component
             Image image = slotGo.GetComponent<Image>();
@@ -34,40 +39,51 @@ public class InventoryUI : MonoBehaviour
             // If index is on repeat of hotbar, set material to reflect hotbar, else, make a new material
             image.material = new(image.material);
 
-            inventorySlots[i] = image;
+            inventorySlots.Add(image);
         }
+
+        // Set clothing slot
+        clothingSlot.material = new(clothingSlot.material);
+        InventorySlot clothingSlotComponent = clothingSlot.GetComponent<InventorySlot>();
+        clothingSlotComponent.index = Player.Instance.handleInventory.inventory.Count - 1;
+        clothingSlotComponent.allowedType = InventorySlot.AllowedType.Wearable;
+        clothingSlotComponent.maxStackSize = 1;
+        inventorySlots.Add(clothingSlot);
 
         UpdateUI();
     }
 
     public void Destroy()
     {
-        // Destroy all slot objects
-        foreach (GameObject go in inventorySlots.Select(x => x.gameObject))
+        if (inventorySlots.Count == 0)
+            return;
+
+        // Destroy all slot objects, excluding clothing slot
+        foreach (GameObject go in inventorySlots.GetRange(0, inventorySlots.Count - 1).Select(x => x.gameObject))
         {
             Destroy(go);
         }
 
         // Clear inventory slots array
-        Array.Clear(inventorySlots, 0, inventorySlots.Length);
+        inventorySlots.Clear();
     }
 
     public void UpdateUI()
     {
         List<HandleInventory.InventoryItem> inventory = Player.Instance.handleInventory.inventory;
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        for (int i = 0; i < inventorySlots.Count; i++)
         {
-            int index = i < inventory.Count ? i : i - inventory.Count;
-
             InventorySlot slotComponent = inventorySlots[i].GetComponent<InventorySlot>();
             Image slot = inventorySlots[i];
+
+            int index = slotComponent.index;
 
             // Set data
             slotComponent.data = inventory[index];
 
             // Set material
-            slot.materialForRendering.SetTexture("_MainTex", inventory[index].image);
+            slot.material.SetTexture("_MainTex", inventory[index].image);
             slot.SetMaterialDirty();
 
             // Set count

@@ -32,7 +32,6 @@ public class StationPriority : MonoBehaviour
             // Get closest station, then set closest to station name, if not null
             Station station = GetObjectFromDistance.FindClosestObject(StationChecks(GameData.Instance.business.stations), player.interactRange, transform.position);
             closest = station != null ? station.name : "";
-            Debug.Log(closest);
 
             // Set active scripts according to closest station
             if (closest == "Customer")
