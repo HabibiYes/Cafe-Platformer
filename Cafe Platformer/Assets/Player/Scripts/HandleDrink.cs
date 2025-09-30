@@ -53,7 +53,6 @@ public class HandleDrink : MonoBehaviour
         {
             // Create cup instance
             GameObject go = Instantiate(cup, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
-            player.Scale(go);
 
             // Set drink data to dispenser data
             Drink drink = go.GetComponent<Drink>();

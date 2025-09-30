@@ -97,12 +97,6 @@ public class Player : MonoBehaviour
         MouseLock.Lock();
     }
 
-    public void Scale(GameObject go)
-    {
-        Vector3 scale = go.transform.localScale;
-        go.transform.localScale = new Vector3(scale.x / playerModel.localScale.x, scale.y / playerModel.localScale.y, scale.z / playerModel.localScale.z);
-    }
-
     private void OnEnable()
     {
         // Enable player controls

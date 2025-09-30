@@ -70,7 +70,6 @@ public class HandleStorage : MonoBehaviour
 
         // Create box
         GameObject go = Instantiate(storageBox, transform.position + player.playerModel.forward, Quaternion.identity, player.playerModel);
-        player.Scale(go);
         box = go.GetComponent<StorageBox>();
 
         holdingBox = true;
