@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 3629471207177401540}
   - component: {fileID: 3096869538745745993}
   - component: {fileID: 6104855430459233850}
+  - component: {fileID: 1733591087052620391}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -553,6 +554,7 @@ MonoBehaviour:
   cameraInputController: {fileID: 0}
   playerMovement: {fileID: 1895022137358924228}
   jumping: {fileID: 0}
+  wallJump: {fileID: 0}
   playerRotation: {fileID: 0}
   handleDrink: {fileID: 0}
   handleDispenser: {fileID: 0}
@@ -714,6 +716,22 @@ MonoBehaviour:
   maxBagLevel: 3
   bagLevel: 1
   maxReleaseDistance: 100
+--- !u!114 &1733591087052620391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b72b638f7214f759d0a3d52d25de83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slipSpeed: 1
+  horizontalWallJumpForce: 10
+  verticalWallJumpForce: 10
+  onWall: 0
 --- !u!1001 &3968911876951855243
 PrefabInstance:
   m_ObjectHideFlags: 0

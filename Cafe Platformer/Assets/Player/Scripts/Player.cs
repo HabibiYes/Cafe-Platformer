@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
+[RequireComponent(typeof(WallJump))]
 [RequireComponent(typeof(PlayerRotation))]
 [RequireComponent(typeof(EnterBusinessHandler))]
 [RequireComponent(typeof(HandleDrink))]
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     // Scripts
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Jumping jumping;
+    [HideInInspector] public WallJump wallJump;
     [HideInInspector] public PlayerRotation playerRotation;
     [HideInInspector] public HandleDrink handleDrink;
     [HideInInspector] public HandleDispenser handleDispenser;
