@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float drag = 10f;
     [SerializeField] private float maxSpeed = 7f;
     [SerializeField] private float airSpeedMultiplier = 0.25f;
+    [SerializeField] private float rotationSpeed = 10f;
 
     // Scaled acceleration
     private float acceleration { get => player.controls.Player.Sprint.IsPressed() ? sprintAcceleration : walkAcceleration; }
@@ -47,7 +48,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        MyInput();
+        moveDir = GetMoveDirection();
+
+        if (player.playerMovement.moveDir.magnitude > 0)
+            player.playerRotation.SetRotation(Quaternion.Lerp(player.playerModel.rotation, Quaternion.LookRotation(moveDir), rotationSpeed * Time.deltaTime));
     }
 
     private void FixedUpdate()
@@ -60,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         SpeedLimit();
 
         // Set movement blend based on current speed, and lerp
-        player.animator.SetFloat("Blend", Mathf.Lerp(player.animator.GetFloat("Blend"), movementAnimationCurve.Evaluate(rb.linearVelocity.magnitude / maxSpeed), animationLerpSpeed * Time.deltaTime));
+        player.animator.SetFloat("MovementBlend", Mathf.Lerp(player.animator.GetFloat("MovementBlend"), movementAnimationCurve.Evaluate(rb.linearVelocity.magnitude / maxSpeed), animationLerpSpeed * Time.deltaTime));
 
         if (OnValidSlope())
         {
@@ -75,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void MyInput()
+    public Vector3 GetMoveDirection(bool allowVertical = false)
     {
         // Get input
         Vector2 input = player.controls.Player.Move.ReadValue<Vector2>();
@@ -83,8 +87,11 @@ public class PlayerMovement : MonoBehaviour
         // Get camera forward and right vectors
         Vector3 forward = player.cam.transform.forward;
         Vector3 right = player.cam.transform.right;
-        forward.y = 0;
-        right.y = 0;
+        if (!allowVertical)
+        {
+            forward.y = 0;
+            right.y = 0;
+        }
 
         // Multiply camera vectors by input
         Vector3 forwardRelative = forward * input.y;
@@ -92,9 +99,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Get movement direction
         if (player.canMove)
-            moveDir = (forwardRelative + rightRelative).normalized;
+            return (forwardRelative + rightRelative).normalized;
         else
-            moveDir = Vector3.zero;
+            return Vector3.zero;
     }
 
     private void MovePlayer()

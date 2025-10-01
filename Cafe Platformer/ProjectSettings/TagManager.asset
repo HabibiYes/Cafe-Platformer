@@ -10,6 +10,7 @@ TagManager:
   - Inventory
   - SceneFade
   - InventoryItemUI
+  - Water
   layers:
   - Default
   - TransparentFX

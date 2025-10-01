@@ -406,6 +406,8 @@ GameObject:
   - component: {fileID: 3629471207177401540}
   - component: {fileID: 3096869538745745993}
   - component: {fileID: 6104855430459233850}
+  - component: {fileID: 1733591087052620391}
+  - component: {fileID: 4166385968404555871}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -553,6 +555,8 @@ MonoBehaviour:
   cameraInputController: {fileID: 0}
   playerMovement: {fileID: 1895022137358924228}
   jumping: {fileID: 0}
+  wallJump: {fileID: 0}
+  swim: {fileID: 0}
   playerRotation: {fileID: 0}
   handleDrink: {fileID: 0}
   handleDispenser: {fileID: 0}
@@ -560,6 +564,7 @@ MonoBehaviour:
   handleInventory: {fileID: 0}
   trashItem: {fileID: 0}
   stationPriority: {fileID: 0}
+  handleAnimationEvents: {fileID: 0}
   mode: 0
   interactRange: 3
   canMove: 1
@@ -584,6 +589,7 @@ MonoBehaviour:
   drag: 10
   maxSpeed: 7
   airSpeedMultiplier: 0.25
+  rotationSpeed: 10
   moveDir: {x: 0, y: 0, z: 0}
   maxSlopeAngle: 40
   slopeLerpSpeed: 7.5
@@ -615,7 +621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0865e349f5d04429cb3dc7185c7d82ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
 --- !u!114 &5036867991383192761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,6 +719,41 @@ MonoBehaviour:
   maxBagLevel: 3
   bagLevel: 1
   maxReleaseDistance: 100
+--- !u!114 &1733591087052620391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b72b638f7214f759d0a3d52d25de83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slipSpeed: 1
+  horizontalWallJumpForce: 10
+  verticalWallJumpForce: 10
+  onWall: 0
+--- !u!114 &4166385968404555871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48cfb6d5cf654aed8d70203af151f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowSwimAccleration: 8
+  fastSwimAccleration: 12
+  drag: 2
+  maxSpeed: 10
+  rotationSpeed: 5
+  animationLerpSpeed: 7.5
+  isSwimming: 0
 --- !u!1001 &3968911876951855243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1118,6 +1158,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7985974569186381559, guid: cfc3e0130300947388643c4634349833, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7098414477942303112}
+    - targetCorrespondingSourceObject: {fileID: 7985974569186381559, guid: cfc3e0130300947388643c4634349833, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7994570039306218560}
   m_SourcePrefab: {fileID: 100100000, guid: cfc3e0130300947388643c4634349833, type: 3}
 --- !u!4 &3503467562421073760 stripped
 Transform:
@@ -1151,3 +1194,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7994570039306218560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6469290975496969852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd459076176949b39f50203f5f44be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
