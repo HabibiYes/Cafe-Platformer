@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     [HideInInspector] public TrashItem trashItem;
     [HideInInspector] public StationPriority stationPriority;
 
+    // Animation event handler
+    [HideInInspector] public HandleAnimationEvents handleAnimationEvents;
+
     public enum Mode
     {
         Platformer,
@@ -81,6 +84,8 @@ public class Player : MonoBehaviour
         handleInventory = GetComponent<HandleInventory>();
         trashItem = GetComponent<TrashItem>();
         stationPriority = GetComponent<StationPriority>();
+
+        handleAnimationEvents = GetComponentInChildren<HandleAnimationEvents>();
 
         // Enable and disable business scripts
         SceneManager.sceneLoaded += (a, b) =>

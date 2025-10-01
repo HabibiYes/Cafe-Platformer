@@ -25,9 +25,6 @@
 - Clothes
     > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
 
-- Movement
-    > Walk, Run, Jump(scales with button held), swim, climb, stick to walls(slide down), wall jump, glide
-
 
 ## In Progress
 - Inventory/Storage
@@ -36,6 +33,9 @@
     > Fridges can only hold food items, and storage units hold everything else
 
     > Inventory has a seperate slots for your pack and clothing
+
+- Improved Movement
+    > Swim, glide
 
 ## Future Enhancements
 - Inventory/Storage
@@ -92,3 +92,6 @@
     > Item dragging (9/24)
 
     > Items can stack up to 20 (9/24)
+
+- Improved Movement
+    > Wall hold & Wall jump (10/1)

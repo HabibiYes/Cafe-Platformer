@@ -32,6 +32,15 @@ public class WallJump : MonoBehaviour
         player.rb.useGravity = false;
         player.rb.linearVelocity = new Vector3(0, -slipSpeed, 0);
 
+        // Set rotation
+        player.playerRotation.enabled = false;
+        player.playerRotation.SetRotation(Quaternion.LookRotation(-wallNormal));
+
+        // Start wall connect animation
+        player.animator.SetTrigger("WallConnect");
+        player.animator.ResetTrigger("WallJump");
+        player.animator.ResetTrigger("WallSlideFinished");
+
         Debug.Log("Connected to wall");
     }
 
@@ -40,8 +49,11 @@ public class WallJump : MonoBehaviour
         onWall = false;
         player.playerMovement.enabled = true;
         player.jumping.enabled = true;
+        player.playerRotation.enabled = true;
 
         player.rb.useGravity = true;
+
+        player.animator.ResetTrigger("WallConnect");
 
         Debug.Log("Released from wall");
     }
@@ -52,6 +64,12 @@ public class WallJump : MonoBehaviour
 
         player.rb.AddForce(wallNormal * horizontalWallJumpForce + Vector3.up * verticalWallJumpForce, ForceMode.Impulse);
 
+        // Rotate player away from wall
+        player.playerRotation.SetRotation(Quaternion.LookRotation(wallNormal));
+
+        // Start wall jump animation
+        player.animator.SetTrigger("WallJump");
+
         Debug.Log("Jumped from wall");
     }
 
@@ -59,13 +77,21 @@ public class WallJump : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            // Check if hit surface is a valid wall and the player if off the ground
-            wallNormal = collision.GetContact(0).normal;
-            if (wallNormal.y != 0 || player.playerMovement.IsGrounded())
-                return;
+            if (!onWall)
+            {
+                // Check if hit surface is a valid wall and the player if off the ground
+                wallNormal = collision.GetContact(0).normal;
+                if (wallNormal.y != 0 || player.playerMovement.IsGrounded())
+                    return;
 
-            // Connect to wall
-            ConnectToWall();
+                // Connect to wall
+                ConnectToWall();
+            }
+            else
+            {
+                player.animator.SetTrigger("WallSlideFinished");
+                ReleaseFromWall();
+            }
         }
     }
 }
