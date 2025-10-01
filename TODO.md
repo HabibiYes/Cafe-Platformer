@@ -35,7 +35,7 @@
     > Inventory has a seperate slots for your pack and clothing
 
 - Improved Movement
-    > Swim, glide
+    > Glide
 
 ## Future Enhancements
 - Inventory/Storage
@@ -95,3 +95,5 @@
 
 - Improved Movement
     > Wall hold & Wall jump (10/1)
+
+    > Swimming (10/1)

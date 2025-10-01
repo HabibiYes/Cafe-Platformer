@@ -589,6 +589,7 @@ MonoBehaviour:
   drag: 10
   maxSpeed: 7
   airSpeedMultiplier: 0.25
+  rotationSpeed: 10
   moveDir: {x: 0, y: 0, z: 0}
   maxSlopeAngle: 40
   slopeLerpSpeed: 7.5
@@ -620,7 +621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0865e349f5d04429cb3dc7185c7d82ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
 --- !u!114 &5036867991383192761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,9 +747,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48cfb6d5cf654aed8d70203af151f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 10
+  slowSwimAccleration: 8
+  fastSwimAccleration: 12
   drag: 2
   maxSpeed: 10
+  rotationSpeed: 5
+  animationLerpSpeed: 7.5
   isSwimming: 0
 --- !u!1001 &3968911876951855243
 PrefabInstance:

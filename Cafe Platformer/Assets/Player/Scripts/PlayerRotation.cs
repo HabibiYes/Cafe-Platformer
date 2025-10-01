@@ -5,18 +5,10 @@ public class PlayerRotation : MonoBehaviour
 {
     Player player;
 
-    [SerializeField] private float rotationSpeed = 10f;
-
     private void Start()
     {
         // Get base player
         player = GetComponent<Player>();
-    }
-
-    private void LateUpdate()
-    {
-        if (player.playerMovement.moveDir.magnitude > 0)
-            SetRotation(Quaternion.Lerp(player.playerModel.rotation, Quaternion.LookRotation(player.playerMovement.moveDir), rotationSpeed * Time.deltaTime));
     }
 
     public void SetRotation(Quaternion rotation)
@@ -34,5 +26,10 @@ public class PlayerRotation : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void ResetTilt()
+    {
+        SetRotation(Quaternion.Euler(new Vector3(0, player.playerModel.rotation.eulerAngles.y, player.playerModel.rotation.eulerAngles.z)));
     }
 }

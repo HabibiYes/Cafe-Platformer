@@ -33,7 +33,6 @@ public class WallJump : MonoBehaviour
         player.rb.linearVelocity = new Vector3(0, -slipSpeed, 0);
 
         // Set rotation
-        player.playerRotation.enabled = false;
         player.playerRotation.SetRotation(Quaternion.LookRotation(-wallNormal));
 
         // Start wall connect animation
@@ -49,7 +48,6 @@ public class WallJump : MonoBehaviour
         onWall = false;
         player.playerMovement.enabled = true;
         player.jumping.enabled = true;
-        player.playerRotation.enabled = true;
 
         player.rb.useGravity = true;
 
@@ -79,9 +77,9 @@ public class WallJump : MonoBehaviour
         {
             if (!onWall)
             {
-                // Check if hit surface is a valid wall and the player if off the ground
+                // Don't connect to wall if conditions are not satisfied
                 wallNormal = collision.GetContact(0).normal;
-                if (wallNormal.y != 0 || player.playerMovement.IsGrounded())
+                if (wallNormal.y != 0 || player.playerMovement.IsGrounded() || player.swim.isSwimming)
                     return;
 
                 // Connect to wall
