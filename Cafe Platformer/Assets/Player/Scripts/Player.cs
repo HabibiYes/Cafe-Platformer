@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
 [RequireComponent(typeof(WallJump))]
+[RequireComponent(typeof(Swim))]
 [RequireComponent(typeof(PlayerRotation))]
 [RequireComponent(typeof(EnterBusinessHandler))]
 [RequireComponent(typeof(HandleDrink))]
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Jumping jumping;
     [HideInInspector] public WallJump wallJump;
+    [HideInInspector] public Swim swim;
     [HideInInspector] public PlayerRotation playerRotation;
     [HideInInspector] public HandleDrink handleDrink;
     [HideInInspector] public HandleDispenser handleDispenser;
@@ -77,6 +79,8 @@ public class Player : MonoBehaviour
         // Get scripts
         playerMovement = GetComponent<PlayerMovement>();
         jumping = GetComponent<Jumping>();
+        wallJump = GetComponent<WallJump>();
+        swim = GetComponent<Swim>();
         playerRotation = GetComponent<PlayerRotation>();
         handleDrink = GetComponent<HandleDrink>();
         handleDispenser = GetComponent<HandleDispenser>();
