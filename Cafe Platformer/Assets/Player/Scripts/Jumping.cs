@@ -7,6 +7,8 @@ public class Jumping : MonoBehaviour
     [SerializeField] private float jumpForce = 7f;
     [HideInInspector] public bool isJumping = false;
 
+    float currentYVelocity;
+
     private void Awake()
     {
         // Get base player
@@ -23,12 +25,29 @@ public class Jumping : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isJumping && player.rb.linearVelocity.y < 0)
+        currentYVelocity = player.rb.linearVelocity.y;
+    }
+
+    public void Jump()
+    {
+        isJumping = true;
+        player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, player.rb.linearVelocity.y + jumpForce * player.rb.mass, player.rb.linearVelocity.z);
+
+        // Trigger jump animation
+        player.animator.SetTrigger("Jump");
+        player.animator.ResetTrigger("Land");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isJumping)
         {
             if (player.playerMovement.OnValidSlope(false))
             {
                 isJumping = false;
-                player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, 0, player.rb.linearVelocity.z);
+                Vector3 projectedFallingVector = Vector3.ProjectOnPlane(new Vector3(0, currentYVelocity, 0), player.playerMovement.GetSlopeNormal());
+
+                player.rb.AddForce(-projectedFallingVector, ForceMode.Impulse);
 
                 // Trigger landing animation
                 player.animator.SetTrigger("Land");
@@ -43,15 +62,5 @@ public class Jumping : MonoBehaviour
                 player.animator.ResetTrigger("Jump");
             }
         }
-    }
-
-    public void Jump()
-    {
-        isJumping = true;
-        player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, player.rb.linearVelocity.y + jumpForce * player.rb.mass, player.rb.linearVelocity.z);
-
-        // Trigger jump animation
-        player.animator.SetTrigger("Jump");
-        player.animator.ResetTrigger("Land");
     }
 }

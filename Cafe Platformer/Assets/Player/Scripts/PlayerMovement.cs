@@ -178,6 +178,11 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    public Vector3 GetSlopeNormal()
+    {
+        return slopeHit.normal;
+    }
+
     private bool OnInvalidSlope(bool checkJumping = true)
     {
         if (checkJumping && player.jumping.isJumping)
