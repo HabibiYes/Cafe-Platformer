@@ -33,14 +33,13 @@ public class HandleStorage : MonoBehaviour
         }
         else if (holdingBox)
         {
-            if (storage != null)
+            if (player.stationPriority.closest == "Dispenser")
+                UseStorageBox();
+            else if (player.stationPriority.closest == "Storage" && storage != null)
             {
                 AddStorageToBox();
                 ReturnStorageFromBox();
             }
-
-            if (player.stationPriority.closest == "Dispenser")
-                UseStorageBox();
         }
     }
 
