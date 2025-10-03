@@ -72,6 +72,8 @@ public class Swim : MonoBehaviour
 
     private void Jump()
     {
+        StopSwimming();
+
         player.rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         player.playerRotation.ResetTilt();
 
