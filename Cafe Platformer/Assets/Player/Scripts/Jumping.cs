@@ -60,8 +60,6 @@ public class Jumping : MonoBehaviour
                 // Trigger landing animation
                 player.animator.SetTrigger("Land");
                 player.animator.ResetTrigger("Jump");
-
-                Debug.Log("Landed");
             }
         }
     }

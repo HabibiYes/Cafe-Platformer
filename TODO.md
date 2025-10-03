@@ -21,19 +21,12 @@
     > Rabbit: Double jump
 
     > Bird: Glide
-
-- Clothes
-    > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
-
+- Movement
+    > Walk, Run, Jump(scales with button held), swim, climb, stick to walls(slide down), wall jump, glide
 
 ## In Progress
-- Inventory/Storage
-    > 10 storage slots per storage unit level works for both fridges and storage units
-
-    > Fridges can only hold food items, and storage units hold everything else
-
-    > Inventory has a seperate slots for your pack and clothing
-
+- Clothes
+    > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
 - Improved Movement
     > Glide
 
@@ -79,6 +72,7 @@
     > Yes, a combat system coming out of fuck all nowhere
 
     > Just melee attacks don't worry
+
 ## Completed (last 30 days)
 - Inventory/Storage
     > 5 hotbar slots (9/22)
@@ -93,7 +87,10 @@
 
     > Items can stack up to 20 (9/24)
 
+    > Inventory has a seperate slots for your clothing (9/29)
 - Improved Movement
     > Wall hold & Wall jump (10/1)
 
     > Swimming (10/1)
+- Clothing
+    > Switch clothing in inventory (10/3)

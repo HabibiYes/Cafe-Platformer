@@ -11,26 +11,24 @@ public class HandleInventory : MonoBehaviour
 
 
     // Inventory vars
+    [Serializable]
     public struct InventoryItem
     {
         public string name;
+        public enum Type
+        {
+            Valuable = 0,
+            Consumable = 1,
+            Wearable = 2,
+        }
+        public Type type;
         public Texture2D image;
         public int count;
-    }
-    public List<InventoryItem> inventory = new List<InventoryItem>(10);
 
-    private InventoryItem InventoryDataToStruct(InventoryItemData data, int count = 0)
-    {
-        // Convert item data to struct
-        InventoryItem item = new InventoryItem()
-        {
-            name = data.name,
-            image = data.image,
-            count = count
-        };
-
-        return item;
+        [Header("If Wearable")]
+        public Mesh clothingMesh;
     }
+    [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>(11);
 
     private InventoryUI inventoryUI;
     [HideInInspector] public bool isOpen = false;
@@ -49,6 +47,10 @@ public class HandleInventory : MonoBehaviour
     bool isDragging = false;
     InventorySlot draggedItem;
     InventorySlot baseItem;
+
+    // Clothing
+    public delegate void ClothingChanged(Mesh mesh);
+    public ClothingChanged clothingChanged;
 
     private void Awake()
     {
@@ -86,11 +88,19 @@ public class HandleInventory : MonoBehaviour
             return;
 
         // Get first open index. If out of range, do not add.
-        int index = InventoryFirstOpenIndex(InventoryDataToStruct(data));
+        int index = InventoryFirstOpenIndex(data.data);
         if (index < 0 || index > inventory.Count)
             return;
 
-        InventoryItem item = InventoryDataToStruct(data, inventory[index].count + amount);
+        InventoryItem item = new InventoryItem()
+        {
+            name = data.data.name,
+            image = data.data.image,
+            type = data.data.type,
+            count = inventory[index].count + amount,
+
+            clothingMesh = data.data.clothingMesh,
+        };
         inventory[index] = item;
 
         inventoryUI.UpdateUI();
@@ -199,16 +209,20 @@ public class HandleInventory : MonoBehaviour
         // Resize array to match upgrade inventory
         if (inventory.Count != baseInventorySize * bagLevel + baseHotbarSize)
         {
+            // Create regular spots
             int count = baseInventorySize * bagLevel + baseHotbarSize - inventory.Count;
             for (int i = 0; i < count; i++)
             {
                 inventory.Add(new InventoryItem() { name = "None" });
             }
+
+            // Create clothing spot
+            inventory.Add(new InventoryItem() { name = "None", type = InventoryItem.Type.Wearable });
         }
 
         // Remake UI to match upgrade inventory
         inventoryUI.Destroy();
-        inventoryUI.Create(baseInventorySize * bagLevel, baseHotbarSize, inventorySlotGameObject);
+        inventoryUI.Create(baseInventorySize * bagLevel, baseHotbarSize, maxStackSize, inventorySlotGameObject);
     }
 
     private void DragItem()
@@ -233,7 +247,8 @@ public class HandleInventory : MonoBehaviour
         // Set image material
         Image draggedImage = go.GetComponent<Image>();
         Image baseImage = hits[0].gameObject.GetComponent<Image>();
-        draggedImage.materialForRendering.SetTexture("_MainTex", baseImage.materialForRendering.GetTexture("_MainTex"));
+        draggedImage.material = new(draggedImage.material);
+        draggedImage.material.SetTexture("_MainTex", baseImage.material.GetTexture("_MainTex"));
 
         // Set transform size
         RectTransform draggedTransform = go.GetComponent<RectTransform>();
@@ -267,7 +282,13 @@ public class HandleInventory : MonoBehaviour
         InventorySlot closestSlot = GetObjectFromDistance.FindClosestObject(slots, maxReleaseDistance, Input.mousePosition);
         if (closestSlot != null)
         {
-            ChangeInventory(closestSlot.index, draggedItem.index, closestSlot.data, draggedItem.data);
+            if (AllowedInSlot(draggedItem.data, closestSlot))
+            {
+                ChangeInventory(draggedItem.index, closestSlot.index, draggedItem.data, closestSlot.data);
+
+                // Call clothing change
+                clothingChanged?.Invoke(inventory[inventory.Count - 1].clothingMesh);
+            }
         }
 
         // Destroy dragged item
@@ -280,6 +301,11 @@ public class HandleInventory : MonoBehaviour
         isDragging = false;
 
         Debug.Log("Stopped dragging item");
+    }
+
+    private bool AllowedInSlot(InventoryItem item, InventorySlot slot)
+    {
+        return slot.allowedType == InventorySlot.AllowedType.Any || (InventoryItem.Type)(int)slot.allowedType == item.type;
     }
 
     private void Open()
