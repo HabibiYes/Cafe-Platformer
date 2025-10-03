@@ -24,6 +24,9 @@ public class HandleInventory : MonoBehaviour
         public Type type;
         public Texture2D image;
         public int count;
+
+        [Header("If Wearable")]
+        public Mesh clothingMesh;
     }
     [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>(11);
 
@@ -44,6 +47,10 @@ public class HandleInventory : MonoBehaviour
     bool isDragging = false;
     InventorySlot draggedItem;
     InventorySlot baseItem;
+
+    // Clothing
+    public delegate void ClothingChanged(Mesh mesh);
+    public ClothingChanged clothingChanged;
 
     private void Awake()
     {
@@ -90,7 +97,9 @@ public class HandleInventory : MonoBehaviour
             name = data.data.name,
             image = data.data.image,
             type = data.data.type,
-            count = inventory[index].count + amount
+            count = inventory[index].count + amount,
+
+            clothingMesh = data.data.clothingMesh,
         };
         inventory[index] = item;
 
@@ -274,7 +283,12 @@ public class HandleInventory : MonoBehaviour
         if (closestSlot != null)
         {
             if (AllowedInSlot(draggedItem.data, closestSlot))
+            {
                 ChangeInventory(draggedItem.index, closestSlot.index, draggedItem.data, closestSlot.data);
+
+                // Call clothing change
+                clothingChanged?.Invoke(inventory[inventory.Count - 1].clothingMesh);
+            }
         }
 
         // Destroy dragged item

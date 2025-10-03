@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 6104855430459233850}
   - component: {fileID: 1733591087052620391}
   - component: {fileID: 4166385968404555871}
+  - component: {fileID: 2817516017487526299}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -562,6 +563,7 @@ MonoBehaviour:
   handleDispenser: {fileID: 0}
   handleStorage: {fileID: 0}
   handleInventory: {fileID: 0}
+  handleClothing: {fileID: 0}
   trashItem: {fileID: 0}
   stationPriority: {fileID: 0}
   handleAnimationEvents: {fileID: 0}
@@ -757,6 +759,19 @@ MonoBehaviour:
   yLevelJumpDifference: 2
   animationLerpSpeed: 7.5
   isSwimming: 0
+--- !u!114 &2817516017487526299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e3969b6e36046a489fa468e6b2dde9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clothingMeshRenderer: {fileID: 3051264791399174085}
 --- !u!1001 &1224052373336291990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -814,6 +829,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf82ed93b257f4036996ac3a60dc4bef, type: 3}
+--- !u!137 &3051264791399174085 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4225766287465248083, guid: cf82ed93b257f4036996ac3a60dc4bef, type: 3}
+  m_PrefabInstance: {fileID: 1224052373336291990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8245260975735219903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7102660439895989289, guid: cf82ed93b257f4036996ac3a60dc4bef, type: 3}

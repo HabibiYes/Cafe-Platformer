@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     name: Test2
-    type: 0
+    type: 2
     image: {fileID: 2800000, guid: 4967dfcee94bddd4ba1430cb6fa1f304, type: 3}
     count: 0
+    clothingMesh: {fileID: -3979876171712677494, guid: 7e5f06de0c4734732ad53aa1cb3d44ef, type: 3}

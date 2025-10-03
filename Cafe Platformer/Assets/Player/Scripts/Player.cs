@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(TrashItem))]
 [RequireComponent(typeof(StationPriority))]
 [RequireComponent(typeof(HandleInventory))]
+[RequireComponent(typeof(HandleClothing))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public HandleDispenser handleDispenser;
     [HideInInspector] public HandleStorage handleStorage;
     [HideInInspector] public HandleInventory handleInventory;
+    [HideInInspector] public HandleClothing handleClothing;
     [HideInInspector] public TrashItem trashItem;
     [HideInInspector] public StationPriority stationPriority;
 
@@ -86,6 +88,7 @@ public class Player : MonoBehaviour
         handleDispenser = GetComponent<HandleDispenser>();
         handleStorage = GetComponent<HandleStorage>();
         handleInventory = GetComponent<HandleInventory>();
+        handleClothing = GetComponent<HandleClothing>();
         trashItem = GetComponent<TrashItem>();
         stationPriority = GetComponent<StationPriority>();
 
