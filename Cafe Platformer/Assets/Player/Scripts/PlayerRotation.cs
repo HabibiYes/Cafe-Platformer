@@ -32,4 +32,9 @@ public class PlayerRotation : MonoBehaviour
     {
         SetRotation(Quaternion.Euler(new Vector3(0, player.playerModel.rotation.eulerAngles.y, player.playerModel.rotation.eulerAngles.z)));
     }
+
+    public void ResetRoll()
+    {
+        SetRotation(Quaternion.Euler(new Vector3(player.playerModel.rotation.eulerAngles.x, player.playerModel.rotation.eulerAngles.y, 0)));
+    }
 }
