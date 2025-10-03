@@ -140,20 +140,6 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "5546938cb9894aa2aab774d6d4687066"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "5f3dc3fb21a8499c9171c75512cf4bf0"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
                     "m_Id": "efef84ad9f264ffeb6038414fcfecfd6"
                 },
                 "m_SlotId": 0
@@ -255,6 +241,20 @@
                     "m_Id": "7c5826b100f447a09aeb96dc20cf25f7"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "ecedbc459db9417dbab679a336a60fcc"
+                },
+                "m_SlotId": 4
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "5546938cb9894aa2aab774d6d4687066"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -497,8 +497,8 @@
     "m_ObjectId": "1db197c0490744c99363b9121ca1880e",
     "m_Title": "Color",
     "m_Position": {
-        "x": -1102.5,
-        "y": 261.0
+        "x": -1102.500244140625,
+        "y": 260.9999694824219
     }
 }
 
@@ -1049,8 +1049,8 @@
     "m_ObjectId": "5e7b0343438643b2947a57db8b5aac88",
     "m_Title": "Bar",
     "m_Position": {
-        "x": -1402.0001220703125,
-        "y": -528.5
+        "x": -1402.000244140625,
+        "y": -528.5000610351563
     }
 }
 

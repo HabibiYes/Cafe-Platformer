@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Supplies))]
@@ -8,6 +9,7 @@ public class Dispenser : Station
 
     [HideInInspector] public Supplies supplies;
     [HideInInspector] public Material supplyBar;
+    [HideInInspector] public TMP_Text supplyBarCount;
 
     MeshRenderer meshRenderer;
 
@@ -16,7 +18,9 @@ public class Dispenser : Station
         meshRenderer = GetComponent<MeshRenderer>();
 
         supplies = GetComponent<Supplies>();
-        supplyBar = transform.Find("SupplyBar").GetComponent<MeshRenderer>().material;
+        Transform supplyBarTransform = transform.Find("SupplyBar");
+        supplyBar = supplyBarTransform.GetComponent<MeshRenderer>().material;
+        supplyBarCount = supplyBarTransform.GetComponentInChildren<TMP_Text>();
     }
 
     public DrinkData GetDrinkData()
@@ -43,6 +47,8 @@ public class Dispenser : Station
 
     public void UpdateSupplyBar()
     {
-        supplyBar.SetFloat("_Supply", (float)supplies.drinkSupplies[GetDrinkData().name] / supplies.maxSupplies);
+        float count = supplies.drinkSupplies[GetDrinkData().name];
+        supplyBar.SetFloat("_Supply", count / supplies.maxSupplies);
+        supplyBarCount.text = Mathf.RoundToInt(count).ToString();
     }
 }
