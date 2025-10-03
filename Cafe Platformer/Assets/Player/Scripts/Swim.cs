@@ -40,11 +40,6 @@ public class Swim : MonoBehaviour
         // Get move direction
         moveDir = player.playerMovement.GetMoveDirection(true);
 
-        // Player forces
-        MovePlayer();
-        ApplyDrag();
-        SpeedLimit();
-
         // Set swimming animation blend
         player.animator.SetFloat("SwimBlend", Mathf.Lerp(player.animator.GetFloat("SwimBlend"), player.rb.linearVelocity.magnitude / maxSpeed, animationLerpSpeed * Time.deltaTime));
 
@@ -52,9 +47,25 @@ public class Swim : MonoBehaviour
             player.playerRotation.SetRotation(Quaternion.Lerp(player.playerModel.rotation, Quaternion.LookRotation(moveDir), rotationSpeed * Time.deltaTime));
     }
 
+    private void FixedUpdate()
+    {
+        // Player forces
+        MovePlayer();
+        ApplyDrag();
+        SpeedLimit();
+    }
+
     private void MovePlayer()
     {
-        player.rb.AddForce(moveDir * acceleration, ForceMode.Force);
+        Vector3 moveForce = moveDir * acceleration;
+
+        // Keep player in water
+        if (player.rb.position.y + (moveForce.y / Mathf.Abs(moveForce.y)) > waterYLevel)
+        {
+            moveForce.y -= (player.rb.position + moveForce).y - waterYLevel;
+        }
+
+        player.rb.AddForce(moveForce, ForceMode.Force);
     }
 
     private void ApplyDrag()
