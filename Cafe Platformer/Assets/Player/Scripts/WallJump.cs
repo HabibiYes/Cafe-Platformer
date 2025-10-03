@@ -60,6 +60,8 @@ public class WallJump : MonoBehaviour
     {
         ReleaseFromWall();
 
+        player.jumping.isJumping = true;
+
         player.rb.AddForce(wallNormal * horizontalWallJumpForce + Vector3.up * verticalWallJumpForce, ForceMode.Impulse);
 
         // Rotate player away from wall
