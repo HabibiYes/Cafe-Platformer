@@ -30,12 +30,9 @@ public class Jumping : MonoBehaviour
 
     public void Jump()
     {
-        isJumping = true;
         player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, player.rb.linearVelocity.y + jumpForce * player.rb.mass, player.rb.linearVelocity.z);
 
-        // Trigger jump animation
-        player.animator.SetTrigger("Jump");
-        player.animator.ResetTrigger("Land");
+        TriggerJumpAnimation();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -44,23 +41,32 @@ public class Jumping : MonoBehaviour
         {
             if (player.playerMovement.OnValidSlope(false))
             {
-                isJumping = false;
                 Vector3 projectedFallingVector = Vector3.ProjectOnPlane(new Vector3(0, currentYVelocity, 0), player.playerMovement.GetSlopeNormal());
 
                 player.rb.AddForce(-projectedFallingVector, ForceMode.Impulse);
 
-                // Trigger landing animation
-                player.animator.SetTrigger("Land");
-                player.animator.ResetTrigger("Jump");
+                TriggerLandAnimation();
             }
             else if (player.playerMovement.IsGrounded(false))
             {
-                isJumping = false;
-
-                // Trigger landing animation
-                player.animator.SetTrigger("Land");
-                player.animator.ResetTrigger("Jump");
+                TriggerLandAnimation();
             }
         }
+    }
+
+    public void TriggerJumpAnimation()
+    {
+        isJumping = true;
+
+        player.animator.SetTrigger("Jump");
+        player.animator.ResetTrigger("Land");
+    }
+
+    public void TriggerLandAnimation()
+    {
+        isJumping = false;
+
+        player.animator.SetTrigger("Land");
+        player.animator.ResetTrigger("Jump");
     }
 }

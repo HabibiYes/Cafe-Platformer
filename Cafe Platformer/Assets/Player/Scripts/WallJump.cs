@@ -37,7 +37,6 @@ public class WallJump : MonoBehaviour
 
         // Start wall connect animation
         player.animator.SetTrigger("WallConnect");
-        player.animator.ResetTrigger("WallJump");
         player.animator.ResetTrigger("WallSlideFinished");
 
         Debug.Log("Connected to wall");
@@ -60,15 +59,12 @@ public class WallJump : MonoBehaviour
     {
         ReleaseFromWall();
 
-        player.jumping.isJumping = true;
-
         player.rb.AddForce(wallNormal * horizontalWallJumpForce + Vector3.up * verticalWallJumpForce, ForceMode.Impulse);
 
         // Rotate player away from wall
         player.playerRotation.SetRotation(Quaternion.LookRotation(wallNormal));
 
-        // Start wall jump animation
-        player.animator.SetTrigger("WallJump");
+        player.jumping.TriggerJumpAnimation();
 
         Debug.Log("Jumped from wall");
     }
