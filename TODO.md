@@ -17,12 +17,6 @@
     > Bird: Glide
 
 ## In Progress
-- Health
-    > Max HP is 25 (never changes)
-
-    > Natrual regen after 30 seconds at a rate of 1 HP/sec
-
-    > Player death on complete health depletion
 - HUD/Gadgets
     > Base hud is hotbar, money, thermometer, and health
 
@@ -94,3 +88,9 @@
     > Swimming (10/1)
 - Clothing
     > Switch clothing in inventory (10/3)
+- Health
+    > Max HP is 25 (never changes) (10/6)
+
+    > Natrual regen after 30 seconds at a rate of 1 HP/sec (10/6)
+
+    > Player death on complete health depletion (10/6)
