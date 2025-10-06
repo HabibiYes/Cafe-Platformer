@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Jumping))]
 [RequireComponent(typeof(WallJump))]
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public CinemachineInputAxisController cameraInputController;
 
     // Scripts
+    [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Jumping jumping;
     [HideInInspector] public WallJump wallJump;
@@ -79,6 +81,7 @@ public class Player : MonoBehaviour
         cameraInputController = GetComponentInChildren<CinemachineInputAxisController>();
 
         // Get scripts
+        playerHealth = GetComponent<PlayerHealth>();
         playerMovement = GetComponent<PlayerMovement>();
         jumping = GetComponent<Jumping>();
         wallJump = GetComponent<WallJump>();
