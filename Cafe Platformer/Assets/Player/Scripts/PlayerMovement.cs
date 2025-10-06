@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float airSpeedMultiplier = 0.25f;
     [SerializeField] private float rotationSpeed = 10f;
 
+    public bool canMove { get; private set; } = true;
+
     // Scaled acceleration
     private float acceleration { get => player.controls.Player.Sprint.IsPressed() ? sprintAcceleration : walkAcceleration; }
 
@@ -27,6 +29,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float slopeLerpSpeed = 7.5f;
     [SerializeField] private float slipForce = 10f;
     RaycastHit slopeHit;
+
+    [Header("Jumping")]
+    [SerializeField] private float jumpForce = 7f;
+    public bool isJumping { get; private set; } = false;
+    float currentYVelocity = 0f;
+
+    public bool canJump { get; private set; } = true;
 
     [Header("Animation")]
     [SerializeField] private float animationLerpSpeed = 10f;
@@ -44,6 +53,12 @@ public class PlayerMovement : MonoBehaviour
         movementAnimationCurve.AddKey(0f, 0f);
         movementAnimationCurve.AddKey(walkAcceleration / drag / maxSpeed, 0.5f);
         movementAnimationCurve.AddKey(1f, 1f);
+    }
+
+    private void Start()
+    {
+        // Add jump event to jump key
+        player.controls.Player.Jump.performed += (context) => { if (IsGrounded()) Jump(); };
     }
 
     private void Update()
@@ -77,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
             // Slip down slope
             Slip();
         }
+
+        currentYVelocity = rb.linearVelocity.y;
     }
 
     public Vector3 GetMoveDirection(bool allowVertical = false)
@@ -98,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rightRelative = right * input.x;
 
         // Get movement direction
-        if (player.canMove)
+        if (canMove)
             return (forwardRelative + rightRelative).normalized;
         else
             return Vector3.zero;
@@ -141,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(-flatVelocity * drag * airSpeedMultiplier, ForceMode.Force);
     }
 
+    // Slopes
     private void KeepPlayerOnSlope()
     {
         // Lerp the player towards the spherecast center, keeping them attached to the slope
@@ -159,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded(bool checkJumping = true)
     {
-        if (checkJumping && player.jumping.isJumping)
+        if (checkJumping && isJumping)
             return false;
 
         return Physics.SphereCast(transform.position, 0.5f, Vector3.down, out RaycastHit hit, groundCheckDistance, ground);
@@ -167,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool OnValidSlope(bool checkJumping = true)
     {
-        if (checkJumping && player.jumping.isJumping)
+        if (checkJumping && isJumping)
             return false;
 
         if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground))
@@ -185,10 +203,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnInvalidSlope(bool checkJumping = true)
     {
-        if (checkJumping && player.jumping.isJumping)
+        if (checkJumping && isJumping)
             return false;
 
-        if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground) && !player.jumping.isJumping)
+        if (Physics.SphereCast(transform.position, 0.5f, Vector3.down, out slopeHit, groundCheckDistance, ground) && !isJumping)
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle != 0 && angle > maxSlopeAngle;
@@ -200,10 +218,88 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(moveDir, slopeHit.normal);
     }
+    // End slopes
+
+    // Jumping
+    public void Jump()
+    {
+        player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, player.rb.linearVelocity.y + jumpForce * player.rb.mass, player.rb.linearVelocity.z);
+
+        TriggerJumpAnimation();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isJumping)
+        {
+            if (player.playerMovement.OnValidSlope(false))
+            {
+                Vector3 projectedFallingVector = Vector3.ProjectOnPlane(new Vector3(0, currentYVelocity, 0), player.playerMovement.GetSlopeNormal());
+
+                player.rb.AddForce(-projectedFallingVector, ForceMode.Impulse);
+
+                TriggerLandAnimation();
+            }
+            else if (player.playerMovement.IsGrounded(false))
+            {
+                TriggerLandAnimation();
+            }
+        }
+    }
+
+    public void TriggerJumpAnimation()
+    {
+        isJumping = true;
+
+        player.animator.SetTrigger("Jump");
+        player.animator.ResetTrigger("Land");
+    }
+
+    public void TriggerLandAnimation()
+    {
+        isJumping = false;
+
+        player.animator.SetTrigger("Land");
+        player.animator.ResetTrigger("Jump");
+    }
+    // End jumping
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(new Ray(transform.position, Vector3.down * groundCheckDistance));
+    }
+
+    // Movement booleans
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void EnableJumping()
+    {
+        canJump = true;
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
+    }
+
+    public void DisableJumping()
+    {
+        canJump = false;
+    }
+
+    public void EnableAllMovement()
+    {
+        EnableMovement();
+        EnableJumping();
+    }
+
+    public void DisableAllMovement()
+    {
+        DisableMovement();
+        DisableJumping();
     }
 }

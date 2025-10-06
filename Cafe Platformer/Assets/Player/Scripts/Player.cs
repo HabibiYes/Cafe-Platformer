@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerMovement))]
-[RequireComponent(typeof(Jumping))]
 [RequireComponent(typeof(WallJump))]
 [RequireComponent(typeof(Swim))]
 [RequireComponent(typeof(PlayerRotation))]
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour
     // Scripts
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public PlayerMovement playerMovement;
-    [HideInInspector] public Jumping jumping;
     [HideInInspector] public WallJump wallJump;
     [HideInInspector] public Swim swim;
     [HideInInspector] public PlayerRotation playerRotation;
@@ -55,8 +53,6 @@ public class Player : MonoBehaviour
     public Mode mode = Mode.Platformer;
 
     public float interactRange = 3f;
-
-    [HideInInspector] public bool canMove = true;
 
     private void Awake()
     {
@@ -83,7 +79,6 @@ public class Player : MonoBehaviour
         // Get scripts
         playerHealth = GetComponent<PlayerHealth>();
         playerMovement = GetComponent<PlayerMovement>();
-        jumping = GetComponent<Jumping>();
         wallJump = GetComponent<WallJump>();
         swim = GetComponent<Swim>();
         playerRotation = GetComponent<PlayerRotation>();
@@ -160,15 +155,5 @@ public class Player : MonoBehaviour
         trashItem.enabled = false;
 
         mode = Mode.Platformer;
-    }
-
-    public void EnableMovement()
-    {
-        canMove = true;
-    }
-
-    public void DisableMovement()
-    {
-        canMove = false;
     }
 }

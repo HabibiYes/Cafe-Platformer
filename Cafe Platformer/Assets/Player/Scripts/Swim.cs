@@ -89,7 +89,7 @@ public class Swim : MonoBehaviour
         player.playerRotation.ResetTilt();
         player.playerRotation.ResetRoll();
 
-        player.jumping.TriggerJumpAnimation();
+        player.playerMovement.TriggerJumpAnimation();
     }
 
     private void StartSwimming()
@@ -99,7 +99,6 @@ public class Swim : MonoBehaviour
 
         player.rb.useGravity = false;
         player.playerMovement.enabled = false;
-        player.jumping.enabled = false;
 
         // Start swim animation
         player.animator.SetBool("Swimming", true);
@@ -114,7 +113,6 @@ public class Swim : MonoBehaviour
 
         player.rb.useGravity = true;
         player.playerMovement.enabled = true;
-        player.jumping.enabled = true;
 
         // Stop swim animation
         player.animator.SetBool("Swimming", false);

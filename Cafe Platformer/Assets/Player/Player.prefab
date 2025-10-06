@@ -398,7 +398,6 @@ GameObject:
   - component: {fileID: 1688217304780181510}
   - component: {fileID: 8505818621098470612}
   - component: {fileID: 1895022137358924228}
-  - component: {fileID: 2349531008263143818}
   - component: {fileID: 3393604642244418350}
   - component: {fileID: 5036867991383192761}
   - component: {fileID: 164446283544546945}
@@ -557,7 +556,6 @@ MonoBehaviour:
   cameraInputController: {fileID: 0}
   playerHealth: {fileID: 0}
   playerMovement: {fileID: 1895022137358924228}
-  jumping: {fileID: 0}
   wallJump: {fileID: 0}
   swim: {fileID: 0}
   playerRotation: {fileID: 0}
@@ -571,7 +569,6 @@ MonoBehaviour:
   handleAnimationEvents: {fileID: 0}
   mode: 0
   interactRange: 3
-  canMove: 1
 --- !u!114 &8505818621098470612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,8 +581,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527f532f824ce4ed3a49c1466eb7bf8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 25
+  health: 0
   regenerationStartTime: 30
   regenerationRate: 1
 --- !u!114 &1895022137358924228
@@ -614,21 +611,8 @@ MonoBehaviour:
   maxSlopeAngle: 40
   slopeLerpSpeed: 7.5
   slipForce: 10
-  animationLerpSpeed: 10
---- !u!114 &2349531008263143818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814327211277529523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba4767bbfe5a5463cba3e34d0f2f1c07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   jumpForce: 7
-  isJumping: 0
+  animationLerpSpeed: 10
 --- !u!114 &3393604642244418350
 MonoBehaviour:
   m_ObjectHideFlags: 0
