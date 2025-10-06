@@ -310,7 +310,7 @@ public class HandleInventory : MonoBehaviour
 
     private void Open()
     {
-        player.DisableMovement();
+        player.playerMovement.DisableAllMovement();
         inventoryUI.Open();
         isOpen = true;
 
@@ -322,7 +322,7 @@ public class HandleInventory : MonoBehaviour
 
     private void Close()
     {
-        player.EnableMovement();
+        player.playerMovement.EnableAllMovement();
         inventoryUI.Close();
         isOpen = false;
 

@@ -26,7 +26,6 @@ public class WallJump : MonoBehaviour
     {
         onWall = true;
         player.playerMovement.enabled = false;
-        player.jumping.enabled = false;
 
         // Remove gravity and start slipping
         player.rb.useGravity = false;
@@ -46,7 +45,6 @@ public class WallJump : MonoBehaviour
     {
         onWall = false;
         player.playerMovement.enabled = true;
-        player.jumping.enabled = true;
 
         player.rb.useGravity = true;
 
@@ -64,7 +62,7 @@ public class WallJump : MonoBehaviour
         // Rotate player away from wall
         player.playerRotation.SetRotation(Quaternion.LookRotation(wallNormal));
 
-        player.jumping.TriggerJumpAnimation();
+        player.playerMovement.TriggerJumpAnimation();
 
         Debug.Log("Jumped from wall");
     }

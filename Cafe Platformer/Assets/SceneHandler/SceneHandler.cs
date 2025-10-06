@@ -33,13 +33,13 @@ public class SceneHandler : MonoBehaviour
 
     public async Task LoadScene(string scene)
     {
-        Player.Instance.DisableMovement();
+        Player.Instance.playerMovement.DisableAllMovement();
 
         await FadeIn();
         SceneManager.LoadScene(scene);
         await FadeOut();
 
-        Player.Instance.EnableMovement();
+        Player.Instance.playerMovement.EnableAllMovement();
     }
 
     public async Task FadeIn()
