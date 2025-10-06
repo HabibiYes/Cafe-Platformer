@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 1815934877426226109}
   - component: {fileID: 8375753585463072636}
   - component: {fileID: 1688217304780181510}
+  - component: {fileID: 8505818621098470612}
   - component: {fileID: 1895022137358924228}
   - component: {fileID: 2349531008263143818}
   - component: {fileID: 3393604642244418350}
@@ -554,6 +555,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   cameraInputController: {fileID: 0}
+  playerHealth: {fileID: 0}
   playerMovement: {fileID: 1895022137358924228}
   jumping: {fileID: 0}
   wallJump: {fileID: 0}
@@ -570,6 +572,22 @@ MonoBehaviour:
   mode: 0
   interactRange: 3
   canMove: 1
+--- !u!114 &8505818621098470612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 527f532f824ce4ed3a49c1466eb7bf8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 25
+  regenerationStartTime: 30
+  regenerationRate: 1
 --- !u!114 &1895022137358924228
 MonoBehaviour:
   m_ObjectHideFlags: 0

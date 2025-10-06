@@ -1,18 +1,12 @@
 # Cafe Platformer TODO
 
 ## High Priority
-- Health
-    > Max HP is 25 (never changes)
-
-    > Natrual regen after 30 seconds at a rate of 1 HP/sec
 - Temperature
     > Temperture too high or too low player slows and starts losing health
 
     > 0 to 100 system, 0 is cold, 100 is hot, could do -100 to 100 if thats easier
 
     > Different zones have different base tempertures
-- HUD/Gadgets
-    > Base hud is hotbar, money, thermometer, and health
 - Characters
     > Shark: Water breathing, Faster swim speed
 
@@ -21,20 +15,26 @@
     > Rabbit: Double jump
 
     > Bird: Glide
-- Movement
-    > Walk, Run, Jump(scales with button held), swim, climb, stick to walls(slide down), wall jump, glide
 
 ## In Progress
-- Clothes
-    > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
-- Improved Movement
-    > Glide
+- Health
+    > Max HP is 25 (never changes)
+
+    > Natrual regen after 30 seconds at a rate of 1 HP/sec
+
+    > Player death on complete health depletion
+- HUD/Gadgets
+    > Base hud is hotbar, money, thermometer, and health
 
 ## Future Enhancements
 - Inventory/Storage
     > When a item is hovered highlight and enlarge the frame
 
     > When a menu is open the background for it changes depending on what is open
+- Clothes
+    > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
+- Improved Movement
+    > Glide
 - HUD/Gadgets
     > Compass adds directions
 
