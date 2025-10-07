@@ -54,6 +54,24 @@ public class Player : MonoBehaviour
 
     public float interactRange = 3f;
 
+    [SerializeField] private int maxMoney = 999999999;
+    public int money { get; private set; }
+    public string moneyDisplay
+    {
+        get
+        {
+            if (money < 1000)
+                return "$" + money;
+            else if (money < 1000000)
+                return "$" + Mathf.Floor(money / 10f) / 100f + "k";
+            else
+                return "$" + Mathf.Floor(money / 10000f) / 100f + "m";
+        }
+    }
+
+    public delegate void MoneyChanged();
+    public MoneyChanged onMoneyChanged;
+
     private void Awake()
     {
         // Set instance and keep loaded, or destroy if already existing
@@ -109,6 +127,12 @@ public class Player : MonoBehaviour
         MouseLock.Lock();
     }
 
+    private void Start()
+    {
+        onMoneyChanged += UpdateMoneyText;
+        SetMoney(0);
+    }
+
     private void OnEnable()
     {
         // Enable player controls
@@ -155,5 +179,28 @@ public class Player : MonoBehaviour
         trashItem.enabled = false;
 
         mode = Mode.Platformer;
+    }
+
+    public void SetMoney(int amount)
+    {
+        money = Mathf.Clamp(amount, 0, maxMoney);
+        onMoneyChanged?.Invoke();
+    }
+
+    public void AddMoney(int amount)
+    {
+        money = Mathf.Clamp(money + amount, 0, maxMoney);
+        onMoneyChanged?.Invoke();
+    }
+
+    public void RemoveMoney(int amount)
+    {
+        money = Mathf.Clamp(money - amount, 0, maxMoney);
+        onMoneyChanged?.Invoke();
+    }
+
+    private void UpdateMoneyText()
+    {
+        CanvasHandler.Instance.moneyText.text = moneyDisplay;
     }
 }

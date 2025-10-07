@@ -26,12 +26,13 @@ public class PlayerHealth : MonoBehaviour
     public delegate void PlayerDeath();
     public PlayerDeath onPlayerDeath;
 
-    // HUD
-    private Image healthBar;
+    Image healthBar;
 
     private void Start()
     {
         player = GetComponent<Player>();
+
+        healthBar = CanvasHandler.Instance.healthBar;
 
         // Get health bar
         healthBar = GameObject.Find("HealthBar").GetComponent<Image>();

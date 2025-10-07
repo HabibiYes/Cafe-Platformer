@@ -17,10 +17,6 @@
     > Bird: Glide
 
 ## In Progress
-- HUD/Gadgets
-    > Money
-
-    > Temp
 
 ## Future Enhancements
 - Inventory/Storage
@@ -32,6 +28,8 @@
 - Improved Movement
     > Glide
 - HUD/Gadgets
+    > Temp
+
     > Compass adds directions
 
     > Pocket watch adds clock
@@ -100,3 +98,5 @@
     > Hotbar (9/22)
 
     > Health bar (10/7)
+
+    > Money (10/7)
