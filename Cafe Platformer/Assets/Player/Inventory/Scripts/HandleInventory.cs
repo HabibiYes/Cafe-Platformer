@@ -164,15 +164,15 @@ public class HandleInventory : MonoBehaviour
     /// </summary>
     private int InventoryFirstOpenIndex(InventoryItem compare)
     {
-        // Find all possible indecies
+        // Find all possible indecies, excluding clothing slot
         List<int> foundIndecies = new();
         int i = 0;
-        foreach (InventoryItem item in inventory)
+        foreach (InventoryItem item in inventory.GetRange(0, inventory.Count - 1))
         {
             // Check if 'item' and 'compare' are the same item
             if (item.name == compare.name || item.name == "None")
             {
-                if (item.count != maxStackSize)
+                if (item.count != (item.type == InventoryItem.Type.Wearable ? 1 : maxStackSize))
                 {
                     foundIndecies.Add(i);
                 }
