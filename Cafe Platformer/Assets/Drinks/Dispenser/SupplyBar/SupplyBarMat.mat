@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SupplyBarMat
-  m_Shader: {fileID: -6465566751694194690, guid: 44cb0c9a64dfd4f5fa384516a077cc53, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 1e930acf5dddc4c89bb0295bbbeaec77, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -51,11 +51,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Fill: 0
+    - _Height: 0.25
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Supply: 1
+    - _Width: 1
     m_Colors:
-    - _High_Color: {r: 0, g: 1, b: 0.03731489, a: 0}
-    - _Low_Color: {r: 1, g: 0, b: 0, a: 0}
+    - _Background_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Foreground_Color_High: {r: 0, g: 1, b: 0, a: 1}
+    - _Foreground_Color_Low: {r: 1, g: 0, b: 0, a: 1}
+    - _High_Color: {r: 0, g: 1, b: 0.03731489, a: 1}
+    - _Low_Color: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

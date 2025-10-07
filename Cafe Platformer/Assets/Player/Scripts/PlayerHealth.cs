@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerHealth : MonoBehaviour
     public float health;
     public int roundedHealth { get => Mathf.FloorToInt(health); }
 
+    public delegate void HealthChanged();
+    public HealthChanged onHealthChanged;
+
     [Header("Regeneration")]
     [SerializeField, Tooltip("Time to wait before starting regeneration")] private float regenerationStartTime = 30f;
     [SerializeField, Tooltip("Health regen rate in health per second")] private float regenerationRate = 1f;
@@ -18,15 +22,25 @@ public class PlayerHealth : MonoBehaviour
 
     Coroutine regenerationCoroutine;
 
+    // Death delegate
     public delegate void PlayerDeath();
     public PlayerDeath onPlayerDeath;
+
+    // HUD
+    private Image healthBar;
 
     private void Start()
     {
         player = GetComponent<Player>();
 
-        player.controls.Player.Interact.performed += (context) => Heal(10);
-        player.controls.Player.AltInteract.performed += (context) => Damage(10);
+        // Get health bar
+        healthBar = GameObject.Find("HealthBar").GetComponent<Image>();
+
+        // Instantiate health bar material
+        healthBar.material = new(healthBar.material);
+
+        // Update health bar on health change
+        onHealthChanged += () => UpdateHealthBar();
 
         MaxHealth();
     }
@@ -48,6 +62,9 @@ public class PlayerHealth : MonoBehaviour
     {
         health = maxHealth;
 
+        // Call health changed delegate
+        onHealthChanged?.Invoke();
+
         Debug.Log("Health maxed");
     }
 
@@ -58,6 +75,9 @@ public class PlayerHealth : MonoBehaviour
             StopCoroutine(regenerationCoroutine);
 
         health = Mathf.Clamp(health - damage, 0, maxHealth);
+
+        // Call health changed delegate
+        onHealthChanged?.Invoke();
 
         // Call player death
         if (health == 0)
@@ -71,6 +91,9 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(float heal)
     {
         health = Mathf.Clamp(health + heal, 0, maxHealth);
+
+        // Call health changed delegate
+        onHealthChanged?.Invoke();
 
         Debug.Log("Healed for " + heal + " health");
     }
@@ -101,5 +124,11 @@ public class PlayerHealth : MonoBehaviour
         regenerating = false;
         regenerationCoroutine = null;
         ResetRegenerationTimer();
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthBar.material.SetFloat("_Fill", health / maxHealth);
+        healthBar.SetMaterialDirty();
     }
 }

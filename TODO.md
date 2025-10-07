@@ -18,7 +18,9 @@
 
 ## In Progress
 - HUD/Gadgets
-    > Base hud is hotbar, money, thermometer, and health
+    > Money
+
+    > Temp
 
 ## Future Enhancements
 - Inventory/Storage
@@ -94,3 +96,7 @@
     > Natrual regen after 30 seconds at a rate of 1 HP/sec (10/6)
 
     > Player death on complete health depletion (10/6)
+- HUD
+    > Hotbar (9/22)
+
+    > Health bar (10/7)

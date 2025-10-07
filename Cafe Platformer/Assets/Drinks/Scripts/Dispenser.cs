@@ -48,7 +48,7 @@ public class Dispenser : Station
     public void UpdateSupplyBar()
     {
         float count = supplies.drinkSupplies[GetDrinkData().name];
-        supplyBar.SetFloat("_Supply", count / supplies.maxSupplies);
+        supplyBar.SetFloat("_Fill", count / supplies.maxSupplies);
         supplyBarCount.text = Mathf.RoundToInt(count).ToString();
     }
 }
