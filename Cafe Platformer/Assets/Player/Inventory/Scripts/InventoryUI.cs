@@ -24,14 +24,14 @@ public class InventoryUI : MonoBehaviour
             GameObject slotGo = Instantiate(inventorySlotGameObject, Vector3.zero, Quaternion.identity, parent);
 
             // Get slot component
-            InventorySlot slotComponent = slotGo.GetComponent<InventorySlot>();
+            InventoryItemUI inventoryBox = slotGo.GetComponent<InventoryItemUI>();
 
             // Set slot index
-            slotComponent.index = i < totalSize ? i : i - totalSize;
+            inventoryBox.index = i < totalSize ? i : i - totalSize;
 
             // Set inventory slots to allow any type, and set max stack size
-            slotComponent.allowedType = InventorySlot.AllowedType.Any;
-            slotComponent.maxStackSize = maxStackSize;
+            inventoryBox.allowedType = InventoryItemUI.AllowedType.Any;
+            inventoryBox.maxStackSize = maxStackSize;
 
             // Get child image component
             Image image = slotGo.GetComponent<Image>();
@@ -42,12 +42,16 @@ public class InventoryUI : MonoBehaviour
             inventorySlots.Add(image);
         }
 
-        // Set clothing slot
+        // Set clothing slot material
         clothingSlot.material = new(clothingSlot.material);
-        InventorySlot clothingSlotComponent = clothingSlot.GetComponent<InventorySlot>();
+
+        // Set clothing slot values
+        InventoryItemUI clothingSlotComponent = clothingSlot.GetComponent<InventoryItemUI>();
         clothingSlotComponent.index = Player.Instance.handleInventory.inventory.Count - 1;
-        clothingSlotComponent.allowedType = InventorySlot.AllowedType.Wearable;
+        clothingSlotComponent.allowedType = InventoryItemUI.AllowedType.Wearable;
         clothingSlotComponent.maxStackSize = 1;
+
+        // Add clothing slot
         inventorySlots.Add(clothingSlot);
 
         UpdateUI();
@@ -74,21 +78,17 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            InventorySlot slotComponent = inventorySlots[i].GetComponent<InventorySlot>();
-            Image slot = inventorySlots[i];
+            InventoryItemUI inventoryBox = inventorySlots[i].GetComponent<InventoryItemUI>();
+            Image boxUI = inventorySlots[i];
 
-            int index = slotComponent.index;
-
-            // Set data
-            slotComponent.data = inventory[index];
+            int index = inventoryBox.index;
 
             // Set material
-            slot.material.SetTexture("_MainTex", inventory[index].image);
-            slot.SetMaterialDirty();
+            boxUI.material.SetTexture("_MainTex", inventory[index].texture);
+            boxUI.SetMaterialDirty();
 
             // Set count
-            slotComponent.data.count = inventory[index].count;
-            slotComponent.SetCountText();
+            inventoryBox.SetCountText(inventory[index].count);
         }
 
         Debug.Log("Updated inventory UI");

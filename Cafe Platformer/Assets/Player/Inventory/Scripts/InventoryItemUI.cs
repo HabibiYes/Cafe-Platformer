@@ -1,18 +1,19 @@
 using TMPro;
 using UnityEngine;
 
-public class InventorySlot : MonoBehaviour
+public class InventoryItemUI : MonoBehaviour
 {
     [HideInInspector] public int index = -1;
-    [HideInInspector] public HandleInventory.InventoryItem data;
+
     public enum AllowedType
     {
-        Valuable = 0,
-        Consumable = 1,
-        Wearable = 2,
-        Any = 3,
+        Any = 0,
+        Valuable = 1,
+        Consumable = 2,
+        Wearable = 3,
     }
     [HideInInspector] public AllowedType allowedType = AllowedType.Any;
+
     [HideInInspector] public int maxStackSize = 20;
 
     [HideInInspector] public TMP_Text tmpText;
@@ -22,8 +23,9 @@ public class InventorySlot : MonoBehaviour
         tmpText = GetComponentInChildren<TMP_Text>();
     }
 
-    public void SetCountText()
+    public void SetCountText(int count)
     {
-        tmpText.text = data.count > 0 ? data.count.ToString() : "";
+        // Set count text. If zero, no text.
+        tmpText.text = count > 0 ? count.ToString() : "";
     }
 }
