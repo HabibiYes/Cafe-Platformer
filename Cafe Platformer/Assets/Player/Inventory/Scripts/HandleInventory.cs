@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,24 +12,41 @@ public class HandleInventory : MonoBehaviour
 
 
     // Inventory vars
-    [Serializable]
     public struct InventoryItem
     {
         public string name;
+
         public enum Type
         {
-            Valuable = 0,
-            Consumable = 1,
-            Wearable = 2,
+            None = 0,
+            Valuable = 1,
+            Consumable = 2,
+            Wearable = 3,
         }
         public Type type;
-        public Texture2D image;
+
+        public Texture2D texture;
+
         public int count;
 
-        [Header("If Wearable")]
+        // If wearable
         public Mesh clothingMesh;
     }
-    [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>(11);
+    [HideInInspector] public List<InventoryItem> inventory = new(11);
+
+    public InventoryItem InventoryItemDataToStruct(InventoryItemData data, int count = 0)
+    {
+        InventoryItem item = new()
+        {
+            name = data.itemName,
+            type = data.type,
+            texture = data.texture,
+            count = count,
+
+            clothingMesh = data.clothingMesh
+        };
+        return item;
+    }
 
     private InventoryUI inventoryUI;
     [HideInInspector] public bool isOpen = false;
@@ -45,8 +63,8 @@ public class HandleInventory : MonoBehaviour
     [Header("Dragging")]
     [SerializeField] private float maxReleaseDistance = 10f;
     bool isDragging = false;
-    InventorySlot draggedItem;
-    InventorySlot baseItem;
+    InventoryItemUI draggedItem;
+    InventoryItemUI baseItem;
 
     // Clothing
     public delegate void ClothingChanged(Mesh mesh);
@@ -64,6 +82,7 @@ public class HandleInventory : MonoBehaviour
     {
         // Get inventory UI
         inventoryUI = GameObject.FindFirstObjectByType<InventoryUI>();
+
         MakeInventory();
 
         // Hide inventory at start
@@ -75,37 +94,28 @@ public class HandleInventory : MonoBehaviour
         if (isDragging)
         {
             draggedItem.transform.position = Input.mousePosition;
-            draggedItem.data.count = baseItem.data.count;
-            draggedItem.SetCountText();
+            draggedItem.SetCountText(inventory[baseItem.index].count);
         }
     }
 
     // Inventory methods
-    public void AddInventory(InventoryItemData data, int amount = 1)
+    public void AddInventory(InventoryItemData itemData, int amount = 1)
     {
         // Check if data is null
-        if (data == null)
+        if (itemData == null)
             return;
 
         // Get first open index. If out of range, do not add.
-        int index = InventoryFirstOpenIndex(data.data);
+        int index = InventoryFirstValidIndex(InventoryItemDataToStruct(itemData));
         if (index < 0 || index > inventory.Count)
             return;
 
-        InventoryItem item = new InventoryItem()
-        {
-            name = data.data.name,
-            image = data.data.image,
-            type = data.data.type,
-            count = inventory[index].count + amount,
-
-            clothingMesh = data.data.clothingMesh,
-        };
+        InventoryItem item = InventoryItemDataToStruct(itemData, inventory[index].count + 1);
         inventory[index] = item;
 
         inventoryUI.UpdateUI();
 
-        Debug.Log("Added " + data.name + " to inventory at index " + index);
+        Debug.Log("Added " + item.name + " to inventory at index " + index);
     }
 
     public void ChangeInventory(int index1, int index2, InventoryItem data1, InventoryItem data2)
@@ -124,10 +134,14 @@ public class HandleInventory : MonoBehaviour
         if (index < 0 || index >= inventory.Count)
             return;
 
-        // Remove specified amount of inventory item at index, if none left, remove
+        // Remove specified amount of inventory item at index, if none left, set slot to empty
         if (inventory[index].count - amount <= 0)
         {
-            inventory[index] = new InventoryItem() { name = "None" };
+            inventory[index] = new InventoryItem()
+            {
+                name = "None",
+                type = InventoryItem.Type.None,
+            };
 
             Debug.Log("Removed inventory item at " + index);
         }
@@ -136,7 +150,7 @@ public class HandleInventory : MonoBehaviour
             inventory[index] = new InventoryItem()
             {
                 name = inventory[index].name,
-                image = inventory[index].image,
+                texture = inventory[index].texture,
                 count = inventory[index].count - amount
             };
 
@@ -162,23 +176,26 @@ public class HandleInventory : MonoBehaviour
     /// <summary>
     /// Finds the first open index in the inventory.
     /// </summary>
-    private int InventoryFirstOpenIndex(InventoryItem compare)
+    private int InventoryFirstValidIndex(InventoryItem compare)
     {
         // Find all possible indecies, excluding clothing slot
         List<int> foundIndecies = new();
-        int i = 0;
-        foreach (InventoryItem item in inventory.GetRange(0, inventory.Count - 1))
+        for (int i = 0; i < inventory.Count - 1; i++)
         {
+            InventoryItem item = inventory[i];
+
             // Check if 'item' and 'compare' are the same item
             if (item.name == compare.name || item.name == "None")
             {
-                if (item.count != (item.type == InventoryItem.Type.Wearable ? 1 : maxStackSize))
+                // Get current count of inventory slot
+                int count = inventory[i].count;
+
+                // Check if count is less than max stack size, or is zero is wearable
+                if (count != (item.type == InventoryItem.Type.Wearable ? 1 : maxStackSize))
                 {
                     foundIndecies.Add(i);
                 }
             }
-
-            i++;
         }
 
         if (foundIndecies.Count == 0)
@@ -238,11 +255,16 @@ public class HandleInventory : MonoBehaviour
         hits = hits.Where(x => x.gameObject.CompareTag("InventoryItemUI")).ToList();
 
         // Return if nothing was hit or none of the hits were valid
-        if (hits.Count == 0 || !hits.Any(x => x.gameObject.GetComponent<InventorySlot>().data.name != "None"))
+        if (hits.Count == 0 || !hits.Any(x => inventory[x.gameObject.GetComponent<InventoryItemUI>().index].name != "None"))
             return;
 
         // Create inventory item to drag
         GameObject go = Instantiate(inventorySlotGameObject, Input.mousePosition, Quaternion.identity, CanvasHandler.Instance.transform);
+
+        // Set transform size
+        RectTransform draggedTransform = go.GetComponent<RectTransform>();
+        RectTransform baseTransform = hits[0].gameObject.GetComponent<RectTransform>();
+        draggedTransform.sizeDelta = baseTransform.sizeDelta;
 
         // Set image material
         Image draggedImage = go.GetComponent<Image>();
@@ -250,20 +272,10 @@ public class HandleInventory : MonoBehaviour
         draggedImage.material = new(draggedImage.material);
         draggedImage.material.SetTexture("_MainTex", baseImage.material.GetTexture("_MainTex"));
 
-        // Set transform size
-        RectTransform draggedTransform = go.GetComponent<RectTransform>();
-        RectTransform baseTransform = hits[0].gameObject.GetComponent<RectTransform>();
-        draggedTransform.sizeDelta = baseTransform.sizeDelta;
-
         // Set dragged item and dragged item index
-        draggedItem = go.GetComponent<InventorySlot>();
-        baseItem = hits[0].gameObject.GetComponent<InventorySlot>();
-        draggedItem.index = hits[0].gameObject.GetComponent<InventorySlot>().index;
-        draggedItem.data = baseItem.data;
-
-        // Set dragged item count
-        draggedItem.data.count = baseItem.data.count;
-        draggedItem.SetCountText();
+        draggedItem = go.GetComponent<InventoryItemUI>();
+        baseItem = hits[0].gameObject.GetComponent<InventoryItemUI>();
+        draggedItem.index = hits[0].gameObject.GetComponent<InventoryItemUI>().index;
 
         isDragging = true;
 
@@ -277,14 +289,17 @@ public class HandleInventory : MonoBehaviour
             return;
 
         // Place dragged item into slot
-        List<InventorySlot> slots = GameObject.FindObjectsByType<InventorySlot>(FindObjectsSortMode.None).ToList();
+        List<InventoryItemUI> slots = GameObject.FindObjectsByType<InventoryItemUI>(FindObjectsSortMode.None).ToList();
         slots.Remove(draggedItem);
-        InventorySlot closestSlot = GetObjectFromDistance.FindClosestObject(slots, maxReleaseDistance, Input.mousePosition);
+        InventoryItemUI closestSlot = GetObjectFromDistance.FindClosestObject(slots, maxReleaseDistance, Input.mousePosition);
         if (closestSlot != null)
         {
-            if (AllowedInSlot(draggedItem.data, closestSlot))
+            Debug.Log(inventory[draggedItem.index].type.HumanName());
+            Debug.Log(((InventoryItem.Type)(int)closestSlot.allowedType).HumanName());
+            if (SlotTypeMatches(inventory[draggedItem.index], closestSlot))
             {
-                ChangeInventory(draggedItem.index, closestSlot.index, draggedItem.data, closestSlot.data);
+                Debug.Log("Slot is valid");
+                ChangeInventory(draggedItem.index, closestSlot.index, inventory[draggedItem.index], inventory[closestSlot.index]);
 
                 // Call clothing change
                 clothingChanged?.Invoke(inventory[inventory.Count - 1].clothingMesh);
@@ -303,9 +318,9 @@ public class HandleInventory : MonoBehaviour
         Debug.Log("Stopped dragging item");
     }
 
-    private bool AllowedInSlot(InventoryItem item, InventorySlot slot)
+    private bool SlotTypeMatches(InventoryItem item, InventoryItemUI slot)
     {
-        return slot.allowedType == InventorySlot.AllowedType.Any || (InventoryItem.Type)(int)slot.allowedType == item.type;
+        return slot.allowedType == InventoryItemUI.AllowedType.Any || (InventoryItem.Type)(int)slot.allowedType == item.type;
     }
 
     private void Open()
