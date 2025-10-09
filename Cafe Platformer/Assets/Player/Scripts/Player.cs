@@ -204,4 +204,15 @@ public class Player : MonoBehaviour
     {
         CanvasHandler.Instance.moneyText.text = moneyDisplay;
     }
+
+    public void ResetAllTriggers()
+    {
+        foreach (AnimatorControllerParameter param in animator.parameters)
+        {
+            if (param.type == AnimatorControllerParameterType.Trigger)
+            {
+                animator.ResetTrigger(param.name);
+            }
+        }
+    }
 }
