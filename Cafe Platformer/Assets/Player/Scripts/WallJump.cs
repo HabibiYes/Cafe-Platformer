@@ -14,6 +14,8 @@ public class WallJump : MonoBehaviour
     [HideInInspector] public bool onWall = false;
     Vector3 wallNormal;
 
+    [HideInInspector] public bool canHoldWall = true;
+
     private void Start()
     {
         player = GetComponent<Player>();
@@ -69,6 +71,9 @@ public class WallJump : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!canHoldWall)
+            return;
+
         if (collision.collider.CompareTag("Ground"))
         {
             if (!onWall)
@@ -87,5 +92,15 @@ public class WallJump : MonoBehaviour
                 ReleaseFromWall();
             }
         }
+    }
+
+    public void EnableWallHold()
+    {
+        canHoldWall = true;
+    }
+
+    public void DisableWallHold()
+    {
+        canHoldWall = false;
     }
 }
