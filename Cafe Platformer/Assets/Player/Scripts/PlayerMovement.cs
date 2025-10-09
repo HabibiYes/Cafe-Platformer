@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] private float jumpForce = 7f;
-    public bool isJumping { get; private set; } = false;
+    [HideInInspector] public bool isJumping = false;
     float currentYVelocity = 0f;
 
     public bool canJump { get; private set; } = true;
@@ -225,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
     {
         player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, player.rb.linearVelocity.y + jumpForce * player.rb.mass, player.rb.linearVelocity.z);
 
+        isJumping = true;
         TriggerJumpAnimation();
     }
 
@@ -238,10 +239,12 @@ public class PlayerMovement : MonoBehaviour
 
                 player.rb.AddForce(-projectedFallingVector, ForceMode.Impulse);
 
+                isJumping = false;
                 TriggerLandAnimation();
             }
             else if (player.playerMovement.IsGrounded(false))
             {
+                isJumping = false;
                 TriggerLandAnimation();
             }
         }
@@ -249,16 +252,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void TriggerJumpAnimation()
     {
-        isJumping = true;
-
         player.animator.SetTrigger("Jump");
         player.animator.ResetTrigger("Land");
     }
 
     public void TriggerLandAnimation()
     {
-        isJumping = false;
-
         player.animator.SetTrigger("Land");
         player.animator.ResetTrigger("Jump");
     }
