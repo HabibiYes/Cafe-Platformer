@@ -86,6 +86,8 @@
     > Wall hold & Wall jump (10/1)
 
     > Swimming (10/1)
+
+    > Mantling (10/9)
 - Clothing
     > Switch clothing in inventory (10/3)
 - Health
