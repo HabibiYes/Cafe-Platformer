@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 1733591087052620391}
   - component: {fileID: 4166385968404555871}
   - component: {fileID: 2817516017487526299}
+  - component: {fileID: 5970845544560243677}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -569,6 +570,7 @@ MonoBehaviour:
   handleAnimationEvents: {fileID: 0}
   mode: 0
   interactRange: 3
+  maxMoney: 999999999
 --- !u!114 &8505818621098470612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,7 +717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74249288ce20f4cd4a7e8bf3be8bc015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
   isOpen: 0
   inventorySlotGameObject: {fileID: 280572739673641672, guid: 769477abda4fb41e78e31edc3238bbdc, type: 3}
   baseInventorySize: 5
@@ -774,6 +775,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clothingMeshRenderer: {fileID: 3051264791399174085}
+--- !u!114 &5970845544560243677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814327211277529523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b950c26e5b60645e98b3e88e7ff3fd54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mantleCheckDistance: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &1224052373336291990
 PrefabInstance:
   m_ObjectHideFlags: 0

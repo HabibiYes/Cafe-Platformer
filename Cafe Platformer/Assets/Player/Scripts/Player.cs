@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(Mantle))]
 [RequireComponent(typeof(WallJump))]
 [RequireComponent(typeof(Swim))]
 [RequireComponent(typeof(PlayerRotation))]
