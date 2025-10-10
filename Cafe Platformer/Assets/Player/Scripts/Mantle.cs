@@ -36,7 +36,6 @@ public class Mantle : MonoBehaviour
                 // Set position
                 if (Physics.Raycast(player.rb.position, player.playerModel.forward, out RaycastHit hit, mantleCheckDistance))
                 {
-
                     player.rb.position = new Vector3(hit.point.x, ledgeHit.point.y - 0.5f, hit.point.z) + hit.normal * 0.5f;
                     player.playerRotation.SetRotation(Quaternion.LookRotation(-hit.normal));
                 }
@@ -52,10 +51,9 @@ public class Mantle : MonoBehaviour
     private bool CheckLedge()
     {
         // Get ledge detection point
-        Vector3 position = (player.rb.position + (player.playerModel.forward * mantleCheckDistance)) + (Vector3.up * (col.bounds.extents.y + 1f));
-        Ray ray = new Ray(position, Vector3.down);
+        Vector3 position = (player.rb.position + (player.playerModel.forward * mantleCheckDistance)) + (Vector3.up * col.bounds.extents.y);
 
-        return Physics.Raycast(ray, out ledgeHit, 2f, groundLayer);
+        return Physics.Raycast(new Ray(position, Vector3.down), out ledgeHit, 1f, groundLayer) && !Physics.Raycast(new Ray(position, Vector3.up), 1f, groundLayer);
     }
 
     private void MantleOntoLedge()
