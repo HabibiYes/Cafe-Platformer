@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -10,6 +10,9 @@ public class InventoryUI : MonoBehaviour
     public Transform inventoryUI;
     public Image clothingSlot;
     [HideInInspector] public List<Image> inventorySlots; // End of slots is hotbar repeat (shows in hotbar object)
+
+    [SerializeField] private float selectedScale = 1.25f;
+    [SerializeField] private float scaleSpeed = 7f;
 
     public void Create(int inventorySize, int hotbarSize, int maxStackSize, GameObject inventorySlotGameObject)
     {
@@ -92,6 +95,35 @@ public class InventoryUI : MonoBehaviour
         }
 
         Debug.Log("Updated inventory UI");
+    }
+
+    private void Update()
+    {
+        // Get pointer position
+        PointerEventData data = new(EventSystem.current);
+        data.position = Input.mousePosition;
+
+        // Get hits
+        List<RaycastResult> hits = new();
+        CanvasHandler.Instance.graphicRaycaster.Raycast(data, hits);
+
+        hits = hits.Where(x => x.gameObject.CompareTag("InventoryItemUI")).ToList();
+
+        if (hits.Count > 0)
+        {
+            // Enlarge selected box
+            Transform transform = hits[0].gameObject.transform;
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * selectedScale, scaleSpeed * Time.deltaTime);
+        }
+
+        // Shrink all non-selected item UIs
+        foreach (Transform itemTransform in inventorySlots.Select(x => x.transform))
+        {
+            if (itemTransform.localScale != Vector3.one && (hits.Count > 0 ? itemTransform != hits[0].gameObject.transform : true))
+            {
+                itemTransform.localScale = Vector3.Lerp(itemTransform.localScale, Vector3.one, scaleSpeed * Time.deltaTime);
+            }
+        }
     }
 
     public void Open()

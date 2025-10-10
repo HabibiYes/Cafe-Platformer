@@ -239,6 +239,8 @@ MonoBehaviour:
   inventoryUI: {fileID: 606279051576915569}
   clothingSlot: {fileID: 9105270408167241099}
   inventorySlots: []
+  selectedScale: 1.15
+  scaleSpeed: 20
 --- !u!1 &4285239120822896454
 GameObject:
   m_ObjectHideFlags: 0

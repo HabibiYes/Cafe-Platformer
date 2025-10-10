@@ -7,8 +7,6 @@
 ## Future Enhancements
 - Inventory/Storage
     > When a item is hovered highlight and enlarge the frame
-
-    > When a menu is open the background for it changes depending on what is open
 - Characters
     > Shark: Water breathing, Faster swim speed
 
@@ -80,6 +78,8 @@
     > Items can stack up to 20 (9/24)
 
     > Inventory has a seperate slots for your clothing (9/29)
+
+    > When a menu is open the background for it changes depending on what is open (10/10)
 - Improved Movement
     > Wall hold & Wall jump (10/1)
 
