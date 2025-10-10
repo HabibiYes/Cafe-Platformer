@@ -1,20 +1,6 @@
 # Cafe Platformer TODO
 
 ## High Priority
-- Temperature
-    > Temperture too high or too low player slows and starts losing health
-
-    > 0 to 100 system, 0 is cold, 100 is hot, could do -100 to 100 if thats easier
-
-    > Different zones have different base tempertures
-- Characters
-    > Shark: Water breathing, Faster swim speed
-
-    > Lizard: Breath fire
-
-    > Rabbit: Double jump
-
-    > Bird: Glide
 
 ## In Progress
 
@@ -23,10 +9,16 @@
     > When a item is hovered highlight and enlarge the frame
 
     > When a menu is open the background for it changes depending on what is open
+- Characters
+    > Shark: Water breathing, Faster swim speed
+
+    > Lizard: Breath fire
+
+    > Rabbit: Double jump
+
+    > Bird: Glide
 - Clothes
     > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
-- Improved Movement
-    > Glide
 - HUD/Gadgets
     > Temp
 
@@ -51,6 +43,12 @@
     > Scientist: Sell gadgets, bring blueprints to them to expand their catalog, MAIN STORY NPC
 
     > Some blueprints can only be given to one npc
+- Temperature
+    > Temperture too high or too low player slows and starts losing health
+
+    > 0 to 100 system, 0 is cold, 100 is hot, could do -100 to 100 if thats easier
+
+    > Different zones have different base tempertures
 - Weather
     > Rain, Lightning, Flooding, Snow, Sleet, Blizzards, Avalanches, Winds, Tornados, Earthquakes, General heat, Heat waves, Hurricane
 - Characters Attack Animations
@@ -71,7 +69,7 @@
 - Inventory/Storage
     > 5 hotbar slots (9/22)
 
-    > 5 inventory slots (base) (9/22)
+    > 5 inventory slots (9/22)
 
     > inventory slots increase by 5 per bag level (9/23)
 
@@ -91,7 +89,7 @@
 - Clothing
     > Switch clothing in inventory (10/3)
 - Health
-    > Max HP is 25 (never changes) (10/6)
+    > Max HP is 25 (10/6)
 
     > Natrual regen after 30 seconds at a rate of 1 HP/sec (10/6)
 
@@ -102,3 +100,5 @@
     > Health bar (10/7)
 
     > Money (10/7)
+- Business
+    > Receive money (10/10)

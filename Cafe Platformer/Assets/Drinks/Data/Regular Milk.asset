@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Regular Milk
   m_EditorClassIdentifier: 
   name: Regular Milk
-  price: 1.5
+  price: 2
   color: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}

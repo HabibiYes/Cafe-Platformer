@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Chocolate Milk
   m_EditorClassIdentifier: 
   name: Chocolate Milk
-  price: 1.75
+  price: 3
   color: {r: 0.5188679, g: 0.39351147, b: 0.18356177, a: 1}
