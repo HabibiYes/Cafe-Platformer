@@ -1,24 +1,30 @@
 # Cafe Platformer TODO
 
 ## High Priority
-
-## In Progress
-
-## Future Enhancements
-- Inventory/Storage
-    > When a item is hovered highlight and enlarge the frame
-
-    > When a menu is open the background for it changes depending on what is open
-- Characters
-    > Shark: Water breathing, Faster swim speed
-
-    > Lizard: Breath fire
-
+- Character Abilities
+    > Shark: Water breathing, increase swim speed
+    
+    > Lizard: Fire breathing
+    
     > Rabbit: Double jump
 
     > Bird: Glide
 - Clothes
     > Improve resistance to cold or heat, resistance to weather effects, affect swim speed
+
+## In Progress
+- Characters
+    > Shark
+
+    > Lizard
+
+    > Rabbit
+
+    > Bird
+
+## Future Enhancements
+- Inventory/Storage
+    > When a menu is open the background for it changes depending on what is open
 - HUD/Gadgets
     > Temp
 
@@ -80,6 +86,8 @@
     > Items can stack up to 20 (9/24)
 
     > Inventory has a seperate slots for your clothing (9/29)
+
+    > When a item is hovered highlight and enlarge the frame (10/10)
 - Improved Movement
     > Wall hold & Wall jump (10/1)
 
