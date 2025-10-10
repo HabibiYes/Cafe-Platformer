@@ -74,6 +74,9 @@ public class HandleDrink : MonoBehaviour
         // Give drink on key press
         if (customer != null && player.controls.Player.Interact.WasPressedThisFrame())
         {
+            // Receive money
+            player.AddMoney(player.handleDrink.currentDrink.data.price);
+
             // Reset holding drink
             player.handleDrink.ResetDrink();
 

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Grape Juice
   m_EditorClassIdentifier: 
   name: Grape Juice
-  price: 2.25
+  price: 5
   color: {r: 0.45065328, g: 0.24519402, b: 0.5471698, a: 1}

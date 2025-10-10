@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Apple Juice
   m_EditorClassIdentifier: 
   name: Apple Juice
-  price: 2
+  price: 4
   color: {r: 0.7924528, g: 0.66288304, b: 0.43734425, a: 1}
